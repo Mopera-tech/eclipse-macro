@@ -5,82 +5,241 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Eclipse — Macro Grátis para TSB e Minecraft</title>
 <style>
-  /* ... (o CSS é o mesmo que te passei antes, com fundo preto #000) ... */
+  /* RESET E CONFIGURAÇÕES BÁSICAS */
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: #000; color: #fff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, sans-serif; line-height: 1.6; }
+  
+  /* EFEITO DE ABERTURA */
+  body { 
+    background: #050505; 
+    color: #fff; 
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, sans-serif; 
+    line-height: 1.6; 
+    overflow-x: hidden;
+    animation: siteFadeIn 1s ease-out forwards;
+  }
+
+  @keyframes siteFadeIn {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
   .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+  /* HERO */
   .hero { text-align: center; padding: 120px 0 80px; }
-  .hero h1 { font-size: clamp(2.5rem, 8vw, 5rem); font-weight: 800; letter-spacing: -2px; margin-bottom: 24px; }
+  .hero h1 { 
+    font-size: clamp(3rem, 8vw, 6rem); 
+    font-weight: 800; 
+    letter-spacing: -2px; 
+    margin-bottom: 24px; 
+    background: linear-gradient(180deg, #fff 0%, #888 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
   .hero p { color: #999; font-size: 1.2rem; max-width: 600px; margin: 0 auto 40px; }
-  .btn { display: inline-block; background: #fff; color: #000; padding: 16px 40px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 1.1rem; transition: transform .2s, opacity .2s; }
-  .btn:hover { transform: translateY(-2px); opacity: .9; }
+  
+  /* BOTÃO */
+  .btn { 
+    display: inline-block; 
+    background: #fff; 
+    color: #000; 
+    padding: 16px 40px; 
+    border-radius: 8px; 
+    font-weight: 700; 
+    text-decoration: none; 
+    font-size: 1.1rem; 
+    transition: all 0.3s ease;
+  }
+  .btn:hover { 
+    transform: translateY(-4px) scale(1.02); 
+    box-shadow: 0 10px 20px rgba(255,255,255,0.2); 
+  }
+
+  /* SEÇÕES E ANIMAÇÕES */
   section { padding: 80px 0; border-top: 1px solid #1a1a1a; }
-  h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 40px; letter-spacing: -1px; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px; }
-  .card { background: #0a0a0a; border: 1px solid #1a1a1a; border-radius: 12px; padding: 32px; }
-  .card h3 { font-size: 1.3rem; margin-bottom: 12px; }
-  .card p { color: #999; font-size: .95rem; }
+  h2 { font-size: 2.5rem; font-weight: 800; margin-bottom: 40px; letter-spacing: -1px; }
+  
+  .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
+  .reveal.active { opacity: 1; transform: translateY(0); }
+
+  /* GRID DE TECHS */
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+  
+  /* CARDS DAS TECHS */
+  .tech-card { 
+    background: #0a0a0a; 
+    border: 1px solid #222; 
+    border-radius: 16px; 
+    padding: 32px 24px; 
+    transition: all 0.4s ease;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .tech-card:hover {
+    transform: translateY(-8px);
+    border-color: #10b981; /* Borda verde no hover */
+    box-shadow: 0 10px 30px rgba(16, 185, 129, 0.1); /* Brilho verde */
+  }
+
+  /* TAG VERDE */
+  .tag {
+    display: inline-block;
+    background: #10b981; color: #000;
+    padding: 4px 12px; border-radius: 4px;
+    font-weight: 800; font-size: 0.75rem; letter-spacing: 1px;
+    margin-bottom: 16px;
+    width: fit-content;
+  }
+
+  .tech-card h3 { font-size: 1.6rem; margin-bottom: 8px; font-weight: 700; }
+  .tech-card p { color: #888; font-size: 0.95rem; }
+
+  /* JOGOS SUPORTADOS */
+  .game-card {
+    background: #0a0a0a; border: 1px solid #222; border-radius: 16px; padding: 32px;
+    transition: all 0.4s ease;
+  }
+  .game-card:hover { border-color: #444; transform: translateY(-4px); }
+  .game-card h3 { font-size: 1.5rem; margin-bottom: 8px; }
+  .game-card p { color: #888; }
+
+  /* COMO FUNCIONA */
   .step { margin-bottom: 32px; }
-  .step .num { color: #666; font-size: .9rem; font-weight: 700; letter-spacing: 2px; }
+  .step .num { color: #10b981; font-size: 1rem; font-weight: 800; letter-spacing: 2px; }
   .step h3 { font-size: 1.5rem; margin: 8px 0; }
-  details { background: #0a0a0a; border: 1px solid #1a1a1a; border-radius: 8px; padding: 20px 24px; margin-bottom: 12px; cursor: pointer; }
-  details summary { font-weight: 600; font-size: 1.1rem; }
-  details p { color: #999; margin-top: 12px; }
+  .step p { color: #888; }
+
+  /* FAQ */
+  details { 
+    background: #0a0a0a; border: 1px solid #222; border-radius: 12px; 
+    padding: 24px; margin-bottom: 16px; cursor: pointer; transition: all 0.3s ease;
+  }
+  details:hover { border-color: #444; }
+  details summary { font-weight: 600; font-size: 1.1rem; outline: none; }
+  details p { color: #888; margin-top: 16px; }
+
+  /* FOOTER */
   footer { padding: 60px 0; border-top: 1px solid #1a1a1a; text-align: center; color: #666; font-size: .9rem; }
-  footer .warning { color: #f59e0b; margin-bottom: 16px; }
+  footer .warning { color: #f59e0b; margin-bottom: 16px; background: #f59e0b11; padding: 12px; border-radius: 8px; display: inline-block; }
 </style>
 </head>
 <body>
 
-<div class="hero container">
+<div class="hero container reveal">
   <h1>Eclipse</h1>
-  <p>Macro gratuito para TSB e Minecraft. Sem licença, sem complicação.</p>
+  <p>Macro gratuito para TSB e Minecraft. Sem licença, sem complicação, direto ao ponto.</p>
   <a href="#download" class="btn">Download para Windows</a>
 </div>
 
-<section class="container">
-  <h2>Funções</h2>
+<section class="container reveal">
+  <h2>Veja em ação</h2>
   <div class="grid">
-    <div class="card"><h3>Função 1</h3><p>Descreva aqui a primeira função do seu macro (ex: timing ajustável).</p></div>
-    <div class="card"><h3>Função 2</h3><p>Descreva aqui a segunda função.</p></div>
-    <div class="card"><h3>Função 3</h3><p>Descreva aqui a terceira função.</p></div>
-    <div class="card"><h3>Função 4</h3><p>Descreva aqui a quarta função.</p></div>
+    
+    <!-- CARD 1 -->
+    <div class="tech-card">
+      <div class="tag">TECH</div>
+      <h3>Supa</h3>
+      <p>Execução perfeita de Supa sem esforço.</p>
+    </div>
+
+    <!-- CARD 2 -->
+    <div class="tech-card">
+      <div class="tag">TECH</div>
+      <h3>Boomy</h3>
+      <p>Combos rápidos e precisos com Boomy.</p>
+    </div>
+
+    <!-- CARD 3 -->
+    <div class="tech-card">
+      <div class="tag">TECH</div>
+      <h3>Lethal</h3>
+      <p>Ataques letais na hora certa.</p>
+    </div>
+
+    <!-- CARD 4 -->
+    <div class="tech-card">
+      <div class="tag">TECH</div>
+      <h3>Backdash Cancel</h3>
+      <p>Cancelamento de recuo para máxima mobilidade.</p>
+    </div>
+
+    <!-- CARD 5 -->
+    <div class="tech-card">
+      <div class="tag">TECH</div>
+      <h3>Emote Dash</h3>
+      <p>Dash rápido utilizando emotes.</p>
+    </div>
+
+    <!-- CARD 6 -->
+    <div class="tech-card">
+      <div class="tag">TECH</div>
+      <h3>M1 Reset</h3>
+      <p>Reset de combo instantâneo.</p>
+    </div>
+
   </div>
 </section>
 
-<section class="container">
+<section class="container reveal">
   <h2>Jogos suportados</h2>
   <div class="grid">
-    <div class="card"><h3>TSB</h3><p>The Strongest Battlegrounds.</p></div>
-    <div class="card"><h3>Minecraft</h3><p>Automação para tarefas repetitivas.</p></div>
+    <div class="game-card">
+      <h3>TSB</h3><p>The Strongest Battlegrounds.</p>
+    </div>
+    <div class="game-card">
+      <h3>Minecraft</h3><p>Automação para tarefas repetitivas.</p>
+    </div>
   </div>
 </section>
 
-<section class="container">
+<section class="container reveal">
   <h2>Como funciona</h2>
   <div class="step"><div class="num">01</div><h3>Baixe</h3><p>Baixe o instalador para Windows no botão abaixo.</p></div>
   <div class="step"><div class="num">02</div><h3>Instale</h3><p>Execute o instalador. Se o SmartScreen aparecer, clique em "Mais informações → Executar assim mesmo".</p></div>
   <div class="step"><div class="num">03</div><h3>Use</h3><p>Abra o Eclipse, escolha o jogo e comece a usar.</p></div>
 </section>
 
-<section class="container">
+<section class="container reveal">
   <h2>Perguntas frequentes</h2>
   <details><summary>É realmente grátis?</summary><p>Sim, 100% gratuito. Sem licença, sem pagamento.</p></details>
-  <details><summary>Precisa de Discord?</summary><p>Não é obrigatório, mas recomendamos entrar no nosso servidor para suporte e atualizações.</p></details>
   <details><summary>É seguro?</summary><p>O Eclipse não injeta código no Roblox. É uma ferramenta de automação de input. Mesmo assim, use por sua conta e risco.</p></details>
   <details><summary>Funciona no Windows?</summary><p>Sim, feito para Windows 10/11.</p></details>
 </section>
 
-<section class="container" id="download" style="text-align:center;">
+<section class="container reveal" id="download" style="text-align:center; padding-bottom: 120px;">
   <h2>Pronto para começar?</h2>
   <p style="color:#999; margin-bottom:32px;">Baixe agora e comece a usar em minutos.</p>
+  <!-- NÃO ESQUEÇA DE COLOCAR O LINK DO SEU ARQUIVO AQUI NO HREF -->
   <a href="#" class="btn">Download para Windows</a>
 </section>
 
 <footer class="container">
-  <p class="warning">⚠️ O uso de macros pode violar os Termos de Serviço do Roblox e do Minecraft. Use por sua conta e risco.</p>
+  <div class="warning">⚠️ O uso de macros pode violar os Termos de Serviço do Roblox. Use por sua conta e risco.</div>
   <p>© 2026 Eclipse. Todos os direitos reservados.</p>
 </footer>
+
+<!-- SCRIPT PARA AS ANIMAÇÕES DE SCROLL -->
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+
+  const revealOnScroll = () => {
+    const windowHeight = window.innerHeight;
+    const elementVisible = 100;
+
+    reveals.forEach((reveal) => {
+      const elementTop = reveal.getBoundingClientRect().top;
+      if (elementTop < windowHeight - elementVisible) {
+        reveal.classList.add('active');
+      }
+    });
+  };
+
+  window.addEventListener('scroll', revealOnScroll);
+  revealOnScroll();
+</script>
 
 </body>
 </html>
