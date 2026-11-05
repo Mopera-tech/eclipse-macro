@@ -11,6 +11,9 @@
   /* RESET E CONFIGURAÇÕES BÁSICAS */
   * { margin: 0; padding: 0; box-sizing: border-box; }
   
+  /* ROLAGEM SUAVE */
+  html { scroll-behavior: smooth; }
+
   /* CORES PRINCIPAIS */
   :root {
     --accent-color: #ffffff; 
@@ -31,20 +34,20 @@
     100% { opacity: 1; transform: translateY(0); }
   }
 
-  /* NAVBAR */
+  /* NAVBAR FIXA E FLUTUANTE */
   .navbar {
     position: fixed;
-    top: 24px;
+    top: 24px; /* Distância do topo */
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(15, 15, 15, 0.8);
-    backdrop-filter: blur(12px);
+    background: rgba(15, 15, 15, 0.85); /* Fundo escuro semi-transparente */
+    backdrop-filter: blur(12px); /* Efeito de vidro */
     border: 1px solid #222;
     border-radius: 50px;
     display: flex;
     align-items: center;
     padding: 8px 16px 8px 8px;
-    z-index: 1000;
+    z-index: 9999; /* Fica acima de TUDO na página */
     width: max-content;
     max-width: 95%;
   }
@@ -78,6 +81,7 @@
     color: #fff;
   }
   
+  /* Classe ativada pelo JavaScript para marcar a seção atual */
   .nav-links a.active {
     background: #333;
     color: #fff;
@@ -109,7 +113,8 @@
   .btn:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 10px 20px rgba(255,255,255,0.2); }
 
   /* SEÇÕES E ANIMAÇÕES */
-  section { padding: 80px 0; border-top: 1px solid #1a1a1a; position: relative; z-index: 2; }
+  /* O scroll-margin-top evita que a navbar cubra o título da seção ao clicar no menu */
+  section { padding: 80px 0; border-top: 1px solid #1a1a1a; position: relative; z-index: 2; scroll-margin-top: 100px; }
   h2 { font-size: 2.5rem; font-weight: 800; margin-bottom: 40px; letter-spacing: -1px; }
   
   .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
@@ -222,11 +227,10 @@
 
 <!-- NAVBAR COM LOGO -->
 <nav class="navbar">
-  <!-- COLOQUE SUA IMAGEM COM O NOME logo.png NA RAIZ DO SEU GITHUB -->
   <img src="logo.png" alt="Eclipse Logo" class="navbar-logo">
   
   <div class="nav-links">
-    <a href="#" class="active">Home</a>
+    <a href="#home" class="active">Home</a>
     <a href="#features">Features</a>
     <a href="#showcase">Showcase</a>
     <a href="#howitworks">How it Works</a>
@@ -236,13 +240,13 @@
 <!-- CANVAS DO FUNDO ANIMADO -->
 <canvas id="bg-canvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;"></canvas>
 
-<div class="hero container reveal">
+<div id="home" class="hero container reveal">
   <h1>Eclipse</h1>
   <p>Free macro for TSB and Minecraft. No license, no hassle, straight to the point.</p>
   <a href="#download" class="btn">Download for Windows</a>
 </div>
 
-<!-- SHOWCASE (Antigo "See it in action") -->
+<!-- SHOWCASE -->
 <section id="showcase" class="container reveal">
   <h2>See it in action</h2>
   <div class="grid">
@@ -279,7 +283,7 @@
   </div>
 </section>
 
-<!-- FEATURES (Jogos suportados) -->
+<!-- FEATURES -->
 <section id="features" class="container reveal">
   <h2>Supported Games</h2>
   <div class="grid">
@@ -365,6 +369,29 @@
         mouse: { interactionType: 2 }
       }).start();
     }
+  });
+
+  // 3. Lógica para mudar a aba ativa (pílula) ao rolar a página
+  const sections = document.querySelectorAll('section, #home');
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      // Pega a seção que está 150px abaixo do topo da tela
+      if (window.scrollY >= sectionTop - 150) {
+        current = section.getAttribute('id');
+      }
+    });
+
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === `#${current}`) {
+        link.classList.add('active');
+      }
+    });
   });
 </script>
 
