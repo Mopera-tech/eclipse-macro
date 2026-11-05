@@ -4,11 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Eclipse — Macro Grátis para TSB e Minecraft</title>
+<!-- Biblioteca para as partículas de fundo -->
+<script src="https://cdn.jsdelivr.net/npm/canvasparticles-js/dist/index.umd.min.js" defer></script>
+
 <style>
   /* RESET E CONFIGURAÇÕES BÁSICAS */
   * { margin: 0; padding: 0; box-sizing: border-box; }
   
-  /* EFEITO DE ABERTURA */
+  /* FUNDO E EFEITO DE ABERTURA */
   body { 
     background: #050505; 
     color: #fff; 
@@ -23,85 +26,72 @@
     100% { opacity: 1; transform: translateY(0); }
   }
 
-  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 2; }
 
   /* HERO */
-  .hero { text-align: center; padding: 120px 0 80px; }
+  .hero { text-align: center; padding: 140px 0 100px; }
   .hero h1 { 
-    font-size: clamp(3rem, 8vw, 6rem); 
+    font-size: clamp(3.5rem, 8vw, 6rem); 
     font-weight: 800; 
     letter-spacing: -2px; 
     margin-bottom: 24px; 
-    background: linear-gradient(180deg, #fff 0%, #888 100%);
+    background: linear-gradient(180deg, #fff 0%, #666 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
   .hero p { color: #999; font-size: 1.2rem; max-width: 600px; margin: 0 auto 40px; }
   
-  /* BOTÃO */
+  /* BOTÕES */
   .btn { 
-    display: inline-block; 
-    background: #fff; 
-    color: #000; 
-    padding: 16px 40px; 
-    border-radius: 8px; 
-    font-weight: 700; 
-    text-decoration: none; 
-    font-size: 1.1rem; 
-    transition: all 0.3s ease;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: #fff; color: #000; 
+    padding: 16px 40px; border-radius: 8px; font-weight: 700; 
+    text-decoration: none; font-size: 1.1rem; transition: all 0.3s ease;
   }
-  .btn:hover { 
-    transform: translateY(-4px) scale(1.02); 
-    box-shadow: 0 10px 20px rgba(255,255,255,0.2); 
+  .btn:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 10px 20px rgba(255,255,255,0.2); }
+
+  .discord-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: #5865F2; color: #fff; /* Cor oficial do Discord */
+    padding: 16px 32px; border-radius: 8px; font-weight: 700; 
+    text-decoration: none; font-size: 1.1rem; transition: all 0.3s ease;
   }
+  .discord-btn:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 10px 20px rgba(88, 101, 242, 0.3); background: #4752C4; }
+  .discord-btn svg { margin-right: 10px; }
 
   /* SEÇÕES E ANIMAÇÕES */
-  section { padding: 80px 0; border-top: 1px solid #1a1a1a; }
+  section { padding: 80px 0; border-top: 1px solid #1a1a1a; position: relative; z-index: 2; }
   h2 { font-size: 2.5rem; font-weight: 800; margin-bottom: 40px; letter-spacing: -1px; }
   
   .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
   .reveal.active { opacity: 1; transform: translateY(0); }
 
-  /* GRID DE TECHS */
+  /* GRID E CARDS DAS TECHS */
   .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
   
-  /* CARDS DAS TECHS */
   .tech-card { 
-    background: #0a0a0a; 
-    border: 1px solid #222; 
-    border-radius: 16px; 
-    padding: 32px 24px; 
-    transition: all 0.4s ease;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    background: #0a0a0a; border: 1px solid #222; border-radius: 16px; 
+    padding: 32px 24px; transition: all 0.4s ease; position: relative;
   }
 
   .tech-card:hover {
     transform: translateY(-8px);
-    border-color: #10b981; /* Borda verde no hover */
-    box-shadow: 0 10px 30px rgba(16, 185, 129, 0.1); /* Brilho verde */
+    border-color: #10b981;
+    box-shadow: 0 10px 30px rgba(16, 185, 129, 0.15);
   }
 
-  /* TAG VERDE */
   .tag {
-    display: inline-block;
-    background: #10b981; color: #000;
+    display: inline-block; background: #10b981; color: #000;
     padding: 4px 12px; border-radius: 4px;
     font-weight: 800; font-size: 0.75rem; letter-spacing: 1px;
-    margin-bottom: 16px;
-    width: fit-content;
+    margin-bottom: 16px; width: fit-content;
   }
 
   .tech-card h3 { font-size: 1.6rem; margin-bottom: 8px; font-weight: 700; }
   .tech-card p { color: #888; font-size: 0.95rem; }
 
   /* JOGOS SUPORTADOS */
-  .game-card {
-    background: #0a0a0a; border: 1px solid #222; border-radius: 16px; padding: 32px;
-    transition: all 0.4s ease;
-  }
+  .game-card { background: #0a0a0a; border: 1px solid #222; border-radius: 16px; padding: 32px; transition: all 0.4s ease; }
   .game-card:hover { border-color: #444; transform: translateY(-4px); }
   .game-card h3 { font-size: 1.5rem; margin-bottom: 8px; }
   .game-card p { color: #888; }
@@ -113,20 +103,20 @@
   .step p { color: #888; }
 
   /* FAQ */
-  details { 
-    background: #0a0a0a; border: 1px solid #222; border-radius: 12px; 
-    padding: 24px; margin-bottom: 16px; cursor: pointer; transition: all 0.3s ease;
-  }
+  details { background: #0a0a0a; border: 1px solid #222; border-radius: 12px; padding: 24px; margin-bottom: 16px; cursor: pointer; transition: all 0.3s ease; }
   details:hover { border-color: #444; }
   details summary { font-weight: 600; font-size: 1.1rem; outline: none; }
   details p { color: #888; margin-top: 16px; }
 
   /* FOOTER */
-  footer { padding: 60px 0; border-top: 1px solid #1a1a1a; text-align: center; color: #666; font-size: .9rem; }
+  footer { padding: 60px 0; border-top: 1px solid #1a1a1a; text-align: center; color: #666; font-size: .9rem; position: relative; z-index: 2; }
   footer .warning { color: #f59e0b; margin-bottom: 16px; background: #f59e0b11; padding: 12px; border-radius: 8px; display: inline-block; }
 </style>
 </head>
 <body>
+
+<!-- CANVAS DO FUNDO ANIMADO -->
+<canvas id="bg-canvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;"></canvas>
 
 <div class="hero container reveal">
   <h1>Eclipse</h1>
@@ -137,49 +127,36 @@
 <section class="container reveal">
   <h2>Veja em ação</h2>
   <div class="grid">
-    
-    <!-- CARD 1 -->
     <div class="tech-card">
       <div class="tag">TECH</div>
       <h3>Supa</h3>
       <p>Execução perfeita de Supa sem esforço.</p>
     </div>
-
-    <!-- CARD 2 -->
     <div class="tech-card">
       <div class="tag">TECH</div>
       <h3>Boomy</h3>
       <p>Combos rápidos e precisos com Boomy.</p>
     </div>
-
-    <!-- CARD 3 -->
     <div class="tech-card">
       <div class="tag">TECH</div>
       <h3>Lethal</h3>
       <p>Ataques letais na hora certa.</p>
     </div>
-
-    <!-- CARD 4 -->
     <div class="tech-card">
       <div class="tag">TECH</div>
       <h3>Backdash Cancel</h3>
       <p>Cancelamento de recuo para máxima mobilidade.</p>
     </div>
-
-    <!-- CARD 5 -->
     <div class="tech-card">
       <div class="tag">TECH</div>
       <h3>Emote Dash</h3>
       <p>Dash rápido utilizando emotes.</p>
     </div>
-
-    <!-- CARD 6 -->
     <div class="tech-card">
       <div class="tag">TECH</div>
       <h3>M1 Reset</h3>
       <p>Reset de combo instantâneo.</p>
     </div>
-
   </div>
 </section>
 
@@ -211,9 +188,19 @@
 
 <section class="container reveal" id="download" style="text-align:center; padding-bottom: 120px;">
   <h2>Pronto para começar?</h2>
-  <p style="color:#999; margin-bottom:32px;">Baixe agora e comece a usar em minutos.</p>
-  <!-- NÃO ESQUEÇA DE COLOCAR O LINK DO SEU ARQUIVO AQUI NO HREF -->
-  <a href="#" class="btn">Download para Windows</a>
+  <p style="color:#999; margin-bottom:32px;">Baixe agora ou entre na nossa comunidade.</p>
+  
+  <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+    <!-- COLOQUE O LINK DO SEU ARQUIVO NO HREF ABAIXO -->
+    <a href="#" class="btn">Download para Windows</a>
+    <!-- COLOQUE O LINK DO SEU DISCORD NO HREF ABAIXO -->
+    <a href="https://discord.gg/P6z3J583F" target="_blank" class="discord-btn">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+      </svg>
+      Entrar no Discord
+    </a>
+  </div>
 </section>
 
 <footer class="container">
@@ -221,14 +208,13 @@
   <p>© 2026 Eclipse. Todos os direitos reservados.</p>
 </footer>
 
-<!-- SCRIPT PARA AS ANIMAÇÕES DE SCROLL -->
+<!-- SCRIPTS DE ANIMAÇÃO -->
 <script>
+  // 1. Animação das seções ao rolar
   const reveals = document.querySelectorAll('.reveal');
-
   const revealOnScroll = () => {
     const windowHeight = window.innerHeight;
     const elementVisible = 100;
-
     reveals.forEach((reveal) => {
       const elementTop = reveal.getBoundingClientRect().top;
       if (elementTop < windowHeight - elementVisible) {
@@ -236,9 +222,20 @@
       }
     });
   };
-
   window.addEventListener('scroll', revealOnScroll);
   revealOnScroll();
+
+  // 2. Animação de partículas pretas no fundo
+  document.addEventListener('DOMContentLoaded', function() {
+    if (typeof CanvasParticles !== 'undefined') {
+      new CanvasParticles('#bg-canvas', {
+        background: '#050505',
+        particles: { color: '#333333', number: 60, size: 2 },
+        connect: { distance: 120, color: '#333333', opacity: 0.4 },
+        mouse: { interactionType: 2 }
+      }).start();
+    }
+  });
 </script>
 
 </body>
