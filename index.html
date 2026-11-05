@@ -3,18 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Eclipse — Free Macro for TSB & Minecraft</title>
-<!-- Biblioteca para as partículas de fundo -->
-<script src="https://cdn.jsdelivr.net/npm/canvasparticles-js/dist/index.umd.min.js" defer></script>
+<title>Eclipse — Free Macro for TSB</title>
 
 <style>
-  /* RESET E CONFIGURAÇÕES BÁSICAS */
   * { margin: 0; padding: 0; box-sizing: border-box; }
   
-  /* ROLAGEM SUAVE */
-  html { scroll-behavior: smooth; }
-
-  /* CORES PRINCIPAIS */
   :root {
     --accent-color: #ffffff; 
     --accent-glow: rgba(255, 255, 255, 0.1);
@@ -30,24 +23,24 @@
   }
 
   @keyframes siteFadeIn {
-    0% { opacity: 0; transform: translateY(20px); }
-    100% { opacity: 1; transform: translateY(0); }
+    0% { opacity: 0; }
+    100% { opacity: 1; }
   }
 
-  /* NAVBAR FIXA E FLUTUANTE */
+  /* NAVBAR */
   .navbar {
     position: fixed;
-    top: 24px; /* Distância do topo */
+    top: 24px;
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(15, 15, 15, 0.85); /* Fundo escuro semi-transparente */
-    backdrop-filter: blur(12px); /* Efeito de vidro */
+    background: rgba(15, 15, 15, 0.85);
+    backdrop-filter: blur(12px);
     border: 1px solid #222;
     border-radius: 50px;
     display: flex;
     align-items: center;
     padding: 8px 16px 8px 8px;
-    z-index: 9999; /* Fica acima de TUDO na página */
+    z-index: 9999;
     width: max-content;
     max-width: 95%;
   }
@@ -61,238 +54,115 @@
     object-fit: cover;
   }
 
-  .nav-links {
-    display: flex;
-    gap: 8px;
-  }
+  .nav-links { display: flex; gap: 8px; }
 
   .nav-links a {
-    color: #999;
-    text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 600;
-    padding: 8px 16px;
-    border-radius: 20px;
-    transition: all 0.3s ease;
+    color: #999; text-decoration: none; font-size: 0.9rem; font-weight: 600;
+    padding: 8px 16px; border-radius: 20px; transition: all 0.3s ease;
   }
 
-  .nav-links a:hover {
-    background: #222;
-    color: #fff;
-  }
-  
-  /* Classe ativada pelo JavaScript para marcar a seção atual */
-  .nav-links a.active {
-    background: #333;
-    color: #fff;
-  }
+  .nav-links a:hover { background: #222; color: #fff; }
+  .nav-links a.active { background: #333; color: #fff; }
 
   .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 2; }
 
   /* HERO */
   .hero { text-align: center; padding: 180px 0 100px; }
   .hero h1 { 
-    font-size: clamp(3.5rem, 8vw, 6rem); 
-    font-weight: 800; 
-    letter-spacing: -2px; 
-    margin-bottom: 24px; 
-    background: linear-gradient(180deg, #fff 0%, #666 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-size: clamp(3.5rem, 8vw, 6rem); font-weight: 800; letter-spacing: -2px; 
+    margin-bottom: 24px; background: linear-gradient(180deg, #fff 0%, #666 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   }
   .hero p { color: #999; font-size: 1.2rem; max-width: 600px; margin: 0 auto 40px; }
   
   /* BOTÕES */
   .btn { 
     display: inline-flex; align-items: center; justify-content: center;
-    background: #fff; color: #000; 
-    padding: 16px 40px; border-radius: 8px; font-weight: 700; 
-    text-decoration: none; font-size: 1.1rem; transition: all 0.3s ease;
-    border: 1px solid #fff;
+    background: #fff; color: #000; padding: 16px 40px; border-radius: 8px; font-weight: 700; 
+    text-decoration: none; font-size: 1.1rem; transition: all 0.3s ease; border: 1px solid #fff;
   }
   .btn:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 10px 20px rgba(255,255,255,0.2); }
 
   /* SEÇÕES E ANIMAÇÕES */
-  /* O scroll-margin-top evita que a navbar cubra o título da seção ao clicar no menu */
-  section { padding: 80px 0; border-top: 1px solid #1a1a1a; position: relative; z-index: 2; scroll-margin-top: 100px; }
+  section { padding: 80px 0; border-top: 1px solid #1a1a1a; position: relative; z-index: 2; }
   h2 { font-size: 2.5rem; font-weight: 800; margin-bottom: 40px; letter-spacing: -1px; }
   
   .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
   .reveal.active { opacity: 1; transform: translateY(0); }
 
-  /* GRID E CARDS DAS TECHS */
+  /* CARDS */
   .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
-  
-  .tech-card { 
-    background: #0a0a0a; border: 1px solid #222; border-radius: 16px; 
-    padding: 32px 24px; transition: all 0.4s ease; position: relative;
-  }
+  .games-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 600px; }
 
-  .tech-card:hover {
-    transform: translateY(-8px);
-    border-color: var(--accent-color);
-    box-shadow: 0 10px 30px var(--accent-glow);
-  }
-
-  .tag {
-    display: inline-block; background: var(--accent-color); color: #000;
-    padding: 4px 12px; border-radius: 4px;
-    font-weight: 800; font-size: 0.75rem; letter-spacing: 1px;
-    margin-bottom: 16px; width: fit-content;
-  }
-
+  .tech-card { background: #0a0a0a; border: 1px solid #222; border-radius: 16px; padding: 32px 24px; transition: all 0.4s ease; position: relative; }
+  .tech-card:hover { transform: translateY(-8px); border-color: var(--accent-color); box-shadow: 0 10px 30px var(--accent-glow); }
+  .tag { display: inline-block; background: var(--accent-color); color: #000; padding: 4px 12px; border-radius: 4px; font-weight: 800; font-size: 0.75rem; letter-spacing: 1px; margin-bottom: 16px; width: fit-content; }
   .tech-card h3 { font-size: 1.6rem; margin-bottom: 8px; font-weight: 700; }
   .tech-card p { color: #888; font-size: 0.95rem; }
 
-  /* JOGOS SUPORTADOS */
   .game-card { background: #0a0a0a; border: 1px solid #222; border-radius: 16px; padding: 32px; transition: all 0.4s ease; }
   .game-card:hover { border-color: #444; transform: translateY(-4px); }
   .game-card h3 { font-size: 1.5rem; margin-bottom: 8px; }
   .game-card p { color: #888; }
 
-  /* COMO FUNCIONA */
   .step { margin-bottom: 32px; }
   .step .num { color: var(--accent-color); font-size: 1rem; font-weight: 800; letter-spacing: 2px; }
   .step h3 { font-size: 1.5rem; margin: 8px 0; }
   .step p { color: #888; }
 
-  /* FAQ */
   details { background: #0a0a0a; border: 1px solid #222; border-radius: 12px; padding: 24px; margin-bottom: 16px; cursor: pointer; transition: all 0.3s ease; }
   details:hover { border-color: #444; }
   details summary { font-weight: 600; font-size: 1.1rem; outline: none; }
   details p { color: #888; margin-top: 16px; }
 
-  /* COMUNIDADE (DISCORD VERTICAL) */
-  .community-section {
-    background: #000;
-    padding: 100px 0;
-    border-top: 1px solid #1a1a1a;
-  }
-  
-  .community-content {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    max-width: 800px;
-  }
-
-  .community-icon {
-    background: #5865F2;
-    width: 56px;
-    height: 56px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 24px;
-  }
-
-  .community-label {
-    color: #888;
-    font-weight: 700;
-    font-size: 1rem;
-    margin-bottom: 16px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-
-  .community-content h2 {
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    line-height: 1.1;
-    margin-bottom: 16px;
-    border: none;
-  }
-
-  .community-content p {
-    color: #999;
-    font-size: 1.2rem;
-    margin-bottom: 40px;
-  }
-
-  .discord-btn-vertical {
-    display: inline-flex; align-items: center; justify-content: center;
-    background: #fff; color: #000;
-    padding: 16px 32px; border-radius: 30px; font-weight: 700; 
-    text-decoration: none; font-size: 1.1rem; transition: all 0.3s ease;
-    border: 1px solid #fff;
-  }
+  /* DISCORD */
+  .community-section { background: #000; padding: 100px 0; border-top: 1px solid #1a1a1a; }
+  .community-content { display: flex; flex-direction: column; align-items: flex-start; max-width: 800px; }
+  .community-icon { background: #5865F2; width: 56px; height: 56px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 24px; }
+  .community-label { color: #888; font-weight: 700; font-size: 1rem; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px; }
+  .community-content h2 { font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.1; margin-bottom: 16px; border: none; }
+  .community-content p { color: #999; font-size: 1.2rem; margin-bottom: 40px; }
+  .discord-btn-vertical { display: inline-flex; align-items: center; justify-content: center; background: #fff; color: #000; padding: 16px 32px; border-radius: 30px; font-weight: 700; text-decoration: none; font-size: 1.1rem; transition: all 0.3s ease; border: 1px solid #fff; }
   .discord-btn-vertical:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 10px 20px rgba(255,255,255,0.2); background: #e0e0e0; }
   .discord-btn-vertical svg { margin-right: 10px; }
 
-  /* FOOTER */
   footer { padding: 60px 0; border-top: 1px solid #1a1a1a; text-align: center; color: #666; font-size: .9rem; position: relative; z-index: 2; }
 </style>
 </head>
 <body>
 
-<!-- NAVBAR COM LOGO -->
 <nav class="navbar">
   <img src="logo.png" alt="Eclipse Logo" class="navbar-logo">
-  
   <div class="nav-links">
     <a href="#home" class="active">Home</a>
     <a href="#features">Features</a>
-    <a href="#showcase">Showcase</a>
     <a href="#howitworks">How it Works</a>
   </div>
 </nav>
 
-<!-- CANVAS DO FUNDO ANIMADO -->
 <canvas id="bg-canvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;"></canvas>
 
-<div id="home" class="hero container reveal">
+<div id="home" class="hero container reveal active">
   <h1>Eclipse</h1>
-  <p>Free macro for TSB and Minecraft. No license, no hassle, straight to the point.</p>
+  <p>Free macro for TSB. No license, no hassle, straight to the point.</p>
   <a href="#download" class="btn">Download for Windows</a>
 </div>
 
-<!-- SHOWCASE -->
-<section id="showcase" class="container reveal">
-  <h2>See it in action</h2>
-  <div class="grid">
-    <div class="tech-card">
-      <div class="tag">TECH</div>
-      <h3>Supa</h3>
-      <p>Flawless Supa execution with zero effort.</p>
-    </div>
-    <div class="tech-card">
-      <div class="tag">TECH</div>
-      <h3>Boomy</h3>
-      <p>Fast and precise combos with Boomy.</p>
-    </div>
-    <div class="tech-card">
-      <div class="tag">TECH</div>
-      <h3>Lethal</h3>
-      <p>Lethal attacks at the right moment.</p>
-    </div>
-    <div class="tech-card">
-      <div class="tag">TECH</div>
-      <h3>Backdash Cancel</h3>
-      <p>Backdash canceling for maximum mobility.</p>
-    </div>
-    <div class="tech-card">
-      <div class="tag">TECH</div>
-      <h3>Emote Dash</h3>
-      <p>Fast dash using emotes.</p>
-    </div>
-    <div class="tech-card">
-      <div class="tag">TECH</div>
-      <h3>M1 Reset</h3>
-      <p>Instant combo reset.</p>
-    </div>
-  </div>
-</section>
-
 <!-- FEATURES -->
 <section id="features" class="container reveal">
-  <h2>Supported Games</h2>
+  <h2>Features For Now</h2>
   <div class="grid">
-    <div class="game-card">
-      <h3>TSB</h3><p>The Strongest Battlegrounds.</p>
-    </div>
-    <div class="game-card">
-      <h3>Minecraft</h3><p>Automation for repetitive tasks.</p>
-    </div>
+    <div class="tech-card"><div class="tag">TECH</div><h3>Supa</h3><p>Flawless Supa execution with zero effort.</p></div>
+    <div class="tech-card"><div class="tag">TECH</div><h3>Instant Twisted</h3><p>Fast and precise combos with Instant Twisted.</p></div>
+    <div class="tech-card"><div class="tag">TECH</div><h3>Lethal</h3><p>Lethal attacks at the right moment.</p></div>
+    <div class="tech-card"><div class="tag">TECH</div><h3>Backdash Cancel</h3><p>Backdash canceling for maximum mobility.</p></div>
+    <div class="tech-card"><div class="tag">TECH</div><h3>Emote Dash</h3><p>Fast dash using emotes.</p></div>
+    <div class="tech-card"><div class="tag">TECH</div><h3>M1 Reset</h3><p>Instant combo reset.</p></div>
+  </div>
+
+  <h2 style="margin-top: 80px;">Supported Games</h2>
+  <div class="games-grid">
+    <div class="game-card"><h3>TSB</h3><p>The Strongest Battlegrounds.</p></div>
   </div>
 </section>
 
@@ -312,26 +182,18 @@
   <details><summary>Does it work on Windows?</summary><p>Yes, built for Windows 10/11.</p></details>
 </section>
 
-<!-- SEÇÃO DISCORD VERTICAL -->
+<!-- SEÇÃO DISCORD -->
 <section id="download" class="community-section">
   <div class="container reveal">
     <div class="community-content">
-      
       <div class="community-icon">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="#ffffff">
-          <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
-        </svg>
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="#ffffff"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
       </div>
-
       <div class="community-label">Community</div>
       <h2>Join the community.</h2>
       <p>Updates, techs, and support. All in one place.</p>
-      
-      <!-- COLOQUE O LINK DO SEU DISCORD NO HREF ABAIXO -->
       <a href="https://discord.gg/jfevHZcSzU" target="_blank" class="discord-btn-vertical">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
-        </svg>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
         Join Discord
       </a>
     </div>
@@ -342,57 +204,180 @@
   <p>© 2026 Eclipse. All rights reserved.</p>
 </footer>
 
-<!-- SCRIPTS DE ANIMAÇÃO -->
 <script>
-  // 1. Animação das seções ao rolar
+  // 1. SCROLL SUAVE CUSTOMIZADO
+  const navLinks = document.querySelectorAll('.nav-links a');
+  const sections = document.querySelectorAll('section, #home');
+
+  function smoothScrollTo(targetY, duration = 800) {
+    const startY = window.scrollY;
+    const difference = targetY - startY;
+    const startTime = performance.now();
+
+    function step() {
+      const progress = (performance.now() - startTime) / duration;
+      if (progress < 1) {
+        const ease = progress < 0.5 ? 2 * progress * progress : -1 + (4 - 2 * progress) * progress;
+        window.scrollTo(0, startY + difference * ease);
+        requestAnimationFrame(step);
+      } else {
+        window.scrollTo(0, targetY);
+      }
+    }
+    requestAnimationFrame(step);
+  }
+
+  navLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault(); 
+      const targetId = this.getAttribute('href');
+      const targetSection = document.querySelector(targetId);
+      
+      if (targetSection) {
+        const headerOffset = 100; 
+        const elementPosition = targetSection.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+        smoothScrollTo(offsetPosition, 800); 
+
+        navLinks.forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
+      }
+    });
+  });
+
+  // 2. ANIMAÇÃO DE SURGIMENTO E NAVBAR ATIVA (Otimizado com passive: true)
   const reveals = document.querySelectorAll('.reveal');
-  const revealOnScroll = () => {
+  
+  window.addEventListener('scroll', () => {
+    // Atualiza a aba ativa
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      if (window.scrollY >= sectionTop - 150) current = section.getAttribute('id');
+    });
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === `#${current}`) link.classList.add('active');
+    });
+
+    // Atualiza o reveal das seções
     const windowHeight = window.innerHeight;
-    const elementVisible = 100;
     reveals.forEach((reveal) => {
-      const elementTop = reveal.getBoundingClientRect().top;
-      if (elementTop < windowHeight - elementVisible) {
+      if (reveal.getBoundingClientRect().top < windowHeight - 100) {
         reveal.classList.add('active');
       }
     });
-  };
-  window.addEventListener('scroll', revealOnScroll);
-  revealOnScroll();
+  }, { passive: true }); // <-- ISSO AVISA O NAVEGADOR QUE NÃO VAMOS BLOQUEAR O SCROLL
 
-  // 2. Animação de partículas no fundo
-  document.addEventListener('DOMContentLoaded', function() {
-    if (typeof CanvasParticles !== 'undefined') {
-      new CanvasParticles('#bg-canvas', {
-        background: '#050505',
-        particles: { color: '#333333', number: 60, size: 2 },
-        connect: { distance: 120, color: '#333333', opacity: 0.4 },
-        mouse: { interactionType: 2 }
-      }).start();
+  // Roda uma vez ao carregar a página
+  reveals.forEach((reveal) => {
+    if (reveal.getBoundingClientRect().top < window.innerHeight - 100) {
+      reveal.classList.add('active');
     }
   });
 
-  // 3. Lógica para mudar a aba ativa (pílula) ao rolar a página
-  const sections = document.querySelectorAll('section, #home');
-  const navLinks = document.querySelectorAll('.nav-links a');
+  // 3. FUNDO ANIMADO (OTIMIZADO)
+  const canvas = document.getElementById('bg-canvas');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  
+  let mouse = { x: -1000, y: -1000, active: false, radius: 90 }; 
+  let idleTimer;
 
-  window.addEventListener('scroll', () => {
-    let current = '';
-    
-    sections.forEach(section => {
-      const sectionTop = section.offsetTop;
-      // Pega a seção que está 150px abaixo do topo da tela
-      if (window.scrollY >= sectionTop - 150) {
-        current = section.getAttribute('id');
-      }
-    });
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
 
-    navLinks.forEach(link => {
-      link.classList.remove('active');
-      if (link.getAttribute('href') === `#${current}`) {
-        link.classList.add('active');
-      }
-    });
+  window.addEventListener('mousemove', (e) => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+    mouse.active = true;
+
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(() => {
+      mouse.active = false; 
+      mouse.x = -1000;
+      mouse.y = -1000;
+    }, 30000);
+  }, { passive: true });
+
+  window.addEventListener('mouseleave', () => {
+    mouse.active = false;
+    mouse.x = -1000;
+    mouse.y = -1000;
   });
+
+  // Reduzido para 50 partículas para garantir 60fps no scroll
+  for (let i = 0; i < 50; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      vx: (Math.random() - 0.5) * 2.5, // Um pouco mais rápido
+      vy: (Math.random() - 0.5) * 2.5,
+      radius: Math.random() * 2 + 1
+    });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    particles.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+
+      if (mouse.active) {
+        let dx = p.x - mouse.x;
+        let dy = p.y - mouse.y;
+        let distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance < mouse.radius) {
+          let force = (mouse.radius - distance) / mouse.radius;
+          let angle = Math.atan2(dy, dx);
+          
+          p.x += Math.cos(angle) * force * 6;
+          p.y += Math.sin(angle) * force * 6;
+        }
+      }
+
+      if (p.x <= 0 || p.x >= canvas.width) {
+        p.vx *= -1;
+        p.x = Math.max(1, Math.min(canvas.width - 1, p.x));
+      }
+      if (p.y <= 0 || p.y >= canvas.height) {
+        p.vy *= -1;
+        p.y = Math.max(1, Math.min(canvas.height - 1, p.y));
+      }
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+      ctx.fillStyle = '#333333';
+      ctx.fill();
+    });
+
+    // Desenha as linhas (Otimizado)
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        let dx = particles[i].x - particles[j].x;
+        let dy = particles[i].y - particles[j].y;
+        let distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance < 130) { // Aumentei um pouco a distância para compensar menos partículas
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(51, 51, 51, ${1 - distance / 130})`;
+          ctx.stroke();
+        }
+      }
+    }
+
+    requestAnimationFrame(draw);
+  }
+  
+  draw();
 </script>
 
 </body>
