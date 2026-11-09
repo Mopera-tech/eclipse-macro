@@ -94,9 +94,22 @@
   
   footer { padding: 60px 0; border-top: 1px solid #1a1a1a; text-align: center; color: #666; font-size: .9rem; }
 
-  /* TELA DE LOGIN */
-  .auth-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-dark); display: none; opacity: 0; transition: opacity 0.4s ease; z-index: 10000; }
-  .auth-overlay.show { display: flex; opacity: 1; }
+  /* =========================================
+     CORREÇÃO DO CANVAS: visibility hidden em vez de display none
+     ========================================= */
+  .auth-overlay { 
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+    background: var(--bg-dark); 
+    display: flex; 
+    visibility: hidden; 
+    opacity: 0; 
+    transition: opacity 0.4s ease, visibility 0.4s; 
+    z-index: 10000; 
+  }
+  .auth-overlay.show { 
+    visibility: visible; 
+    opacity: 1; 
+  }
 
   .auth-sidebar { flex: 1; background: linear-gradient(135deg, #0a0a0a 0%, #000000 100%); border-right: 1px solid #1a1a1a; padding: 60px; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; }
   #ekg-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
@@ -130,8 +143,11 @@
   .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid #222; }
   .divider::before { margin-right: 15px; }
   .divider::after { margin-left: 15px; }
+  
+  /* O LINK DO DISCORD ESTÁ AQUI - SCOPE CORRIGIDO */
   .discord-login-btn { width: 100%; padding: 16px; background: #0a0a0a; color: #fff; border: 1px solid #222; border-radius: 8px; font-weight: 600; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.3s ease; text-decoration: none; }
   .discord-login-btn:hover { background: #1a1a1a; border-color: #444; }
+  
   @media (max-width: 800px) { .auth-sidebar { display: none; } .auth-main { padding: 40px 24px; } }
 </style>
 </head>
@@ -251,8 +267,8 @@
         <button class="submit-btn">Sign in</button>
         <div class="divider">or</div>
 
-        <!-- LINK DE LOGIN DO DISCORD -->
-        <a href="https://discord.com/api/oauth2/authorize?client_id=1569412157035126864&redirect_uri=https%3A%2F%2Fzpieeogaqggxykxqfnrd.supabase.co%2Fauth%2Fv1%2Fcallback&response_type=code&scope=identify%20guilds%20guild.members.read" class="discord-login-btn">
+        <!-- LINK DO DISCORD COM O SCOPE CORRIGIDO -->
+        <a href="https://discord.com/api/oauth2/authorize?client_id=1569412157035126864&redirect_uri=https%3A%2F%2Fzpieeogaqggxykxqfnrd.supabase.co%2Fauth%2Fv1%2Fcallback&response_type=code&scope=identify%20guilds%20guilds.members.read" class="discord-login-btn">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
           Continue with Discord
         </a>
@@ -278,7 +294,8 @@
         <button class="submit-btn" style="margin-top: 16px;">Create account</button>
         <div class="divider">or</div>
         
-        <a href="https://discord.com/api/oauth2/authorize?client_id=1569412157035126864&redirect_uri=https%3A%2F%2Fzpieeogaqggxykxqfnrd.supabase.co%2Fauth%2Fv1%2Fcallback&response_type=code&scope=identify%20guilds%20guild.members.read" class="discord-login-btn">
+        <!-- LINK DO DISCORD COM O SCOPE CORRIGIDO -->
+        <a href="https://discord.com/api/oauth2/authorize?client_id=1569412157035126864&redirect_uri=https%3A%2F%2Fzpieeogaqggxykxqfnrd.supabase.co%2Fauth%2Fv1%2Fcallback&response_type=code&scope=identify%20guilds%20guilds.members.read" class="discord-login-btn">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
           Continue with Discord
         </a>
@@ -291,11 +308,16 @@
   document.addEventListener('DOMContentLoaded', () => {
     document.body.classList.add('js-enabled');
 
-    // 1. LÓGICA DO LOGIN COM DISCORD
+    // ==========================================
+    // 1. LÓGICA DE CALLBACK DO DISCORD
+    // ==========================================
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('code');
 
     if (code) {
+      // Mostra um alerta de carregamento (opcional)
+      // alert("Autenticando com o Discord...");
+
       fetch('https://zpieeogaqggxykxqfnrd.supabase.co/functions/v1/discord-auth', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -305,13 +327,15 @@
       .then(data => {
         if (data.error) throw new Error(data.error);
 
+        // Monta a URL do avatar
         const avatarUrl = data.avatar 
           ? `https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png`
           : 'https://cdn.discordapp.com/embed/avatars/0.png';
         
         const displayName = data.global_name || data.username;
-        const userTag = data.tags[0];
+        const userTag = data.tags[0] || "Membro";
 
+        // Atualiza o botão no topo
         const loginBtn = document.getElementById('openLoginBtn');
         if (loginBtn) {
           loginBtn.innerHTML = `
@@ -321,19 +345,22 @@
               <span style="font-size: 0.7rem; background: #fff; color: #000; padding: 2px 6px; border-radius: 4px; font-weight: 800;">${userTag}</span>
             </div>
           `;
-          loginBtn.style.pointerEvents = 'none';
+          loginBtn.style.pointerEvents = 'none'; // Desativa clique
         }
 
+        // Limpa a URL
         window.history.replaceState({}, document.title, window.location.pathname);
       })
       .catch(err => {
         console.error("Erro no login:", err);
-        alert("Erro ao fazer login. O projeto no Supabase pode estar pausado.");
+        alert("Erro ao fazer login. Verifique o painel do Supabase.");
         window.history.replaceState({}, document.title, window.location.pathname);
       });
     }
 
-    // 2. TELA DE LOGIN
+    // ==========================================
+    // 2. CONTROLE DO MODAL DE LOGIN
+    // ==========================================
     const openBtn = document.getElementById('openLoginBtn');
     const backToSiteBtn = document.getElementById('backToSiteBtn');
     const modal = document.getElementById('loginModal');
@@ -344,7 +371,7 @@
       if(openBtn.style.pointerEvents !== 'none') {
         modal.classList.add('show');
         document.body.style.overflow = 'hidden'; 
-        resizeEKG();
+        setTimeout(resizeEKG, 50); // Dá um pequeno delay para o CSS carregar antes de ajustar o canvas
       }
     });
 
@@ -363,7 +390,9 @@
       });
     });
 
-    // 3. SCROLL
+    // ==========================================
+    // 3. SCROLL E ANIMAÇÕES
+    // ==========================================
     const navLinks = document.querySelectorAll('.nav-links a');
     const sections = document.querySelectorAll('section, #home');
     const reveals = document.querySelectorAll('.reveal');
@@ -415,7 +444,9 @@
       if (reveal.getBoundingClientRect().top < windowHeight - 100) reveal.classList.add('active');
     });
 
-    // 4. PARTÍCULAS
+    // ==========================================
+    // 4. PARTÍCULAS DE FUNDO
+    // ==========================================
     const canvas = document.getElementById('bg-canvas');
     const ctx = canvas.getContext('2d');
     let particles = [];
@@ -473,16 +504,20 @@
     }
     draw();
 
-    // 5. EKG
+    // ==========================================
+    // 5. BATIMENTO CARDÍACO (CANVAS)
+    // ==========================================
     const ekgCanvas = document.getElementById('ekg-canvas');
     const ekgCtx = ekgCanvas.getContext('2d');
     const sidebar = document.getElementById('sidebar-clickable');
     let ekgWidth, ekgHeight, points = [], isSpiking = false, spikePhase = 0;
 
     function resizeEKG() {
-      if(!ekgCanvas) return;
-      ekgWidth = sidebar.offsetWidth; ekgHeight = sidebar.offsetHeight;
-      ekgCanvas.width = ekgWidth; ekgCanvas.height = ekgHeight;
+      if(!ekgCanvas || !sidebar) return;
+      ekgWidth = sidebar.offsetWidth; 
+      ekgHeight = sidebar.offsetHeight;
+      ekgCanvas.width = ekgWidth; 
+      ekgCanvas.height = ekgHeight;
       points = [];
       for(let i = 0; i < ekgWidth; i++) points.push({ x: i, y: ekgHeight / 2 });
     }
@@ -490,9 +525,12 @@
     sidebar.addEventListener('mousedown', () => { isSpiking = true; spikePhase = 0; });
 
     function drawEKG() {
+      // Se o modal não estiver visível, apenas continua rodando o loop
       if(!document.getElementById('loginModal').classList.contains('show')) {
-        requestAnimationFrame(drawEKG); return;
+        requestAnimationFrame(drawEKG); 
+        return;
       }
+      
       ekgCtx.clearRect(0, 0, ekgWidth, ekgHeight);
       points.shift();
       let targetY = ekgHeight / 2; 
@@ -512,14 +550,29 @@
 
       points.push({ x: ekgWidth, y: targetY });
 
-      ekgCtx.beginPath(); ekgCtx.moveTo(points[0].x, points[0].y);
+      ekgCtx.beginPath(); 
+      ekgCtx.moveTo(points[0].x, points[0].y);
       for (let i = 1; i < points.length; i++) ekgCtx.lineTo(points[i].x, points[i].y);
-      ekgCtx.strokeStyle = '#ffffff'; ekgCtx.lineWidth = 2; ekgCtx.shadowBlur = 15; ekgCtx.shadowColor = 'rgba(255, 255, 255, 0.8)'; ekgCtx.stroke();
-      ekgCtx.shadowBlur = 0; ekgCtx.strokeStyle = 'rgba(255, 255, 255, 0.1)'; ekgCtx.lineWidth = 4; ekgCtx.stroke();
+      
+      ekgCtx.strokeStyle = '#ffffff'; 
+      ekgCtx.lineWidth = 2; 
+      ekgCtx.shadowBlur = 15; 
+      ekgCtx.shadowColor = 'rgba(255, 255, 255, 0.8)'; 
+      ekgCtx.stroke();
+      
+      ekgCtx.shadowBlur = 0; 
+      ekgCtx.strokeStyle = 'rgba(255, 255, 255, 0.1)'; 
+      ekgCtx.lineWidth = 4; 
+      ekgCtx.stroke();
 
       requestAnimationFrame(drawEKG);
     }
-    resizeEKG(); drawEKG(); window.addEventListener('resize', resizeEKG);
+    
+    // Inicializa o tamanho e a animação
+    setTimeout(resizeEKG, 100); 
+    drawEKG(); 
+    
+    window.addEventListener('resize', () => { resizeEKG(); });
   });
 </script>
 </body>
