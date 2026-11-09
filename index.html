@@ -56,7 +56,7 @@
   }
   
   .navbar-left { display: flex; align-items: center; }
-  .navbar-logo { height: 32px; width: 32px; border-radius: 50%; margin-right: 24px; border: 1px solid #333; object-fit: cover; }
+  .navbar-logo { height: 32px; width: 32px; border-radius: 50%; margin-right: 24px; border: 1px solid #333; object-fit: cover; background: #111; }
 
   .nav-links { display: flex; gap: 8px; }
   .nav-links a { color: #999; text-decoration: none; font-size: 0.9rem; font-weight: 600; padding: 8px 16px; border-radius: 20px; transition: all 0.3s ease; cursor: pointer; }
@@ -151,7 +151,7 @@
   #ekg-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
   
   .sidebar-logo { display: flex; align-items: center; gap: 12px; font-size: 1.2rem; font-weight: 700; z-index: 2; position: relative; }
-  .sidebar-logo img { width: 32px; height: 32px; border-radius: 50%; border: 1px solid #333; }
+  .sidebar-logo img { width: 32px; height: 32px; border-radius: 50%; border: 1px solid #333; background: #111; }
   .sidebar-text { z-index: 2; position: relative; }
   .sidebar-text h2 { font-size: 2rem; font-weight: 800; line-height: 1.2; margin-bottom: 16px; color: #fff; }
   .sidebar-text p { color: #888; font-size: 1.1rem; margin-bottom: 24px; }
@@ -265,8 +265,9 @@
 <div id="landing-page">
   <nav class="navbar">
     <div class="navbar-left">
-      <!-- LINK RAW DA IMAGEM AQUI -->
-      <img src="https://raw.githubusercontent.com/Mopera-tech/eclipse-macro/main/logo.png" alt="Eclipse Logo" class="navbar-logo">
+      <!-- ADICIONADO O ONERROR: Se a imagem falhar, ele desenha um SVG elegante no lugar -->
+      <img src="logo.png" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'45\' fill=\'none\' stroke=\'%23ffffff\' stroke-width=\'4\'/><path d=\'M50 20 L55 45 L80 50 L55 55 L50 80 L45 55 L20 50 L45 45 Z\' fill=\'%23ffffff\'/></svg>';" alt="Eclipse Logo" class="navbar-logo">
+      
       <div class="nav-links">
         <a href="#home" class="active" onclick="showPage('home')">Home</a>
         <a href="#features">Features</a>
@@ -366,8 +367,9 @@
 <div id="dashboard-page" class="dashboard-page">
   <nav class="navbar anime-in" style="animation-delay: 0.1s;">
     <div class="navbar-left">
-      <!-- LINK RAW DA IMAGEM AQUI -->
-      <img src="https://raw.githubusercontent.com/Mopera-tech/eclipse-macro/main/logo.png" alt="Eclipse Logo" class="navbar-logo">
+      <!-- ADICIONADO O ONERROR AQUI TAMBÉM -->
+      <img src="logo.png" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'45\' fill=\'none\' stroke=\'%23ffffff\' stroke-width=\'4\'/><path d=\'M50 20 L55 45 L80 50 L55 55 L50 80 L45 55 L20 50 L45 45 Z\' fill=\'%23ffffff\'/></svg>';" alt="Eclipse Logo" class="navbar-logo">
+      
       <div class="nav-links">
         <a onclick="showPage('home')">Voltar ao site</a>
       </div>
@@ -545,8 +547,8 @@
   <div class="auth-sidebar" id="sidebar-clickable">
     <canvas id="ekg-canvas"></canvas>
     <div class="sidebar-logo">
-      <!-- LINK RAW DA IMAGEM AQUI -->
-      <img src="https://raw.githubusercontent.com/Mopera-tech/eclipse-macro/main/logo.png" alt="Logo">Eclipse
+      <!-- ADICIONADO O ONERROR AQUI TAMBÉM -->
+      <img src="logo.png" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'45\' fill=\'none\' stroke=\'%23ffffff\' stroke-width=\'4\'/><path d=\'M50 20 L55 45 L80 50 L55 55 L50 80 L45 55 L20 50 L45 45 Z\' fill=\'%23ffffff\'/></svg>';" alt="Logo">Eclipse
     </div>
     <div class="sidebar-text">
       <h2>Macros, techs and combos for Roblox.</h2>
@@ -634,7 +636,7 @@
 
 <script>
   // ==========================================
-  // CONFIGURAÇÃO DO SUPABASE (SUAS CHAVES AQUI)
+  // CONFIGURAÇÃO DO SUPABASE
   // ==========================================
   const SUPABASE_URL = 'https://zpieeogaqggxykxqfnrd.supabase.co';
   const SUPABASE_ANON_KEY = 'sb_publishable_h__tGsYkagynbTsboFVDsw_xEvLeQZI';
@@ -779,7 +781,6 @@
     // --- 5. PROCESSO DE LOGIN E CADASTRO COM EMAIL ---
     if(supabaseClient) {
       
-      // LOGIN COM EMAIL
       const loginForm = document.getElementById('signin');
       if(loginForm) {
         loginForm.addEventListener('submit', async (e) => {
@@ -817,7 +818,6 @@
         });
       }
 
-      // CRIAR CONTA COM EMAIL
       const signupForm = document.getElementById('signup');
       if(signupForm) {
         signupForm.addEventListener('submit', async (e) => {
