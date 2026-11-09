@@ -11,8 +11,8 @@
   :root {
     --accent-color: #ffffff; 
     --bg-dark: #050505;
-    --bg-card: #0a0a0a;
-    --border-color: #1a1a1a;
+    --bg-card: rgba(15, 15, 15, 0.6);
+    --border-color: rgba(255, 255, 255, 0.08);
     --text-muted: #888;
   }
 
@@ -21,17 +21,14 @@
   /* =========================================
      CURSORES CUSTOMIZADOS
      ========================================= */
-  /* 1. Mouse Normal (Estrela) */
   body, html, a, button, .btn, .tech-card, .game-card, .dropdown-item, .auth-tab, .side-nav-btn {
     cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12,2 C12,7 7,12 2,12 C7,12 12,17 12,22 C12,17 17,12 22,12 C17,12 12,7 12,2 Z" fill="%23ffffff"/></svg>') 12 12, auto !important;
   }
 
-  /* 2. Mouse no Batimento (Cruz perfeita e fina) */
   .auth-sidebar, #sidebar-clickable {
-    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path d="M12 2 C12 8 16 8 20 12 C16 16 12 16 12 22 C12 16 8 16 4 12 C8 8 12 8 12 2 Z" fill="%23ffffff"/></svg>') 16 16, crosshair !important;
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><polygon points="12,1 14,9 21,10 14,12 12,23 10,12 3,10 10,9" fill="%23ffffff"/></svg>') 16 16, crosshair !important;
   }
 
-  /* 3. Mouse Clicando (Lua) */
   *:active, a:active, button:active, .btn:active {
     cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M21,12.79 A9,9 0 1,1 11.21,3 A7,7 0 0,0 21,12.79 Z" fill="%23ffffff"/></svg>') 12 12, pointer !important;
   }
@@ -49,7 +46,7 @@
   /* NAVBAR */
   .navbar {
     position: fixed; top: 24px; left: 50%; transform: translateX(-50%);
-    background: rgba(15, 15, 15, 0.85); backdrop-filter: blur(12px);
+    background: rgba(15, 15, 15, 0.6); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--border-color); border-radius: 50px;
     display: flex; align-items: center; padding: 8px 8px 8px 16px; 
     z-index: 999; width: max-content; max-width: 95%; gap: 20px;
@@ -81,7 +78,7 @@
 
   .dropdown-menu {
     position: absolute; top: calc(100% + 12px); right: 0;
-    background: #111; border: 1px solid #222; border-radius: 12px;
+    background: rgba(17, 17, 17, 0.95); backdrop-filter: blur(10px); border: 1px solid #222; border-radius: 12px;
     width: 220px; padding: 8px; display: flex; flex-direction: column;
     opacity: 0; visibility: hidden; transform: translateY(-10px);
     transition: all 0.2s ease; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
@@ -117,19 +114,19 @@
   
   .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
   .games-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 600px; }
-  .tech-card { background: var(--bg-card); border: 1px solid #222; border-radius: 16px; padding: 32px 24px; transition: all 0.4s ease; }
+  .tech-card { background: var(--bg-card); backdrop-filter: blur(10px); border: 1px solid var(--border-color); border-radius: 16px; padding: 32px 24px; transition: all 0.4s ease; }
   .tech-card:hover { transform: translateY(-8px); border-color: #fff; box-shadow: 0 10px 30px rgba(255,255,255,0.1); }
   .tag { display: inline-block; background: #fff; color: #000; padding: 4px 12px; border-radius: 4px; font-weight: 800; font-size: 0.75rem; margin-bottom: 16px; }
   .tech-card h3 { font-size: 1.6rem; margin-bottom: 8px; font-weight: 700; }
   .tech-card p { color: #888; font-size: 0.95rem; }
-  .game-card { background: var(--bg-card); border: 1px solid #222; border-radius: 16px; padding: 32px; transition: all 0.4s ease; }
+  .game-card { background: var(--bg-card); backdrop-filter: blur(10px); border: 1px solid var(--border-color); border-radius: 16px; padding: 32px; transition: all 0.4s ease; }
   
   .step { margin-bottom: 32px; }
   .step .num { color: #fff; font-size: 1rem; font-weight: 800; letter-spacing: 2px; }
   .step h3 { font-size: 1.5rem; margin: 8px 0; }
   .step p { color: #888; }
 
-  details { background: var(--bg-card); border: 1px solid #222; border-radius: 12px; padding: 24px; margin-bottom: 16px; }
+  details { background: var(--bg-card); backdrop-filter: blur(10px); border: 1px solid var(--border-color); border-radius: 12px; padding: 24px; margin-bottom: 16px; }
   details summary { font-weight: 600; font-size: 1.1rem; outline: none; }
   details p { color: #888; margin-top: 16px; }
 
@@ -161,7 +158,7 @@
   .back-btn { position: absolute; top: 40px; right: 60px; display: inline-flex; align-items: center; gap: 8px; color: #888; text-decoration: none; font-size: 0.9rem; transition: color 0.3s; }
   .back-btn:hover { color: #fff; }
   .form-wrapper { margin: auto; width: 100%; max-width: 400px; }
-  .auth-tabs { display: flex; background: var(--bg-card); border-radius: 8px; border: 1px solid #222; padding: 4px; margin-bottom: 32px; }
+  .auth-tabs { display: flex; background: var(--bg-card); backdrop-filter: blur(10px); border-radius: 8px; border: 1px solid var(--border-color); padding: 4px; margin-bottom: 32px; }
   .auth-tab { flex: 1; padding: 12px; text-align: center; border-radius: 6px; font-weight: 600; color: #888; font-size: 0.95rem; transition: all 0.3s ease; }
   .auth-tab.active { background: #1a1a1a; color: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
   .auth-form { display: none; }
@@ -173,53 +170,92 @@
   .input-group label { display: block; font-size: 0.9rem; color: #ccc; margin-bottom: 8px; font-weight: 500; }
   .input-wrapper { position: relative; display: flex; align-items: center; }
   .input-wrapper svg { position: absolute; left: 16px; color: #666; width: 18px; height: 18px; }
-  .input-wrapper input { width: 100%; padding: 16px 16px 16px 44px; background: var(--bg-card); border: 1px solid #222; border-radius: 8px; color: #fff; font-size: 0.95rem; outline: none; transition: border-color 0.3s; }
+  .input-wrapper input { width: 100%; padding: 16px 16px 16px 44px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; color: #fff; font-size: 0.95rem; outline: none; transition: border-color 0.3s; }
   .input-wrapper input:focus { border-color: #555; }
   .submit-btn { width: 100%; padding: 16px; background: #fff; color: #000; border: none; border-radius: 8px; font-weight: 700; font-size: 1rem; transition: all 0.3s ease; }
   .divider { display: flex; align-items: center; text-align: center; margin: 24px 0; color: #666; font-size: 0.85rem; }
   .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid #222; }
   .divider::before { margin-right: 15px; }
   .divider::after { margin-left: 15px; }
-  .discord-login-btn { width: 100%; padding: 16px; background: var(--bg-card); color: #fff; border: 1px solid #222; border-radius: 8px; font-weight: 600; font-size: 1rem; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.3s ease; text-decoration: none; }
+  .discord-login-btn { width: 100%; padding: 16px; background: var(--bg-card); color: #fff; border: 1px solid var(--border-color); border-radius: 8px; font-weight: 600; font-size: 1rem; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.3s ease; text-decoration: none; }
   .discord-login-btn:hover { background: #1a1a1a; border-color: #444; }
   @media (max-width: 800px) { .auth-sidebar { display: none; } .auth-main { padding: 40px 24px; } }
 
-  /* DASHBOARD */
-  .dashboard-page { display: none; min-height: 100vh; background: var(--bg-dark); padding-top: 100px; position: relative; z-index: 100; }
-  .dash-layout { display: flex; max-width: 1200px; margin: 0 auto; gap: 32px; padding: 0 24px 60px 24px; }
+  /* =========================================
+     DASHBOARD PREMIUM (COM VIDA!)
+     ========================================= */
+  .dashboard-page { display: none; min-height: 100vh; background: var(--bg-dark); padding-top: 100px; position: relative; z-index: 100; overflow: hidden; }
+  
+  /* Fundo do Dashboard */
+  #dash-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.3; pointer-events: none; }
+
+  .dash-layout { display: flex; max-width: 1200px; margin: 0 auto; gap: 32px; padding: 0 24px 60px 24px; position: relative; z-index: 2; }
   .dash-sidebar { width: 280px; flex-shrink: 0; display: flex; flex-direction: column; gap: 8px; }
-  .user-card { background: var(--bg-card); border: 1px solid #222; border-radius: 16px; padding: 32px 24px; text-align: center; margin-bottom: 24px; }
-  .user-card img { width: 80px; height: 80px; border-radius: 50%; border: 2px solid #333; margin-bottom: 16px; background: #111; }
+  
+  /* Animação de Entrada (Staggered) */
+  @keyframes slideUpFade { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  .anime-in { opacity: 0; animation: slideUpFade 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+
+  .user-card { background: var(--bg-card); backdrop-filter: blur(12px); border: 1px solid var(--border-color); border-radius: 16px; padding: 32px 24px; text-align: center; margin-bottom: 24px; transition: all 0.3s ease; }
+  .user-card:hover { border-color: rgba(255,255,255,0.2); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+  .user-card img { width: 80px; height: 80px; border-radius: 50%; border: 2px solid #333; margin-bottom: 16px; background: #111; transition: transform 0.3s ease; }
+  .user-card:hover img { transform: scale(1.05) rotate(5deg); border-color: #fff; }
   .user-card h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
   .user-card .email { color: var(--text-muted); font-size: 0.85rem; }
   .user-tag-badge { background: #fff; color: #000; padding: 2px 8px; border-radius: 4px; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
+  
   .side-nav-btn { display: flex; align-items: center; gap: 12px; padding: 16px; border-radius: 12px; background: transparent; color: #888; border: 1px solid transparent; font-size: 0.95rem; font-weight: 600; transition: all 0.2s; text-align: left; }
-  .side-nav-btn:hover { background: #111; color: #fff; }
-  .side-nav-btn.active { background: var(--bg-card); border-color: #222; color: #fff; }
+  .side-nav-btn:hover { background: rgba(255,255,255,0.05); color: #fff; }
+  .side-nav-btn.active { background: var(--bg-card); border-color: var(--border-color); color: #fff; backdrop-filter: blur(10px); }
   .side-nav-btn svg { width: 20px; height: 20px; }
+
   .dash-main { flex: 1; display: flex; flex-direction: column; gap: 24px; }
   .dash-header { margin-bottom: 8px; }
-  .dash-header h1 { font-size: 2rem; font-weight: 800; margin-bottom: 8px; }
+  .dash-header h1 { font-size: 2.2rem; font-weight: 800; margin-bottom: 8px; }
+  /* Nome do usuário com gradiente */
+  .dash-header h1 span { background: linear-gradient(135deg, #fff 0%, #888 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
   .dash-header p { color: var(--text-muted); font-size: 1rem; }
+
   .dash-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
-  .stat-card { background: var(--bg-card); border: 1px solid #222; border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 8px; transition: border-color 0.3s; }
-  .stat-card:hover { border-color: #444; }
+  
+  /* Card de Estatísticas com Efeito Hover */
+  .stat-card { background: var(--bg-card); backdrop-filter: blur(12px); border: 1px solid var(--border-color); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 8px; transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); position: relative; overflow: hidden; }
+  .stat-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at top right, rgba(255,255,255,0.1), transparent 70%); opacity: 0; transition: opacity 0.3s; }
+  .stat-card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.3); box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+  .stat-card:hover::before { opacity: 1; }
   .stat-card svg { width: 24px; height: 24px; color: #fff; margin-bottom: 8px; }
   .stat-card h3 { font-size: 1.6rem; font-weight: 800; color: #fff; }
   .stat-card p { color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; font-weight: 600; letter-spacing: 1px; }
-  .download-card { background: linear-gradient(135deg, #111 0%, #000 100%); border: 1px solid #333; border-radius: 16px; padding: 40px; position: relative; overflow: hidden; }
-  .download-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: #fff; }
+  
+  /* Status Online Pulsante */
+  .online-status { display: flex; align-items: center; gap: 8px; }
+  .online-dot { width: 8px; height: 8px; background: #10b981; border-radius: 50%; box-shadow: 0 0 10px #10b981; animation: pulseGreen 2s infinite; }
+  @keyframes pulseGreen { 0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); } 100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); } }
+
+  /* Card de Download */
+  .download-card { background: linear-gradient(135deg, rgba(20,20,20,0.8) 0%, rgba(0,0,0,0.9) 100%); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 40px; position: relative; overflow: hidden; transition: all 0.3s ease; }
+  .download-card:hover { border-color: rgba(255,255,255,0.3); box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
+  .download-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, transparent, #fff, transparent); }
   .download-card h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 12px; }
   .download-card p { color: var(--text-muted); font-size: 1rem; margin-bottom: 24px; max-width: 500px; }
-  .dl-btn-main { display: inline-flex; align-items: center; gap: 12px; background: #fff; color: #000; padding: 16px 32px; border-radius: 8px; font-weight: 700; font-size: 1.1rem; text-decoration: none; transition: all 0.3s; }
-  .dl-btn-main:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(255,255,255,0.15); }
-  .changelog-card { background: var(--bg-card); border: 1px solid #222; border-radius: 16px; padding: 32px; }
+  
+  /* Botão de Download com Brilho Passando */
+  .dl-btn-main { display: inline-flex; align-items: center; gap: 12px; background: #fff; color: #000; padding: 16px 32px; border-radius: 8px; font-weight: 700; font-size: 1.1rem; text-decoration: none; transition: all 0.3s; position: relative; overflow: hidden; }
+  .dl-btn-main::after { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent); transform: skewX(-20deg); transition: 0.5s; }
+  .dl-btn-main:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(255,255,255,0.2); }
+  .dl-btn-main:hover::after { left: 150%; }
+
+  /* Changelog */
+  .changelog-card { background: var(--bg-card); backdrop-filter: blur(12px); border: 1px solid var(--border-color); border-radius: 16px; padding: 32px; transition: all 0.3s ease; }
+  .changelog-card:hover { border-color: rgba(255,255,255,0.15); }
   .changelog-card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
-  .update-item { display: flex; gap: 16px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #111; }
+  .update-item { display: flex; gap: 16px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.05); transition: background 0.2s; }
+  .update-item:hover { background: rgba(255,255,255,0.02); border-radius: 8px; padding-left: 8px; }
   .update-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
   .update-date { color: #555; font-size: 0.85rem; font-weight: 600; width: 100px; flex-shrink: 0; }
-  .update-content h4 { font-size: 1rem; font-weight: 600; margin-bottom: 4px; }
+  .update-content h4 { font-size: 1rem; font-weight: 600; margin-bottom: 4px; color: #eee; }
   .update-content p { color: var(--text-muted); font-size: 0.9rem; }
+  
   @media (max-width: 900px) { .dash-layout { flex-direction: column; } .dash-sidebar { width: 100%; } }
 </style>
 </head>
@@ -330,7 +366,9 @@
 
 <!-- DASHBOARD -->
 <div id="dashboard-page" class="dashboard-page">
-  <nav class="navbar">
+  <canvas id="dash-canvas"></canvas>
+
+  <nav class="navbar anime-in" style="animation-delay: 0.1s;">
     <div class="navbar-left">
       <img src="logo.png" alt="Eclipse Logo" class="navbar-logo">
       <div class="nav-links">
@@ -369,7 +407,7 @@
   </nav>
 
   <div class="dash-layout">
-    <aside class="dash-sidebar">
+    <aside class="dash-sidebar anime-in" style="animation-delay: 0.2s;">
       <div class="user-card">
         <img id="db-main-avatar" src="" alt="Avatar">
         <h2>
@@ -398,15 +436,18 @@
     </aside>
 
     <main class="dash-main">
-      <div class="dash-header">
+      <div class="dash-header anime-in" style="animation-delay: 0.3s;">
         <h1>Bem-vindo de volta, <span id="dash-welcome-name">User</span>!</h1>
         <p>Gerencie sua conta e baixe as últimas atualizações do Eclipse Macro.</p>
       </div>
 
-      <div class="dash-grid">
+      <div class="dash-grid anime-in" style="animation-delay: 0.4s;">
         <div class="stat-card">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-          <h3>Online</h3>
+          <div class="online-status">
+            <div class="online-dot"></div>
+            <h3>Online</h3>
+          </div>
           <p>Status do Servidor</p>
         </div>
         <div class="stat-card">
@@ -421,7 +462,7 @@
         </div>
       </div>
 
-      <div class="download-card">
+      <div class="download-card anime-in" style="animation-delay: 0.5s;">
         <h2>Pronto para dominar o TSB?</h2>
         <p>A versão mais recente do Eclipse está disponível. Certifique-se de desativar o antivírus caso haja um falso positivo, ou clique em "Mais informações" no SmartScreen.</p>
         <a href="https://github.com/Mopera-tech/eclipse-macro/releases/download/1.0/Eclipse.exe" class="dl-btn-main">
@@ -430,7 +471,7 @@
         </a>
       </div>
 
-      <div class="changelog-card">
+      <div class="changelog-card anime-in" style="animation-delay: 0.6s;">
         <h3>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
           Últimas Atualizações
@@ -594,6 +635,16 @@
       if (page === 'dashboard' && globalUser) {
         document.getElementById('dashboard-page').style.display = 'block';
         window.location.hash = 'dashboard';
+        
+        // Reinicia as animações do dashboard
+        document.querySelectorAll('.dash-main .anime-in, .dash-sidebar.anime-in, .navbar.anime-in').forEach(el => {
+            el.style.animation = 'none';
+            el.offsetHeight; /* trigger reflow */
+            el.style.animation = null; 
+        });
+        
+        // Inicializa o fundo animado do dashboard
+        initDashCanvas();
       } else {
         document.getElementById('landing-page').style.display = 'block';
         window.location.hash = 'home';
@@ -615,7 +666,7 @@
       }
     }
 
-    // --- 3. PROCESSO DE LOGIN (DIAGNÓSTICO DE ERRO) ---
+    // --- 3. PROCESSO DE LOGIN (DISCORD) ---
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('code');
 
@@ -631,7 +682,7 @@
         try {
           return JSON.parse(text);
         } catch (e) {
-          throw new Error("O Supabase retornou uma resposta inválida (não é JSON). Verifique os logs da Edge Function.");
+          throw new Error("O Supabase retornou uma resposta inválida (não é JSON).");
         }
       })
       .then(data => {
@@ -647,8 +698,8 @@
         document.body.style.opacity = '1';
       })
       .catch(err => {
-        console.error("Erro detalhado no login:", err);
-        alert("ERRO NO SUPABASE:\n\n" + err.message + "\n\nVá no painel do Supabase -> Edge Functions -> discord-auth e verifique se o código está correto.");
+        console.error("Erro no login:", err);
+        alert("ERRO NO SUPABASE:\n\n" + err.message);
         try { window.location.replace('https://mopera-tech.github.io/eclipse-macro/'); } catch(e){}
       });
     } else {
@@ -700,7 +751,7 @@
       });
     });
 
-    // --- 6. PARTÍCULAS DE FUNDO ---
+    // --- 6. PARTÍCULAS DE FUNDO (LANDING) ---
     const canvas = document.getElementById('bg-canvas');
     if(canvas) {
       const ctx = canvas.getContext('2d');
@@ -762,7 +813,43 @@
       draw();
     }
 
-    // --- 7. BATIMENTO CARDÍACO (CURVA SUAVE E LARGA) ---
+    // --- 7. PARTÍCULAS DO DASHBOARD (Opcional - fundo de estrelas/poeira) ---
+    let dashCanvasInitialized = false;
+    function initDashCanvas() {
+      if(dashCanvasInitialized) return;
+      dashCanvasInitialized = true;
+      
+      const dCanvas = document.getElementById('dash-canvas');
+      const dCtx = dCanvas.getContext('2d');
+      let dParticles = [];
+
+      function resizeDash() { dCanvas.width = window.innerWidth; dCanvas.height = window.innerHeight; }
+      window.addEventListener('resize', resizeDash); resizeDash();
+
+      for (let i = 0; i < 50; i++) {
+        dParticles.push({
+          x: Math.random() * dCanvas.width, y: Math.random() * dCanvas.height,
+          vx: (Math.random() - 0.5) * 0.5, vy: (Math.random() - 0.5) * 0.5,
+          radius: Math.random() * 1.5 + 0.5
+        });
+      }
+
+      function drawDash() {
+        dCtx.clearRect(0, 0, dCanvas.width, dCanvas.height);
+        dParticles.forEach(p => {
+          p.x += p.vx; p.y += p.vy;
+          if (p.x < 0) p.x = dCanvas.width;
+          if (p.x > dCanvas.width) p.x = 0;
+          if (p.y < 0) p.y = dCanvas.height;
+          if (p.y > dCanvas.height) p.y = 0;
+          dCtx.beginPath(); dCtx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); dCtx.fillStyle = 'rgba(255,255,255,0.15)'; dCtx.fill();
+        });
+        requestAnimationFrame(drawDash);
+      }
+      drawDash();
+    }
+
+    // --- 8. BATIMENTO CARDÍACO (CURVA SUAVE E LARGA) ---
     const ekgCanvas = document.getElementById('ekg-canvas');
     const sidebar = document.getElementById('sidebar-clickable');
     
@@ -773,16 +860,15 @@
       let isSpiking = false;
       let beatIndex = 0;
       
-      // A "Tabela de Forma" do batimento: mais larga, sem quadrados
       const beatShape = [
-        0, 0, 0, 0,                        // Linha reta
-        10, 20, 25, 20, 10, 0,             // Onda P (subidinha suave)
-        -10, -20,                          // Queda Q
-        -60, -110, -150, -150, -110, -60,  // Pico R (Largo e Alto)
-        40, 80, 110, 110, 80, 40,          // Queda S (Larga e Funda)
-        0, 0,                              // Retorno ao normal
-        -30, -40, -40, -30, 0,             // Onda T (pulinho final)
-        0, 0, 0, 0                         // Linha reta pro próximo
+        0, 0, 0, 0,
+        10, 20, 25, 20, 10, 0,
+        -10, -20,
+        -60, -110, -150, -150, -110, -60,
+        40, 80, 110, 110, 80, 40,
+        0, 0,
+        -30, -40, -40, -30, 0,
+        0, 0, 0, 0
       ];
 
       window.resizeEKG = function() {
@@ -818,7 +904,6 @@
 
         ekgCtx.clearRect(0, 0, ekgWidth, ekgHeight);
         
-        // Deixando o coração mais lento (esticado para os lados)
         points.forEach(p => p.x -= 1.5);
 
         if (points.length > 0 && points[0].x < -10) {
