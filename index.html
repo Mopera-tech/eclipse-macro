@@ -5,20 +5,30 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Eclipse — Free Macro for TSB</title>
 
+<!-- BIBLIOTECA DO SUPABASE -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   
   :root {
     --accent-color: #ffffff; 
     --accent-glow: rgba(255, 255, 255, 0.1);
+    --bg-dark: #050505;
+    --bg-darker: #0a0a0a;
+  }
+
+  /* TRAVA DE SEGURANÇA PARA NÃO VAZAR PARA OS LADOS */
+  html, body {
+    width: 100%;
+    overflow-x: hidden; 
   }
 
   body { 
-    background: #050505; 
+    background: var(--bg-dark); 
     color: #fff; 
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, sans-serif; 
     line-height: 1.6; 
-    overflow-x: hidden;
     animation: siteFadeIn 1s ease-out forwards;
   }
 
@@ -27,20 +37,21 @@
     100% { opacity: 1; }
   }
 
-  /* NAVBAR */
+  /* NAVBAR CORRIGIDA (CENTRALIZADA DE VERDADE) */
   .navbar {
     position: fixed;
     top: 24px;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 0;
+    right: 0;
+    margin: 0 auto;
     background: rgba(15, 15, 15, 0.85);
     backdrop-filter: blur(12px);
     border: 1px solid #222;
     border-radius: 50px;
     display: flex;
     align-items: center;
-    padding: 8px 8px 8px 16px; /* Ajustado para o botão de login */
-    z-index: 9999;
+    padding: 8px 8px 8px 16px; 
+    z-index: 999;
     width: max-content;
     max-width: 95%;
     gap: 20px;
@@ -67,7 +78,6 @@
   .nav-links a:hover { background: #222; color: #fff; }
   .nav-links a.active { background: #333; color: #fff; }
 
-  /* BOTÃO DE LOGIN NA NAVBAR */
   .login-nav-btn {
     background: #fff; color: #000; border: none; padding: 8px 20px;
     border-radius: 30px; font-weight: 700; font-size: 0.9rem;
@@ -94,106 +104,122 @@
   }
   .btn:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 10px 20px rgba(255,255,255,0.2); }
 
-  /* SEÇÕES E ANIMAÇÕES */
+  /* SEÇÕES */
   section { padding: 80px 0; border-top: 1px solid #1a1a1a; position: relative; z-index: 2; }
   h2 { font-size: 2.5rem; font-weight: 800; margin-bottom: 40px; letter-spacing: -1px; }
-  
   .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
   .reveal.active { opacity: 1; transform: translateY(0); }
 
   /* CARDS */
   .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
   .games-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 600px; }
-
-  .tech-card { background: #0a0a0a; border: 1px solid #222; border-radius: 16px; padding: 32px 24px; transition: all 0.4s ease; position: relative; }
-  .tech-card:hover { transform: translateY(-8px); border-color: var(--accent-color); box-shadow: 0 10px 30px var(--accent-glow); }
-  .tag { display: inline-block; background: var(--accent-color); color: #000; padding: 4px 12px; border-radius: 4px; font-weight: 800; font-size: 0.75rem; letter-spacing: 1px; margin-bottom: 16px; width: fit-content; }
+  .tech-card { background: #0a0a0a; border: 1px solid #222; border-radius: 16px; padding: 32px 24px; transition: all 0.4s ease; }
+  .tech-card:hover { transform: translateY(-8px); border-color: #fff; box-shadow: 0 10px 30px rgba(255,255,255,0.1); }
+  .tag { display: inline-block; background: #fff; color: #000; padding: 4px 12px; border-radius: 4px; font-weight: 800; font-size: 0.75rem; margin-bottom: 16px; }
   .tech-card h3 { font-size: 1.6rem; margin-bottom: 8px; font-weight: 700; }
   .tech-card p { color: #888; font-size: 0.95rem; }
-
   .game-card { background: #0a0a0a; border: 1px solid #222; border-radius: 16px; padding: 32px; transition: all 0.4s ease; }
   .game-card:hover { border-color: #444; transform: translateY(-4px); }
-  .game-card h3 { font-size: 1.5rem; margin-bottom: 8px; }
-  .game-card p { color: #888; }
 
   .step { margin-bottom: 32px; }
-  .step .num { color: var(--accent-color); font-size: 1rem; font-weight: 800; letter-spacing: 2px; }
+  .step .num { color: #fff; font-size: 1rem; font-weight: 800; letter-spacing: 2px; }
   .step h3 { font-size: 1.5rem; margin: 8px 0; }
   .step p { color: #888; }
 
-  details { background: #0a0a0a; border: 1px solid #222; border-radius: 12px; padding: 24px; margin-bottom: 16px; cursor: pointer; transition: all 0.3s ease; }
-  details:hover { border-color: #444; }
+  details { background: #0a0a0a; border: 1px solid #222; border-radius: 12px; padding: 24px; margin-bottom: 16px; cursor: pointer; }
   details summary { font-weight: 600; font-size: 1.1rem; outline: none; }
   details p { color: #888; margin-top: 16px; }
 
-  /* DISCORD E DOWNLOAD */
+  /* DISCORD */
   .community-section { background: #000; padding: 100px 0; border-top: 1px solid #1a1a1a; }
   .community-content { display: flex; flex-direction: column; align-items: flex-start; max-width: 800px; }
   .community-icon { background: #5865F2; width: 56px; height: 56px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 24px; }
-  .community-label { color: #888; font-weight: 700; font-size: 1rem; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px; }
-  .community-content h2 { font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.1; margin-bottom: 16px; border: none; }
+  .community-label { color: #888; font-weight: 700; font-size: 1rem; margin-bottom: 16px; text-transform: uppercase; }
+  .community-content h2 { font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 16px; }
   .community-content p { color: #999; font-size: 1.2rem; margin-bottom: 40px; }
-  
   .action-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
-  .discord-btn-vertical { display: inline-flex; align-items: center; justify-content: center; background: #fff; color: #000; padding: 16px 32px; border-radius: 30px; font-weight: 700; text-decoration: none; font-size: 1.1rem; transition: all 0.3s ease; border: 1px solid #fff; }
-  .discord-btn-vertical:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 10px 20px rgba(255,255,255,0.2); background: #e0e0e0; }
-  .discord-btn-vertical svg { margin-right: 10px; }
+  .discord-btn-vertical { display: inline-flex; align-items: center; justify-content: center; background: #fff; color: #000; padding: 16px 32px; border-radius: 30px; font-weight: 700; text-decoration: none; font-size: 1.1rem; border: 1px solid #fff; transition: all 0.3s ease; }
+  .discord-btn-vertical:hover { background: #e0e0e0; transform: translateY(-4px); }
 
-  footer { padding: 60px 0; border-top: 1px solid #1a1a1a; text-align: center; color: #666; font-size: .9rem; position: relative; z-index: 2; }
+  footer { padding: 60px 0; border-top: 1px solid #1a1a1a; text-align: center; color: #666; font-size: .9rem; }
 
   /* =========================================
-     ESTILOS DO MODAL DE LOGIN (INSPIRADO NO ADRENALIN)
+     TELA DE LOGIN (SPLIT SCREEN)
      ========================================= */
-  .modal-overlay {
+  .auth-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(5px);
-    display: flex; align-items: center; justify-content: center;
-    opacity: 0; pointer-events: none; transition: all 0.4s ease;
+    background: var(--bg-dark);
+    display: none; /* CORRIGIDO: Começa escondido e não quebra o layout */
+    opacity: 0; transition: opacity 0.4s ease;
     z-index: 10000;
   }
 
-  .modal-overlay.show {
-    opacity: 1; pointer-events: auto;
+  .auth-overlay.show {
+    display: flex; /* Vira flex só quando abre */
+    opacity: 1;
   }
 
-  .modal-content {
-    background: #050505; border: 1px solid #222;
-    border-radius: 16px; width: 100%; max-width: 420px;
-    padding: 40px; position: relative;
-    transform: translateY(30px); transition: all 0.4s ease;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  /* Lado Esquerdo (Visual) */
+  .auth-sidebar {
+    flex: 1;
+    background: linear-gradient(135deg, #0a0a0a 0%, #000000 100%);
+    border-right: 1px solid #1a1a1a;
+    padding: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
   }
 
-  .modal-overlay.show .modal-content {
-    transform: translateY(0);
+  .auth-sidebar::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 0; width: 100%; height: 2px;
+    background: linear-gradient(90deg, transparent, #ffffff33, transparent);
+    box-shadow: 0 0 20px #ffffff33;
+    transform: translateY(-50%);
   }
 
-  .close-btn {
-    position: absolute; top: 20px; right: 20px;
-    background: transparent; border: none; color: #888;
-    font-size: 1.5rem; cursor: pointer; transition: color 0.3s;
-  }
-  .close-btn:hover { color: #fff; }
+  .sidebar-logo { display: flex; align-items: center; gap: 12px; font-size: 1.2rem; font-weight: 700; z-index: 2; }
+  .sidebar-logo img { width: 32px; height: 32px; border-radius: 50%; border: 1px solid #333; }
 
-  .back-link {
-    display: inline-flex; align-items: center; color: #888;
-    font-size: 0.85rem; text-decoration: none; margin-bottom: 24px;
+  .sidebar-text { z-index: 2; }
+  .sidebar-text h2 { font-size: 2rem; font-weight: 800; line-height: 1.2; margin-bottom: 16px; color: #fff; }
+  .sidebar-text p { color: #888; font-size: 1.1rem; margin-bottom: 24px; }
+  .sidebar-text span { color: #555; font-size: 0.9rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+
+  /* Lado Direito (Formulário) */
+  .auth-main {
+    flex: 1;
+    background: var(--bg-dark);
+    padding: 40px 60px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow-y: auto;
+  }
+
+  .back-btn {
+    position: absolute; top: 40px; right: 60px;
+    display: inline-flex; align-items: center; gap: 8px;
+    color: #888; text-decoration: none; font-size: 0.9rem;
     cursor: pointer; transition: color 0.3s;
   }
-  .back-link:hover { color: #fff; }
+  .back-btn:hover { color: #fff; }
+
+  .form-wrapper { margin: auto; width: 100%; max-width: 400px; }
 
   .auth-tabs {
-    display: flex; background: #0a0a0a; border-radius: 12px;
+    display: flex; background: #0a0a0a; border-radius: 8px;
     border: 1px solid #222; padding: 4px; margin-bottom: 32px;
   }
   .auth-tab {
-    flex: 1; padding: 12px; text-align: center; border-radius: 8px;
+    flex: 1; padding: 12px; text-align: center; border-radius: 6px;
     cursor: pointer; font-weight: 600; color: #888; font-size: 0.95rem;
     transition: all 0.3s ease;
   }
-  .auth-tab.active {
-    background: #1a1a1a; color: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-  }
+  .auth-tab.active { background: #1a1a1a; color: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
 
   .auth-form { display: none; }
   .auth-form.active { display: block; animation: fadeIn 0.4s ease; }
@@ -203,21 +229,15 @@
     to { opacity: 1; transform: translateX(0); }
   }
 
-  .auth-form h3 { font-size: 1.8rem; margin-bottom: 8px; }
-  .auth-form p { color: #888; font-size: 0.95rem; margin-bottom: 24px; }
+  .auth-form h3 { font-size: 2rem; margin-bottom: 8px; font-weight: 700; }
+  .auth-form p { color: #888; font-size: 0.95rem; margin-bottom: 32px; }
 
-  .input-group { margin-bottom: 16px; }
-  .input-group label {
-    display: block; font-size: 0.9rem; color: #ccc; margin-bottom: 8px; font-weight: 500;
-  }
-  .input-wrapper {
-    position: relative; display: flex; align-items: center;
-  }
-  .input-wrapper svg {
-    position: absolute; left: 16px; color: #666; width: 18px; height: 18px;
-  }
+  .input-group { margin-bottom: 20px; }
+  .input-group label { display: block; font-size: 0.9rem; color: #ccc; margin-bottom: 8px; font-weight: 500; }
+  .input-wrapper { position: relative; display: flex; align-items: center; }
+  .input-wrapper svg { position: absolute; left: 16px; color: #666; width: 18px; height: 18px; }
   .input-wrapper input {
-    width: 100%; padding: 14px 16px 14px 44px; background: #0a0a0a;
+    width: 100%; padding: 16px 16px 16px 44px; background: #0a0a0a;
     border: 1px solid #222; border-radius: 8px; color: #fff;
     font-size: 0.95rem; outline: none; transition: border-color 0.3s;
   }
@@ -234,12 +254,8 @@
   }
   .submit-btn:hover { background: #e0e0e0; }
 
-  .divider {
-    display: flex; align-items: center; text-align: center; margin: 24px 0; color: #666; font-size: 0.85rem;
-  }
-  .divider::before, .divider::after {
-    content: ''; flex: 1; border-bottom: 1px solid #222;
-  }
+  .divider { display: flex; align-items: center; text-align: center; margin: 24px 0; color: #666; font-size: 0.85rem; }
+  .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid #222; }
   .divider::before { margin-right: 15px; }
   .divider::after { margin-left: 15px; }
 
@@ -251,10 +267,15 @@
   }
   .discord-login-btn:hover { background: #1a1a1a; border-color: #444; }
 
-  /* Checkbox customizado */
-  .checkbox-group { display: flex; align-items: center; gap: 10px; margin-top: 20px; color: #888; font-size: 0.9rem; }
-  .checkbox-group input { width: 16px; height: 16px; accent-color: #fff; cursor: pointer; }
+  .footer-link { text-align: center; margin-top: 32px; color: #888; font-size: 0.9rem; }
+  .footer-link a { color: #fff; text-decoration: none; font-weight: 600; }
+  .footer-link a:hover { text-decoration: underline; }
 
+  @media (max-width: 800px) {
+    .auth-sidebar { display: none; }
+    .auth-main { padding: 40px 24px; }
+    .back-btn { top: 24px; right: 24px; }
+  }
 </style>
 </head>
 <body>
@@ -336,107 +357,174 @@
 </footer>
 
 <!-- =========================================
-     MODAL DE LOGIN (UI)
+     TELA DE LOGIN (SPLIT SCREEN)
      ========================================= -->
-<div id="loginModal" class="modal-overlay">
-  <div class="modal-content">
-    <button class="close-btn" id="closeModalBtn">&times;</button>
-    
-    <div class="back-link" id="backToSiteBtn">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px;"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+<div id="loginModal" class="auth-overlay">
+  
+  <div class="auth-sidebar">
+    <div class="sidebar-logo">
+      <img src="logo.png" alt="Logo">
+      Eclipse
+    </div>
+    <div class="sidebar-text">
+      <h2>Macros, techs and combos for Roblox.</h2>
+      <p>The Strongest Battlegrounds.</p>
+      <span>Eclipse for Windows</span>
+    </div>
+  </div>
+
+  <div class="auth-main">
+    <a class="back-btn" id="backToSiteBtn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
       Back to website
-    </div>
+    </a>
 
-    <div class="auth-tabs">
-      <div class="auth-tab active" data-target="signin">Sign in</div>
-      <div class="auth-tab" data-target="signup">Create account</div>
-    </div>
+    <div class="form-wrapper">
+      <div class="auth-tabs">
+        <div class="auth-tab active" data-target="signin">Sign in</div>
+        <div class="auth-tab" data-target="signup">Create account</div>
+      </div>
 
-    <!-- FORM: SIGN IN -->
-    <div id="signin" class="auth-form active">
-      <h3>Welcome back</h3>
-      <p>Sign in to your Eclipse account.</p>
+      <!-- Form: Sign in -->
+      <div id="signin" class="auth-form active">
+        <h3>Welcome back</h3>
+        <p>Sign in to your Eclipse account.</p>
 
-      <div class="input-group">
-        <label>Username</label>
-        <div class="input-wrapper">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          <input type="text" placeholder="Your username">
+        <div class="input-group">
+          <label>Username</label>
+          <div class="input-wrapper">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <input type="text" placeholder="Your username">
+          </div>
         </div>
-      </div>
 
-      <div class="input-group">
-        <label>Password</label>
-        <div class="input-wrapper">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          <input type="password" placeholder="Your password">
+        <div class="input-group">
+          <label>Password</label>
+          <div class="input-wrapper">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <input type="password" placeholder="Your password">
+          </div>
         </div>
-      </div>
 
-      <div class="form-extras">
-        <a href="#">Need help signing in?</a>
-      </div>
-
-      <button class="submit-btn">Sign in</button>
-
-      <div class="divider">or</div>
-
-      <button class="discord-login-btn">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
-        Continue with Discord
-      </button>
-    </div>
-
-    <!-- FORM: CREATE ACCOUNT -->
-    <div id="signup" class="auth-form">
-      <h3>Create your account</h3>
-      <p>Use the license key from your email.</p>
-
-      <div class="input-group">
-        <label>Username</label>
-        <div class="input-wrapper">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          <input type="text" placeholder="Choose a username">
+        <div class="form-extras">
+          <a href="#">Need help signing in?</a>
         </div>
+
+        <button class="submit-btn">Sign in</button>
+
+        <div class="divider">or</div>
+
+        <button class="discord-login-btn" onclick="loginWithDiscord()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+          Continue with Discord
+        </button>
       </div>
 
-      <div class="input-group">
-        <label>Password</label>
-        <div class="input-wrapper">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          <input type="password" placeholder="At least 8 characters">
+      <!-- Form: Create Account -->
+      <div id="signup" class="auth-form">
+        <h3>Create your account</h3>
+        <p>Create an account to stay updated.</p>
+
+        <div class="input-group">
+          <label>Username</label>
+          <div class="input-wrapper">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <input type="text" placeholder="Choose a username">
+          </div>
         </div>
-      </div>
 
-      <div class="input-group">
-        <label>License key</label>
-        <div class="input-wrapper">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
-          <input type="text" placeholder="XXXX-XXXX-XXXX-XXXX">
+        <div class="input-group">
+          <label>Password</label>
+          <div class="input-wrapper">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <input type="password" placeholder="At least 8 characters">
+          </div>
         </div>
-      </div>
 
-      <div class="input-group" style="margin-top: 24px; display: flex; gap: 16px; align-items: center; background: #0a0a0a; padding: 12px; border-radius: 8px; border: 1px solid #222;">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
-        <div>
-          <div style="font-weight: 600; font-size: 0.95rem;">Discord</div>
-          <div style="font-size: 0.8rem; color: #888;">Optional - gives you the buyer role</div>
-        </div>
-        <button style="margin-left: auto; background: #222; border: none; color: #fff; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 600;">Link</button>
-      </div>
+        <button class="submit-btn" style="margin-top: 16px;">Create account</button>
 
-      <div class="checkbox-group">
-        <input type="checkbox" id="tos">
-        <label for="tos" style="margin: 0; cursor: pointer;">I agree to the Terms of Service and Privacy Policy</label>
-      </div>
+        <div class="divider">or</div>
 
-      <button class="submit-btn" style="margin-top: 24px;">Create account</button>
+        <button class="discord-login-btn" onclick="loginWithDiscord()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+          Continue with Discord
+        </button>
+      </div>
     </div>
   </div>
 </div>
 
 <script>
-  // 1. SCROLL SUAVE CUSTOMIZADO
+  // ==========================================
+  // 1. SUPABASE CONFIG
+  // ==========================================
+  const SUPABASE_URL = 'https://zpieeoqagqyxkxqffrd.supabase.co'; 
+  const SUPABASE_ANON_KEY = 'sb_publishable_h__tGsYkagynbTsboFVDsw_xEvLeQZI'; 
+
+  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  async function loginWithDiscord() {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: 'discord',
+      options: { redirectTo: window.location.href }
+    });
+
+    if (error) {
+      console.error('Erro no login:', error.message);
+      alert('Erro: ' + error.message);
+    }
+  }
+
+  async function checkSession() {
+    const { data: { session } } = await supabase.auth.getSession();
+    
+    if (session) {
+      const loginBtn = document.getElementById('openLoginBtn');
+      const userName = session.user.user_metadata.full_name || session.user.user_metadata.name || 'My Account';
+      loginBtn.innerText = userName;
+      
+      document.getElementById('loginModal').classList.remove('show');
+      document.body.style.overflow = ''; 
+    }
+  }
+
+  checkSession();
+
+  // ==========================================
+  // 2. TELA DE LOGIN (ABRIR / FECHAR)
+  // ==========================================
+  const openBtn = document.getElementById('openLoginBtn');
+  const backToSiteBtn = document.getElementById('backToSiteBtn');
+  const modal = document.getElementById('loginModal');
+  
+  const tabs = document.querySelectorAll('.auth-tab');
+  const forms = document.querySelectorAll('.auth-form');
+
+  openBtn.addEventListener('click', () => {
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden'; 
+  });
+
+  backToSiteBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    modal.classList.remove('show');
+    document.body.style.overflow = ''; 
+  });
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      forms.forEach(f => f.classList.remove('active'));
+
+      tab.classList.add('active');
+      const targetForm = tab.getAttribute('data-target');
+      document.getElementById(targetForm).classList.add('active');
+    });
+  });
+
+  // ==========================================
+  // 3. SCROLL SUAVE
+  // ==========================================
   const navLinks = document.querySelectorAll('.nav-links a');
   const sections = document.querySelectorAll('section, #home');
 
@@ -476,7 +564,6 @@
     });
   });
 
-  // 2. ANIMAÇÃO DE SURGIMENTO E NAVBAR ATIVA
   const reveals = document.querySelectorAll('.reveal');
   
   window.addEventListener('scroll', () => {
@@ -504,56 +591,9 @@
     }
   });
 
-  // 3. LÓGICA DO MODAL DE LOGIN (ANIMAÇÃO E ABAS)
-  const openBtn = document.getElementById('openLoginBtn');
-  const closeBtn = document.getElementById('closeModalBtn');
-  const backToSiteBtn = document.getElementById('backToSiteBtn');
-  const modal = document.getElementById('loginModal');
-  
-  const tabs = document.querySelectorAll('.auth-tab');
-  const forms = document.querySelectorAll('.auth-form');
-
-  // Abrir Modal
-  openBtn.addEventListener('click', () => {
-    modal.classList.add('show');
-    document.body.style.overflow = 'hidden'; // Previne rolagem no fundo
-  });
-
-  // Fechar Modal (Botão X)
-  closeBtn.addEventListener('click', () => {
-    modal.classList.remove('show');
-    document.body.style.overflow = ''; 
-  });
-
-  // Fechar Modal (Back to website)
-  backToSiteBtn.addEventListener('click', () => {
-    modal.classList.remove('show');
-    document.body.style.overflow = ''; 
-  });
-
-  // Fechar ao clicar fora do conteúdo
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) {
-      modal.classList.remove('show');
-      document.body.style.overflow = '';
-    }
-  });
-
-  // Trocar Abas (Sign in / Create account)
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      // Remove active de tudo
-      tabs.forEach(t => t.classList.remove('active'));
-      forms.forEach(f => f.classList.remove('active'));
-
-      // Adiciona active no clicado
-      tab.classList.add('active');
-      const targetForm = tab.getAttribute('data-target');
-      document.getElementById(targetForm).classList.add('active');
-    });
-  });
-
-  // 4. FUNDO ANIMADO
+  // ==========================================
+  // 4. FUNDO ANIMADO (PARTÍCULAS)
+  // ==========================================
   const canvas = document.getElementById('bg-canvas');
   const ctx = canvas.getContext('2d');
   let particles = [];
