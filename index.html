@@ -18,6 +18,24 @@
 
   html, body { width: 100%; overflow-x: hidden; }
 
+  /* =========================================
+     CURSORES CUSTOMIZADOS
+     ========================================= */
+  /* 1. Mouse Normal (Estrela) */
+  body, html, a, button, .btn, .tech-card, .game-card, .dropdown-item, .auth-tab, .side-nav-btn {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12,2 C12,7 7,12 2,12 C7,12 12,17 12,22 C12,17 17,12 22,12 C17,12 12,7 12,2 Z" fill="%23ffffff"/></svg>') 12 12, auto !important;
+  }
+
+  /* 2. Mouse no Batimento Cardíaco (Cruz) */
+  .auth-sidebar, #sidebar-clickable {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12,2 C13,2 14,6 14.5,8.5 C15,9.5 18,9 20,10 C22,11 22,13 20,14 C18,15 15,14.5 14.5,15.5 C14,18 13,22 12,22 C11,22 10,18 9.5,15.5 C9,14.5 6,15 4,14 C2,13 2,11 4,10 C6,9 9,9.5 9.5,8.5 C10,6 11,2 12,2 Z" fill="%23ffffff"/></svg>') 12 12, crosshair !important;
+  }
+
+  /* 3. Mouse Clicando (Lua) */
+  *:active, a:active, button:active, .btn:active {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M21,12.79 A9,9 0 1,1 11.21,3 A7,7 0 0,0 21,12.79 Z" fill="%23ffffff"/></svg>') 12 12, pointer !important;
+  }
+
   body { 
     background: var(--bg-dark); 
     color: #fff; 
@@ -41,14 +59,14 @@
   .navbar-logo { height: 32px; width: 32px; border-radius: 50%; margin-right: 24px; border: 1px solid #333; object-fit: cover; }
 
   .nav-links { display: flex; gap: 8px; }
-  .nav-links a { color: #999; text-decoration: none; font-size: 0.9rem; font-weight: 600; padding: 8px 16px; border-radius: 20px; transition: all 0.3s ease; cursor: pointer; }
+  .nav-links a { color: #999; text-decoration: none; font-size: 0.9rem; font-weight: 600; padding: 8px 16px; border-radius: 20px; transition: all 0.3s ease; }
   .nav-links a:hover { background: #222; color: #fff; }
   .nav-links a.active { background: #333; color: #fff; }
 
   .login-nav-btn {
     background: #fff; color: #000; border: none; padding: 8px 20px;
     border-radius: 30px; font-weight: 700; font-size: 0.9rem;
-    cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 8px;
+    transition: all 0.3s ease; display: flex; align-items: center; gap: 8px;
   }
   .login-nav-btn:hover { background: #e0e0e0; transform: scale(1.05); }
 
@@ -56,7 +74,7 @@
   .user-menu-btn { 
     background: #1a1a1a; color: #fff; border: 1px solid #222; 
     padding: 4px 16px 4px 4px; border-radius: 30px; display: flex; 
-    align-items: center; gap: 8px; cursor: pointer; transition: background 0.2s;
+    align-items: center; gap: 8px; transition: background 0.2s;
   }
   .user-menu-btn:hover { background: #222; }
   .user-menu-btn img { width: 28px; height: 28px; border-radius: 50%; background: #333; }
@@ -73,7 +91,7 @@
   .dropdown-item {
     display: flex; align-items: center; justify-content: space-between;
     padding: 12px; color: #ccc; text-decoration: none; border-radius: 8px;
-    font-size: 0.95rem; font-weight: 600; transition: all 0.2s; cursor: pointer;
+    font-size: 0.95rem; font-weight: 600; transition: all 0.2s;
   }
   .dropdown-item:hover { background: #222; color: #fff; }
   .dropdown-left { display: flex; align-items: center; gap: 12px; }
@@ -89,7 +107,7 @@
   .hero h1 { font-size: clamp(3.5rem, 8vw, 6rem); font-weight: 800; letter-spacing: -2px; margin-bottom: 24px; background: linear-gradient(180deg, #fff 0%, #666 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
   .hero p { color: #999; font-size: 1.2rem; max-width: 600px; margin: 0 auto 40px; }
   
-  .btn { display: inline-flex; align-items: center; justify-content: center; background: #fff; color: #000; padding: 16px 40px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 1.1rem; transition: all 0.3s ease; border: 1px solid #fff; cursor: pointer; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; background: #fff; color: #000; padding: 16px 40px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 1.1rem; transition: all 0.3s ease; border: 1px solid #fff; }
   .btn:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 10px 20px rgba(255,255,255,0.2); }
 
   section { padding: 80px 0; border-top: 1px solid var(--border-color); position: relative; z-index: 2; }
@@ -111,7 +129,7 @@
   .step h3 { font-size: 1.5rem; margin: 8px 0; }
   .step p { color: #888; }
 
-  details { background: var(--bg-card); border: 1px solid #222; border-radius: 12px; padding: 24px; margin-bottom: 16px; cursor: pointer; }
+  details { background: var(--bg-card); border: 1px solid #222; border-radius: 12px; padding: 24px; margin-bottom: 16px; }
   details summary { font-weight: 600; font-size: 1.1rem; outline: none; }
   details p { color: #888; margin-top: 16px; }
 
@@ -128,7 +146,7 @@
   /* TELA DE LOGIN */
   .auth-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-dark); display: flex; visibility: hidden; opacity: 0; transition: opacity 0.4s ease, visibility 0.4s; z-index: 10000; }
   .auth-overlay.show { visibility: visible; opacity: 1; }
-  .auth-sidebar { flex: 1; background: #000; border-right: 1px solid var(--border-color); padding: 60px 60px 60px 80px; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; cursor: crosshair; }
+  .auth-sidebar { flex: 1; background: #000; border-right: 1px solid var(--border-color); padding: 60px 60px 60px 80px; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; }
   
   #ekg-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
   
@@ -140,11 +158,11 @@
   .sidebar-text span { color: #555; font-size: 0.9rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
 
   .auth-main { flex: 1; background: var(--bg-dark); padding: 40px 60px; display: flex; flex-direction: column; position: relative; overflow-y: auto; }
-  .back-btn { position: absolute; top: 40px; right: 60px; display: inline-flex; align-items: center; gap: 8px; color: #888; text-decoration: none; font-size: 0.9rem; cursor: pointer; transition: color 0.3s; }
+  .back-btn { position: absolute; top: 40px; right: 60px; display: inline-flex; align-items: center; gap: 8px; color: #888; text-decoration: none; font-size: 0.9rem; transition: color 0.3s; }
   .back-btn:hover { color: #fff; }
   .form-wrapper { margin: auto; width: 100%; max-width: 400px; }
   .auth-tabs { display: flex; background: var(--bg-card); border-radius: 8px; border: 1px solid #222; padding: 4px; margin-bottom: 32px; }
-  .auth-tab { flex: 1; padding: 12px; text-align: center; border-radius: 6px; cursor: pointer; font-weight: 600; color: #888; font-size: 0.95rem; transition: all 0.3s ease; }
+  .auth-tab { flex: 1; padding: 12px; text-align: center; border-radius: 6px; font-weight: 600; color: #888; font-size: 0.95rem; transition: all 0.3s ease; }
   .auth-tab.active { background: #1a1a1a; color: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
   .auth-form { display: none; }
   .auth-form.active { display: block; animation: fadeIn 0.4s ease; }
@@ -157,12 +175,12 @@
   .input-wrapper svg { position: absolute; left: 16px; color: #666; width: 18px; height: 18px; }
   .input-wrapper input { width: 100%; padding: 16px 16px 16px 44px; background: var(--bg-card); border: 1px solid #222; border-radius: 8px; color: #fff; font-size: 0.95rem; outline: none; transition: border-color 0.3s; }
   .input-wrapper input:focus { border-color: #555; }
-  .submit-btn { width: 100%; padding: 16px; background: #fff; color: #000; border: none; border-radius: 8px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: all 0.3s ease; }
+  .submit-btn { width: 100%; padding: 16px; background: #fff; color: #000; border: none; border-radius: 8px; font-weight: 700; font-size: 1rem; transition: all 0.3s ease; }
   .divider { display: flex; align-items: center; text-align: center; margin: 24px 0; color: #666; font-size: 0.85rem; }
   .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid #222; }
   .divider::before { margin-right: 15px; }
   .divider::after { margin-left: 15px; }
-  .discord-login-btn { width: 100%; padding: 16px; background: var(--bg-card); color: #fff; border: 1px solid #222; border-radius: 8px; font-weight: 600; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.3s ease; text-decoration: none; }
+  .discord-login-btn { width: 100%; padding: 16px; background: var(--bg-card); color: #fff; border: 1px solid #222; border-radius: 8px; font-weight: 600; font-size: 1rem; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.3s ease; text-decoration: none; }
   .discord-login-btn:hover { background: #1a1a1a; border-color: #444; }
   @media (max-width: 800px) { .auth-sidebar { display: none; } .auth-main { padding: 40px 24px; } }
 
@@ -175,7 +193,7 @@
   .user-card h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
   .user-card .email { color: var(--text-muted); font-size: 0.85rem; }
   .user-tag-badge { background: #fff; color: #000; padding: 2px 8px; border-radius: 4px; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
-  .side-nav-btn { display: flex; align-items: center; gap: 12px; padding: 16px; border-radius: 12px; background: transparent; color: #888; border: 1px solid transparent; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.2s; text-align: left; }
+  .side-nav-btn { display: flex; align-items: center; gap: 12px; padding: 16px; border-radius: 12px; background: transparent; color: #888; border: 1px solid transparent; font-size: 0.95rem; font-weight: 600; transition: all 0.2s; text-align: left; }
   .side-nav-btn:hover { background: #111; color: #fff; }
   .side-nav-btn.active { background: var(--bg-card); border-color: #222; color: #fff; }
   .side-nav-btn svg { width: 20px; height: 20px; }
@@ -526,7 +544,6 @@
       const stored = localStorage.getItem('eclipse_user');
       if (stored && stored !== "undefined" && stored !== "null") {
         const parsed = JSON.parse(stored);
-        // TRAVA DE SEGURANÇA: Se os dados não tiverem ID ou Nome, consideramos inválido.
         if (parsed && parsed.id && parsed.username) {
           globalUser = parsed;
         } else {
@@ -541,35 +558,29 @@
       if (!user || !user.id) return;
       globalUser = user;
 
-      // Foto com Fallback (se não tiver avatar, usa a padrão do Discord)
       const avatarUrl = user.avatar 
         ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`
         : 'https://cdn.discordapp.com/embed/avatars/0.png';
       
-      // Nome com Fallback
       const displayName = user.global_name || user.username || 'Eclipse User';
       const userEmail = user.email || 'Email privado';
       const userTag = (user.tags && user.tags.length > 0) ? user.tags[0] : 'Membro';
 
-      // Navbar (Home)
       document.getElementById('openLoginBtn').style.display = 'none';
       document.getElementById('user-menu-container').style.display = 'block';
       document.getElementById('nav-user-avatar').src = avatarUrl;
       document.getElementById('nav-user-name').innerText = displayName;
 
-      // Navbar (Dashboard)
       document.getElementById('user-menu-container-db').style.display = 'block';
       document.getElementById('db-nav-avatar').src = avatarUrl;
       document.getElementById('db-nav-name').innerText = displayName;
 
-      // Sidebar e Main (Dashboard)
       document.getElementById('db-main-avatar').src = avatarUrl;
       document.getElementById('db-main-name').innerText = displayName;
       document.getElementById('db-main-tag').innerText = userTag;
       document.getElementById('db-main-email').innerText = userEmail;
       document.getElementById('dash-welcome-name').innerText = displayName;
 
-      // Data
       const today = new Date();
       const options = { day: 'numeric', month: 'short', year: 'numeric' };
       document.getElementById('db-stat-date').innerText = today.toLocaleDateString('pt-BR', options);
@@ -594,7 +605,6 @@
         if (globalUser) {
           showPage('dashboard');
         } else {
-          // Tentou ir pro painel sem estar logado. Manda pra home e abre o modal.
           showPage('home');
           document.getElementById('loginModal').classList.add('show');
           document.body.style.overflow = 'hidden';
@@ -618,7 +628,6 @@
       })
       .then(res => res.json())
       .then(data => {
-        // TRAVA DE SEGURANÇA: Se não vier nome ou ID, deu erro no Supabase.
         if (data.error || !data.username || !data.id) {
           throw new Error("O Supabase não retornou os dados corretos. Verifique a Edge Function.");
         }
@@ -632,7 +641,7 @@
       })
       .catch(err => {
         console.error("Erro no login:", err);
-        alert("Erro ao fazer login. Verifique se a Edge Function no Supabase está atualizada.");
+        alert("Erro ao fazer login. Verifique a Edge Function no Supabase.");
         try { window.location.replace('https://mopera-tech.github.io/eclipse-macro/'); } catch(e){}
       });
     } else {
@@ -746,7 +755,7 @@
       draw();
     }
 
-    // --- 7. BATIMENTO CARDÍACO (BRANCO E COM PONTAS AGUDAS) ---
+    // --- 7. BATIMENTO CARDÍACO (BRANCO) ---
     const ekgCanvas = document.getElementById('ekg-canvas');
     const sidebar = document.getElementById('sidebar-clickable');
     
