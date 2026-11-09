@@ -73,7 +73,7 @@
   .dropdown-item {
     display: flex; align-items: center; justify-content: space-between;
     padding: 12px; color: #ccc; text-decoration: none; border-radius: 8px;
-    font-size: 0.95rem; font-weight: 600; transition: all 0.2s;
+    font-size: 0.95rem; font-weight: 600; transition: all 0.2s; cursor: pointer;
   }
   .dropdown-item:hover { background: #222; color: #fff; }
   .dropdown-left { display: flex; align-items: center; gap: 12px; }
@@ -130,8 +130,10 @@
      ========================================= */
   .auth-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-dark); display: flex; visibility: hidden; opacity: 0; transition: opacity 0.4s ease, visibility 0.4s; z-index: 10000; }
   .auth-overlay.show { visibility: visible; opacity: 1; }
-  .auth-sidebar { flex: 1; background: #000; border-right: 1px solid var(--border-color); padding: 60px 60px 60px 100px; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; cursor: crosshair; }
-  #ekg-canvas { position: absolute; top: 0; left: 40px; width: calc(100% - 40px); height: 100%; z-index: 1; pointer-events: none; }
+  .auth-sidebar { flex: 1; background: #000; border-right: 1px solid var(--border-color); padding: 60px 60px 60px 80px; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; cursor: crosshair; }
+  
+  #ekg-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+  
   .sidebar-logo { display: flex; align-items: center; gap: 12px; font-size: 1.2rem; font-weight: 700; z-index: 2; position: relative; }
   .sidebar-logo img { width: 32px; height: 32px; border-radius: 50%; border: 1px solid #333; }
   .sidebar-text { z-index: 2; position: relative; }
@@ -169,14 +171,14 @@
   @media (max-width: 800px) { .auth-sidebar { display: none; } .auth-main { padding: 40px 24px; } }
 
   /* =========================================
-     DASHBOARD (ÁREA DE MEMBROS) - LIMPO E COM NAVBAR
+     DASHBOARD (ÁREA DE MEMBROS)
      ========================================= */
   .dashboard-page { display: none; flex-direction: column; min-height: 100vh; background: var(--bg-dark); position: relative; z-index: 100; }
   
   .db-container { flex: 1; max-width: 800px; margin: 0 auto; width: 100%; padding: 180px 24px 100px 24px; text-align: center; }
   
   .profile-card { background: var(--bg-card); border: 1px solid #222; border-radius: 24px; padding: 60px 40px; display: flex; flex-direction: column; align-items: center; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
-  .profile-card img { width: 120px; height: 120px; border-radius: 50%; border: 4px solid #111; margin-bottom: 24px; }
+  .profile-card img { width: 120px; height: 120px; border-radius: 50%; border: 4px solid #111; margin-bottom: 24px; background: #222; }
   
   .profile-name-wrapper { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
   .profile-name-wrapper h1 { font-size: 2.5rem; font-weight: 800; margin: 0; }
@@ -302,7 +304,6 @@
 
 <!-- DASHBOARD -->
 <div id="dashboard-page" class="dashboard-page">
-  <!-- A mesma navbar flutuante da página inicial -->
   <nav class="navbar">
     <div class="navbar-left">
       <img src="logo.png" alt="Eclipse Logo" class="navbar-logo">
@@ -311,7 +312,6 @@
       </div>
     </div>
     
-    <!-- O menu de usuário já aparece aberto ou pode ser clicado -->
     <div id="user-menu-container-db" class="user-menu-container" style="display: block;">
       <button id="user-menu-btn-db" class="user-menu-btn">
         <img id="db-nav-avatar" src="" alt="User">
@@ -449,67 +449,102 @@
 </div>
 
 <script>
-  // Variáveis globais
-  let globalUser = null;
-
-  // Função segura para buscar os elementos
-  function $(id) { return document.getElementById(id); }
-
-  // Atualiza a interface (foto, nome, tag) do usuário
-  function setupLoggedInUI(user) {
-    if (!user) return;
-    globalUser = user;
-
-    const avatarUrl = user.avatar 
-      ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`
-      : 'https://cdn.discordapp.com/embed/avatars/0.png';
-    
-    const displayName = user.global_name || user.username || 'Eclipse User';
-    const userEmail = user.email || 'Email privado';
-    const userTag = (user.tags && user.tags.length > 0) ? user.tags[0] : 'Membro';
-
-    // Navbar Landing Page
-    $('openLoginBtn').style.display = 'none';
-    $('user-menu-container').style.display = 'block';
-    $('nav-user-avatar').src = avatarUrl;
-    $('nav-user-name').innerText = displayName;
-
-    // Navbar Dashboard
-    $('db-nav-avatar').src = avatarUrl;
-    $('db-nav-name').innerText = displayName;
-
-    // Card Principal do Dashboard
-    $('db-main-avatar').src = avatarUrl;
-    $('db-main-name').innerText = displayName;
-    $('db-main-tag').innerText = userTag;
-    $('db-main-email').innerText = userEmail;
-
-    // Data de Membro
-    const today = new Date();
-    const options = { day: 'numeric', month: 'short', year: 'numeric' };
-    $('db-stat-date').innerText = today.toLocaleDateString('pt-BR', options);
-  }
-
-  // Mostra o site normal e esconde o dashboard
-  function showLanding() {
-    $('dashboard-page').style.display = 'none';
-    $('landing-page').style.display = 'block';
-  }
-
-  // Mostra o dashboard e esconde o site
-  function showDashboard() {
-    $('landing-page').style.display = 'none';
-    $('dashboard-page').style.display = 'flex';
-  }
-
-  // Inicializa o script
   document.addEventListener('DOMContentLoaded', () => {
     
-    // --- 1. CHECAGEM DE LOGIN E CALLBACK ---
+    // --- 1. RECUPERAÇÃO DE SESSÃO (Se atualizar a página, continua logado) ---
+    let globalUser = null;
+    try {
+      const stored = localStorage.getItem('eclipse_user');
+      if (stored && stored !== "undefined" && stored !== "null") {
+        globalUser = JSON.parse(stored);
+      }
+    } catch(e) { console.warn("LocalStorage vazio ou bloqueado."); }
+
+    // Atualiza a interface do usuário em todos os lugares
+    function setupLoggedInUI(user) {
+      if (!user || !user.id) return;
+      globalUser = user;
+
+      // Se o Discord não enviar a foto, usa uma padrão segura.
+      const avatarUrl = user.avatar 
+        ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`
+        : 'https://cdn.discordapp.com/embed/avatars/0.png';
+      
+      const displayName = user.global_name || user.username || 'Eclipse User';
+      const userEmail = user.email || 'Email privado';
+      const userTag = (user.tags && user.tags.length > 0) ? user.tags[0] : 'Membro';
+
+      // Atualiza botões de login (Navbar da Home e da Dashboard)
+      document.getElementById('openLoginBtn').style.display = 'none';
+      
+      const menuHome = document.getElementById('user-menu-container');
+      if(menuHome) menuHome.style.display = 'block';
+      
+      const menuDb = document.getElementById('user-menu-container-db');
+      if(menuDb) menuDb.style.display = 'block';
+
+      // Preenche os dados na Home
+      const navAvatar = document.getElementById('nav-user-avatar');
+      if(navAvatar) navAvatar.src = avatarUrl;
+      const navName = document.getElementById('nav-user-name');
+      if(navName) navName.innerText = displayName;
+
+      // Preenche os dados no Dashboard
+      const dbAvatar = document.getElementById('db-nav-avatar');
+      if(dbAvatar) dbAvatar.src = avatarUrl;
+      const dbName = document.getElementById('db-nav-name');
+      if(dbName) dbName.innerText = displayName;
+
+      const mainAvatar = document.getElementById('db-main-avatar');
+      if(mainAvatar) mainAvatar.src = avatarUrl;
+      const mainName = document.getElementById('db-main-name');
+      if(mainName) mainName.innerText = displayName;
+      const mainTag = document.getElementById('db-main-tag');
+      if(mainTag) mainTag.innerText = userTag;
+      const mainEmail = document.getElementById('db-main-email');
+      if(mainEmail) mainEmail.innerText = userEmail;
+
+      // Data atual
+      const today = new Date();
+      const options = { day: 'numeric', month: 'short', year: 'numeric' };
+      const statDate = document.getElementById('db-stat-date');
+      if(statDate) statDate.innerText = today.toLocaleDateString('pt-BR', options);
+    }
+
+    // --- 2. SISTEMA DE NAVEGAÇÃO (Hash para não perder a tela ao recarregar) ---
+    function showPage(page) {
+      document.getElementById('landing-page').style.display = 'none';
+      document.getElementById('dashboard-page').style.display = 'none';
+      
+      if (page === 'dashboard' && globalUser) {
+        document.getElementById('dashboard-page').style.display = 'flex';
+        window.location.hash = 'dashboard';
+      } else {
+        document.getElementById('landing-page').style.display = 'block';
+        window.location.hash = 'home';
+      }
+    }
+
+    window.showLanding = function() { showPage('home'); };
+    window.showDashboard = function() { showPage('dashboard'); };
+
+    // Verifica a URL para saber se deve carregar o dashboard
+    function checkRoute() {
+      if (window.location.hash === '#dashboard' && globalUser) {
+        showPage('dashboard');
+      } else {
+        showPage('home');
+      }
+    }
+
+    // --- 3. PROCESSO DE LOGIN E CALLBACK DO DISCORD ---
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('code');
 
     if (code) {
+      // Exibe um alerta visual simples
+      document.body.style.opacity = '0.5';
+      
       fetch('https://zpieeogaqggxykxqfnrd.supabase.co/functions/v1/discord-auth', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -518,70 +553,64 @@
       .then(res => res.json())
       .then(data => {
         if (data.error) throw new Error(data.error);
+        
+        // Salva os dados no navegador
         try { localStorage.setItem('eclipse_user', JSON.stringify(data)); } catch(e){}
+        
+        // Limpa o '?code=' da URL
         try { window.history.replaceState({}, document.title, window.location.pathname); } catch(e){}
+        
+        // Atualiza a tela e vai pro dashboard
         setupLoggedInUI(data);
+        showPage('dashboard');
+        document.body.style.opacity = '1';
       })
       .catch(err => {
         console.error("Erro no login:", err);
-        alert("Erro ao fazer login. Tente novamente.");
+        alert("Erro ao fazer login. Verifique o console.");
         try { window.history.replaceState({}, document.title, window.location.pathname); } catch(e){}
+        document.body.style.opacity = '1';
       });
     } else {
-      let savedUser = null;
-      try {
-        const stored = localStorage.getItem('eclipse_user');
-        if (stored && stored !== "undefined") savedUser = JSON.parse(stored);
-      } catch (e) {}
-
-      if (savedUser && savedUser.id) {
-        setupLoggedInUI(savedUser);
+      // Se já estiver logado ao carregar a página
+      if (globalUser) {
+        setupLoggedInUI(globalUser);
       }
+      checkRoute();
     }
 
-    // --- 2. EVENTOS DE CLIQUE DO MENU DROPDOWN ---
-    // Dropdown da Landing Page
-    $('user-menu-btn').addEventListener('click', () => $('dropdown-menu').classList.toggle('show'));
-    $('btn-painel').addEventListener('click', (e) => {
-      e.preventDefault();
-      showDashboard();
-      $('dropdown-menu').classList.remove('show');
-    });
-    $('btn-sair').addEventListener('click', (e) => {
-      e.preventDefault();
+    // --- 4. FUNÇÕES DE LOGOUT E DROPDOWN ---
+    window.logout = function() {
       try { localStorage.removeItem('eclipse_user'); } catch(e){}
-      window.location.reload();
-    });
+      window.location.href = window.location.pathname; // Recarrega sem o hash
+    };
 
-    // Dropdown do Dashboard
-    $('user-menu-btn-db').addEventListener('click', () => $('dropdown-menu-db').classList.toggle('show'));
-    $('btn-painel-db').addEventListener('click', (e) => {
-      e.preventDefault();
-      $('dropdown-menu-db').classList.remove('show');
-    });
-    $('btn-sair-db').addEventListener('click', (e) => {
-      e.preventDefault();
-      try { localStorage.removeItem('eclipse_user'); } catch(e){}
-      window.location.reload();
-    });
+    document.getElementById('btn-sair').addEventListener('click', window.logout);
+    document.getElementById('btn-sair-db').addEventListener('click', window.logout);
+
+    // Toggles do dropdown
+    document.getElementById('user-menu-btn').addEventListener('click', () => document.getElementById('dropdown-menu').classList.toggle('show'));
+    document.getElementById('user-menu-btn-db').addEventListener('click', () => document.getElementById('dropdown-menu-db').classList.toggle('show'));
+    
+    document.getElementById('btn-painel').addEventListener('click', () => { showPage('dashboard'); document.getElementById('dropdown-menu').classList.remove('show'); });
+    document.getElementById('btn-painel-db').addEventListener('click', () => { document.getElementById('dropdown-menu-db').classList.remove('show'); });
 
     // Fecha menus ao clicar fora
     document.addEventListener('click', (e) => {
-      if ($('user-menu-container') && !$('user-menu-container').contains(e.target)) $('dropdown-menu').classList.remove('show');
-      if ($('user-menu-container-db') && !$('user-menu-container-db').contains(e.target)) $('dropdown-menu-db').classList.remove('show');
+      if (!document.getElementById('user-menu-container').contains(e.target)) document.getElementById('dropdown-menu').classList.remove('show');
+      if (!document.getElementById('user-menu-container-db').contains(e.target)) document.getElementById('dropdown-menu-db').classList.remove('show');
     });
 
-
-    // --- 3. CONTROLES DO MODAL DE LOGIN ---
-    $('openLoginBtn').addEventListener('click', () => {
-      $('loginModal').classList.add('show');
+    // --- 5. MODAL DE LOGIN ---
+    document.getElementById('openLoginBtn').addEventListener('click', () => {
+      document.getElementById('loginModal').classList.add('show');
       document.body.style.overflow = 'hidden'; 
       setTimeout(window.resizeEKG, 100);
     });
 
-    $('backToSiteBtn').addEventListener('click', (e) => {
+    document.getElementById('backToSiteBtn').addEventListener('click', (e) => {
       e.preventDefault();
-      $('loginModal').classList.remove('show');
+      document.getElementById('loginModal').classList.remove('show');
       document.body.style.overflow = ''; 
     });
 
@@ -592,31 +621,12 @@
         tabs.forEach(t => t.classList.remove('active'));
         forms.forEach(f => f.classList.remove('active'));
         tab.classList.add('active');
-        $(tab.getAttribute('data-target')).classList.add('active');
+        document.getElementById(tab.getAttribute('data-target')).classList.add('active');
       });
     });
 
-    // --- 4. SCROLL DO SITE ---
-    const navLinks = document.querySelectorAll('#landing-page .nav-links a');
-    navLinks.forEach(link => {
-      link.addEventListener('click', function(e) {
-        if (this.innerText === "Voltar ao site") return; // Ignora se for o botão de voltar
-        e.preventDefault(); 
-        const targetId = this.getAttribute('href');
-        if(!targetId || !targetId.startsWith('#')) return;
-        const targetSection = document.querySelector(targetId);
-        if (targetSection) {
-          const offsetPosition = targetSection.getBoundingClientRect().top + window.pageYOffset - 100;
-          window.scrollTo({ top: offsetPosition, behavior: 'smooth' }); 
-          navLinks.forEach(l => l.classList.remove('active'));
-          this.classList.add('active');
-        }
-      });
-    });
-
-
-    // --- 5. PARTÍCULAS DE FUNDO ---
-    const canvas = $('bg-canvas');
+    // --- 6. PARTÍCULAS DE FUNDO ---
+    const canvas = document.getElementById('bg-canvas');
     if(canvas) {
       const ctx = canvas.getContext('2d');
       let particles = [];
@@ -677,10 +687,9 @@
       draw();
     }
 
-
-    // --- 6. BATIMENTO CARDÍACO ---
-    const ekgCanvas = $('ekg-canvas');
-    const sidebar = $('sidebar-clickable');
+    // --- 7. BATIMENTO CARDÍACO (ESTICADO) ---
+    const ekgCanvas = document.getElementById('ekg-canvas');
+    const sidebar = document.getElementById('sidebar-clickable');
     
     if (ekgCanvas && sidebar) {
       const ekgCtx = ekgCanvas.getContext('2d');
@@ -709,7 +718,7 @@
       });
 
       function drawEKG() {
-        if(!$('loginModal').classList.contains('show')) {
+        if(!document.getElementById('loginModal').classList.contains('show')) {
           requestAnimationFrame(drawEKG); 
           return;
         }
@@ -721,7 +730,9 @@
         }
 
         ekgCtx.clearRect(0, 0, ekgWidth, ekgHeight);
-        points.forEach(p => p.x -= 2);
+        
+        // ESTICADO: x -= 1 deixa a onda mais devagar e larga
+        points.forEach(p => p.x -= 1);
 
         if (points.length > 0 && points[0].x < -10) {
           points.shift();
@@ -730,13 +741,14 @@
         let targetY = ekgHeight / 2;
 
         if (isSpiking) {
-          if (spikePhase === 0) targetY = ekgHeight / 2;
-          else if (spikePhase === 1) targetY = ekgHeight / 2 + 20; 
-          else if (spikePhase === 2) targetY = ekgHeight / 2 - 120; 
-          else if (spikePhase === 3) targetY = ekgHeight / 2 + 100; 
-          else if (spikePhase === 4) targetY = ekgHeight / 2; 
-          else if (spikePhase === 5) targetY = ekgHeight / 2 - 30; 
-          else if (spikePhase === 6) targetY = ekgHeight / 2;
+          // Fases maiores (8 e 12) criam picos mais largos
+          if (spikePhase < 2) targetY = ekgHeight / 2;
+          else if (spikePhase < 4) targetY = ekgHeight / 2 + 30;   
+          else if (spikePhase < 8) targetY = ekgHeight / 2 - 130;  
+          else if (spikePhase < 12) targetY = ekgHeight / 2 + 100; 
+          else if (spikePhase < 14) targetY = ekgHeight / 2;       
+          else if (spikePhase < 18) targetY = ekgHeight / 2 - 40;  
+          else if (spikePhase < 20) targetY = ekgHeight / 2;       
           else { 
             isSpiking = false; 
             targetY = ekgHeight / 2;
