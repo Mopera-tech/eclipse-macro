@@ -21,14 +21,17 @@
   /* =========================================
      CURSORES CUSTOMIZADOS
      ========================================= */
+  /* 1. Mouse Normal (Estrela) */
   body, html, a, button, .btn, .tech-card, .game-card, .dropdown-item, .auth-tab, .side-nav-btn {
     cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12,2 C12,7 7,12 2,12 C7,12 12,17 12,22 C12,17 17,12 22,12 C17,12 12,7 12,2 Z" fill="%23ffffff"/></svg>') 12 12, auto !important;
   }
 
+  /* 2. Mouse no Batimento (Cruz perfeita e fina) */
   .auth-sidebar, #sidebar-clickable {
-    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12,2 C13,2 14,6 14.5,8.5 C15,9.5 18,9 20,10 C22,11 22,13 20,14 C18,15 15,14.5 14.5,15.5 C14,18 13,22 12,22 C11,22 10,18 9.5,15.5 C9,14.5 6,15 4,14 C2,13 2,11 4,10 C6,9 9,9.5 9.5,8.5 C10,6 11,2 12,2 Z" fill="%23ffffff"/></svg>') 12 12, crosshair !important;
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path d="M12 2 C12 8 16 8 20 12 C16 16 12 16 12 22 C12 16 8 16 4 12 C8 8 12 8 12 2 Z" fill="%23ffffff"/></svg>') 16 16, crosshair !important;
   }
 
+  /* 3. Mouse Clicando (Lua) */
   *:active, a:active, button:active, .btn:active {
     cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M21,12.79 A9,9 0 1,1 11.21,3 A7,7 0 0,0 21,12.79 Z" fill="%23ffffff"/></svg>') 12 12, pointer !important;
   }
@@ -645,8 +648,7 @@
       })
       .catch(err => {
         console.error("Erro detalhado no login:", err);
-        // O ALERTA AGORA MOSTRA O ERRO REAL DO SUPABASE
-        alert("ERRO NO SUPABASE:\n\n" + err.message + "\n\nVá no painel do Supabase -> Edge Functions -> discord-auth e verifique se o código está correto e se os Secrets (Client ID/Secret) estão configurados.");
+        alert("ERRO NO SUPABASE:\n\n" + err.message + "\n\nVá no painel do Supabase -> Edge Functions -> discord-auth e verifique se o código está correto.");
         try { window.location.replace('https://mopera-tech.github.io/eclipse-macro/'); } catch(e){}
       });
     } else {
@@ -760,7 +762,7 @@
       draw();
     }
 
-    // --- 7. BATIMENTO CARDÍACO (BRANCO) ---
+    // --- 7. BATIMENTO CARDÍACO (CURVA SUAVE E LARGA) ---
     const ekgCanvas = document.getElementById('ekg-canvas');
     const sidebar = document.getElementById('sidebar-clickable');
     
@@ -769,7 +771,19 @@
       let ekgWidth = 0, ekgHeight = 0;
       let points = [];
       let isSpiking = false;
-      let spikePhase = 0;
+      let beatIndex = 0;
+      
+      // A "Tabela de Forma" do batimento: mais larga, sem quadrados
+      const beatShape = [
+        0, 0, 0, 0,                        // Linha reta
+        10, 20, 25, 20, 10, 0,             // Onda P (subidinha suave)
+        -10, -20,                          // Queda Q
+        -60, -110, -150, -150, -110, -60,  // Pico R (Largo e Alto)
+        40, 80, 110, 110, 80, 40,          // Queda S (Larga e Funda)
+        0, 0,                              // Retorno ao normal
+        -30, -40, -40, -30, 0,             // Onda T (pulinho final)
+        0, 0, 0, 0                         // Linha reta pro próximo
+      ];
 
       window.resizeEKG = function() {
         if(!ekgCanvas || !sidebar) return;
@@ -786,7 +800,7 @@
       sidebar.addEventListener('mousedown', () => {
         if(!isSpiking) {
           isSpiking = true;
-          spikePhase = 0;
+          beatIndex = 0;
         }
       });
 
@@ -804,7 +818,8 @@
 
         ekgCtx.clearRect(0, 0, ekgWidth, ekgHeight);
         
-        points.forEach(p => p.x -= 2);
+        // Deixando o coração mais lento (esticado para os lados)
+        points.forEach(p => p.x -= 1.5);
 
         if (points.length > 0 && points[0].x < -10) {
           points.shift();
@@ -813,19 +828,13 @@
         let targetY = ekgHeight / 2;
 
         if (isSpiking) {
-          if (spikePhase < 2) targetY = ekgHeight / 2; 
-          else if (spikePhase < 6) targetY = ekgHeight / 2 - 20; 
-          else if (spikePhase < 8) targetY = ekgHeight / 2 + 10; 
-          else if (spikePhase < 12) targetY = ekgHeight / 2 - 130; 
-          else if (spikePhase < 16) targetY = ekgHeight / 2 + 90; 
-          else if (spikePhase < 20) targetY = ekgHeight / 2; 
-          else if (spikePhase < 26) targetY = ekgHeight / 2 - 40; 
-          else if (spikePhase < 30) targetY = ekgHeight / 2; 
-          else { 
-            isSpiking = false; 
+          if (beatIndex < beatShape.length) {
+            targetY = ekgHeight / 2 + beatShape[beatIndex];
+            beatIndex++;
+          } else {
+            isSpiking = false;
             targetY = ekgHeight / 2;
           }
-          spikePhase++;
         }
 
         points.push({ x: ekgWidth, y: targetY });
