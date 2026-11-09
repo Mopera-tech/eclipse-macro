@@ -5,23 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Eclipse — Free Macro for TSB</title>
 
-<!-- BIBLIOTECA DO SUPABASE -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   
   :root {
     --accent-color: #ffffff; 
-    --accent-glow: rgba(255, 255, 255, 0.1);
     --bg-dark: #050505;
-    --bg-darker: #0a0a0a;
   }
 
-  html, body {
-    width: 100%;
-    overflow-x: hidden; 
-  }
+  html, body { width: 100%; overflow-x: hidden; }
 
   body { 
     background: var(--bg-dark); 
@@ -31,87 +23,49 @@
     animation: siteFadeIn 1s ease-out forwards;
   }
 
-  @keyframes siteFadeIn {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
-  }
+  @keyframes siteFadeIn { 0% { opacity: 0; } 100% { opacity: 1; } }
 
-  /* NAVBAR CORRIGIDA */
+  /* NAVBAR */
   .navbar {
-    position: fixed;
-    top: 24px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(15, 15, 15, 0.85);
-    backdrop-filter: blur(12px);
-    border: 1px solid #222;
-    border-radius: 50px;
-    display: flex;
-    align-items: center;
-    padding: 8px 8px 8px 16px; 
-    z-index: 999;
-    width: max-content;
-    max-width: 95%;
-    gap: 20px;
+    position: fixed; top: 24px; left: 50%; transform: translateX(-50%);
+    background: rgba(15, 15, 15, 0.85); backdrop-filter: blur(12px);
+    border: 1px solid #222; border-radius: 50px;
+    display: flex; align-items: center; padding: 8px 8px 8px 16px; 
+    z-index: 999; width: max-content; max-width: 95%; gap: 20px;
   }
   
   .navbar-left { display: flex; align-items: center; }
-  
-  .navbar-logo {
-    height: 32px;
-    width: 32px;
-    border-radius: 50%;
-    margin-right: 24px;
-    border: 1px solid #333;
-    object-fit: cover;
-  }
+  .navbar-logo { height: 32px; width: 32px; border-radius: 50%; margin-right: 24px; border: 1px solid #333; object-fit: cover; }
 
   .nav-links { display: flex; gap: 8px; }
-
-  .nav-links a {
-    color: #999; text-decoration: none; font-size: 0.9rem; font-weight: 600;
-    padding: 8px 16px; border-radius: 20px; transition: all 0.3s ease;
-  }
-
+  .nav-links a { color: #999; text-decoration: none; font-size: 0.9rem; font-weight: 600; padding: 8px 16px; border-radius: 20px; transition: all 0.3s ease; }
   .nav-links a:hover { background: #222; color: #fff; }
   .nav-links a.active { background: #333; color: #fff; }
 
   .login-nav-btn {
     background: #fff; color: #000; border: none; padding: 8px 20px;
     border-radius: 30px; font-weight: 700; font-size: 0.9rem;
-    cursor: pointer; transition: all 0.3s ease;
+    cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 8px;
   }
   .login-nav-btn:hover { background: #e0e0e0; transform: scale(1.05); }
 
   .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 2; }
 
-  /* HERO */
+  /* HERO e SEÇÕES */
   .hero { text-align: center; padding: 180px 0 100px; }
-  .hero h1 { 
-    font-size: clamp(3.5rem, 8vw, 6rem); font-weight: 800; letter-spacing: -2px; 
-    margin-bottom: 24px; background: linear-gradient(180deg, #fff 0%, #666 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  }
+  .hero h1 { font-size: clamp(3.5rem, 8vw, 6rem); font-weight: 800; letter-spacing: -2px; margin-bottom: 24px; background: linear-gradient(180deg, #fff 0%, #666 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
   .hero p { color: #999; font-size: 1.2rem; max-width: 600px; margin: 0 auto 40px; }
   
-  /* BOTÕES */
-  .btn { 
-    display: inline-flex; align-items: center; justify-content: center;
-    background: #fff; color: #000; padding: 16px 40px; border-radius: 8px; font-weight: 700; 
-    text-decoration: none; font-size: 1.1rem; transition: all 0.3s ease; border: 1px solid #fff;
-  }
+  .btn { display: inline-flex; align-items: center; justify-content: center; background: #fff; color: #000; padding: 16px 40px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 1.1rem; transition: all 0.3s ease; border: 1px solid #fff; }
   .btn:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 10px 20px rgba(255,255,255,0.2); }
 
-  /* SEÇÕES */
   section { padding: 80px 0; border-top: 1px solid #1a1a1a; position: relative; z-index: 2; }
   h2 { font-size: 2.5rem; font-weight: 800; margin-bottom: 40px; letter-spacing: -1px; }
   
-  /* BLINDAGEM DAS ANIMAÇÕES: Visível por padrão, esconde apenas se o JS rodar */
   .reveal { opacity: 1; transform: translateY(0); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
   body.js-enabled .reveal { opacity: 0; transform: translateY(40px); }
   body.js-enabled .reveal.active { opacity: 1; transform: translateY(0); }
 
-  /* CARDS */
   .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
   .games-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 600px; }
   .tech-card { background: #0a0a0a; border: 1px solid #222; border-radius: 16px; padding: 32px 24px; transition: all 0.4s ease; }
@@ -120,8 +74,7 @@
   .tech-card h3 { font-size: 1.6rem; margin-bottom: 8px; font-weight: 700; }
   .tech-card p { color: #888; font-size: 0.95rem; }
   .game-card { background: #0a0a0a; border: 1px solid #222; border-radius: 16px; padding: 32px; transition: all 0.4s ease; }
-  .game-card:hover { border-color: #444; transform: translateY(-4px); }
-
+  
   .step { margin-bottom: 32px; }
   .step .num { color: #fff; font-size: 1rem; font-weight: 800; letter-spacing: 2px; }
   .step h3 { font-size: 1.5rem; margin: 8px 0; }
@@ -131,43 +84,29 @@
   details summary { font-weight: 600; font-size: 1.1rem; outline: none; }
   details p { color: #888; margin-top: 16px; }
 
-  /* DISCORD */
   .community-section { background: #000; padding: 100px 0; border-top: 1px solid #1a1a1a; }
   .community-content { display: flex; flex-direction: column; align-items: flex-start; max-width: 800px; }
   .community-icon { background: #5865F2; width: 56px; height: 56px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 24px; }
-  .community-label { color: #888; font-weight: 700; font-size: 1rem; margin-bottom: 16px; text-transform: uppercase; }
   .community-content h2 { font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 16px; }
   .community-content p { color: #999; font-size: 1.2rem; margin-bottom: 40px; }
   .action-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
   .discord-btn-vertical { display: inline-flex; align-items: center; justify-content: center; background: #fff; color: #000; padding: 16px 32px; border-radius: 30px; font-weight: 700; text-decoration: none; font-size: 1.1rem; border: 1px solid #fff; transition: all 0.3s ease; }
-  .discord-btn-vertical:hover { background: #e0e0e0; transform: translateY(-4px); }
-
+  
   footer { padding: 60px 0; border-top: 1px solid #1a1a1a; text-align: center; color: #666; font-size: .9rem; }
 
-  /* =========================================
-     TELA DE LOGIN (SPLIT SCREEN)
-     ========================================= */
-  .auth-overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: var(--bg-dark);
-    display: none; 
-    opacity: 0; transition: opacity 0.4s ease;
-    z-index: 10000;
-  }
-
-  .auth-overlay.show {
-    display: flex; 
-    opacity: 1;
-  }
+  /* TELA DE LOGIN */
+  .auth-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-dark); display: none; opacity: 0; transition: opacity 0.4s ease; z-index: 10000; }
+  .auth-overlay.show { display: flex; opacity: 1; }
 
   .auth-sidebar { flex: 1; background: linear-gradient(135deg, #0a0a0a 0%, #000000 100%); border-right: 1px solid #1a1a1a; padding: 60px; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; }
-  .auth-sidebar::before { content: ''; position: absolute; top: 50%; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, #ffffff33, transparent); box-shadow: 0 0 20px #ffffff33; transform: translateY(-50%); }
-  .sidebar-logo { display: flex; align-items: center; gap: 12px; font-size: 1.2rem; font-weight: 700; z-index: 2; }
+  #ekg-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+  .sidebar-logo { display: flex; align-items: center; gap: 12px; font-size: 1.2rem; font-weight: 700; z-index: 2; position: relative; }
   .sidebar-logo img { width: 32px; height: 32px; border-radius: 50%; border: 1px solid #333; }
-  .sidebar-text { z-index: 2; }
+  .sidebar-text { z-index: 2; position: relative; }
   .sidebar-text h2 { font-size: 2rem; font-weight: 800; line-height: 1.2; margin-bottom: 16px; color: #fff; }
   .sidebar-text p { color: #888; font-size: 1.1rem; margin-bottom: 24px; }
   .sidebar-text span { color: #555; font-size: 0.9rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+
   .auth-main { flex: 1; background: var(--bg-dark); padding: 40px 60px; display: flex; flex-direction: column; position: relative; overflow-y: auto; }
   .back-btn { position: absolute; top: 40px; right: 60px; display: inline-flex; align-items: center; gap: 8px; color: #888; text-decoration: none; font-size: 0.9rem; cursor: pointer; transition: color 0.3s; }
   .back-btn:hover { color: #fff; }
@@ -186,21 +125,14 @@
   .input-wrapper svg { position: absolute; left: 16px; color: #666; width: 18px; height: 18px; }
   .input-wrapper input { width: 100%; padding: 16px 16px 16px 44px; background: #0a0a0a; border: 1px solid #222; border-radius: 8px; color: #fff; font-size: 0.95rem; outline: none; transition: border-color 0.3s; }
   .input-wrapper input:focus { border-color: #555; }
-  .form-extras { display: flex; justify-content: flex-end; margin-bottom: 24px; }
-  .form-extras a { color: #888; font-size: 0.85rem; text-decoration: none; }
-  .form-extras a:hover { color: #fff; }
   .submit-btn { width: 100%; padding: 16px; background: #fff; color: #000; border: none; border-radius: 8px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: all 0.3s ease; }
-  .submit-btn:hover { background: #e0e0e0; }
   .divider { display: flex; align-items: center; text-align: center; margin: 24px 0; color: #666; font-size: 0.85rem; }
   .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid #222; }
   .divider::before { margin-right: 15px; }
   .divider::after { margin-left: 15px; }
-  .discord-login-btn { width: 100%; padding: 16px; background: #0a0a0a; color: #fff; border: 1px solid #222; border-radius: 8px; font-weight: 600; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.3s ease; }
+  .discord-login-btn { width: 100%; padding: 16px; background: #0a0a0a; color: #fff; border: 1px solid #222; border-radius: 8px; font-weight: 600; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.3s ease; text-decoration: none; }
   .discord-login-btn:hover { background: #1a1a1a; border-color: #444; }
-  .footer-link { text-align: center; margin-top: 32px; color: #888; font-size: 0.9rem; }
-  .footer-link a { color: #fff; text-decoration: none; font-weight: 600; }
-  .footer-link a:hover { text-decoration: underline; }
-  @media (max-width: 800px) { .auth-sidebar { display: none; } .auth-main { padding: 40px 24px; } .back-btn { top: 24px; right: 24px; } }
+  @media (max-width: 800px) { .auth-sidebar { display: none; } .auth-main { padding: 40px 24px; } }
 </style>
 </head>
 <body>
@@ -235,7 +167,6 @@
     <div class="tech-card"><div class="tag">TECH</div><h3>Emote Dash</h3><p>Fast dash using emotes.</p></div>
     <div class="tech-card"><div class="tag">TECH</div><h3>M1 Reset</h3><p>Instant combo reset.</p></div>
   </div>
-
   <h2 style="margin-top: 80px;">Supported Games</h2>
   <div class="games-grid">
     <div class="game-card"><h3>TSB</h3><p>The Strongest Battlegrounds.</p></div>
@@ -253,7 +184,6 @@
   <h2>FAQ</h2>
   <details><summary>Is it really free?</summary><p>Yes, 100% free. No license, no payment.</p></details>
   <details><summary>Is it safe?</summary><p>Eclipse does not inject code into Roblox. It is an input automation tool. Use it at your own risk.</p></details>
-  <details><summary>Does it work on Windows?</summary><p>Yes, built for Windows 10/11.</p></details>
 </section>
 
 <section id="download" class="community-section">
@@ -262,16 +192,12 @@
       <div class="community-icon">
         <svg width="32" height="32" viewBox="0 0 24 24" fill="#ffffff"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
       </div>
-      <div class="community-label">Community & Download</div>
-      <h2>Join the community or get the macro.</h2>
+      <div class="community-label">Community</div>
+      <h2>Join the community.</h2>
       <p>Updates, techs, and support. All in one place.</p>
-      
       <div class="action-buttons">
         <a href="https://github.com/Mopera-tech/eclipse-macro/releases/download/1.0/Eclipse.exe" class="btn">Download Macro</a>
-        <a href="https://discord.gg/jfevHZcSzU" target="_blank" class="discord-btn-vertical">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
-          Join Discord
-        </a>
+        <a href="https://discord.gg/jfevHZcSzU" target="_blank" class="discord-btn-vertical">Join Discord</a>
       </div>
     </div>
   </div>
@@ -281,16 +207,11 @@
   <p>© 2026 Eclipse. All rights reserved.</p>
 </footer>
 
-<!-- =========================================
-     TELA DE LOGIN (SPLIT SCREEN)
-     ========================================= -->
+<!-- TELA DE LOGIN -->
 <div id="loginModal" class="auth-overlay">
-  
-  <div class="auth-sidebar">
-    <div class="sidebar-logo">
-      <img src="logo.png" alt="Logo">
-      Eclipse
-    </div>
+  <div class="auth-sidebar" id="sidebar-clickable">
+    <canvas id="ekg-canvas"></canvas>
+    <div class="sidebar-logo"><img src="logo.png" alt="Logo">Eclipse</div>
     <div class="sidebar-text">
       <h2>Macros, techs and combos for Roblox.</h2>
       <p>The Strongest Battlegrounds.</p>
@@ -300,8 +221,7 @@
 
   <div class="auth-main">
     <a class="back-btn" id="backToSiteBtn">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-      Back to website
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Back to website
     </a>
 
     <div class="form-wrapper">
@@ -310,7 +230,6 @@
         <div class="auth-tab" data-target="signup">Create account</div>
       </div>
 
-      <!-- Form: Sign in -->
       <div id="signin" class="auth-form active">
         <h3>Welcome back</h3>
         <p>Sign in to your Eclipse account.</p>
@@ -322,7 +241,6 @@
             <input type="text" placeholder="Your username">
           </div>
         </div>
-
         <div class="input-group">
           <label>Password</label>
           <div class="input-wrapper">
@@ -330,26 +248,19 @@
             <input type="password" placeholder="Your password">
           </div>
         </div>
-
-        <div class="form-extras">
-          <a href="#">Need help signing in?</a>
-        </div>
-
         <button class="submit-btn">Sign in</button>
-
         <div class="divider">or</div>
 
-        <button class="discord-login-btn" onclick="loginWithDiscord()">
+        <!-- LINK DE LOGIN DO DISCORD -->
+        <a href="https://discord.com/api/oauth2/authorize?client_id=1569412157035126864&redirect_uri=https%3A%2F%2Fzpieeogaqggxykxqfnrd.supabase.co%2Fauth%2Fv1%2Fcallback&response_type=code&scope=identify%20guilds%20guild.members.read" class="discord-login-btn">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
           Continue with Discord
-        </button>
+        </a>
       </div>
 
-      <!-- Form: Create Account -->
       <div id="signup" class="auth-form">
         <h3>Create your account</h3>
         <p>Create an account to stay updated.</p>
-
         <div class="input-group">
           <label>Username</label>
           <div class="input-wrapper">
@@ -357,7 +268,6 @@
             <input type="text" placeholder="Choose a username">
           </div>
         </div>
-
         <div class="input-group">
           <label>Password</label>
           <div class="input-wrapper">
@@ -365,95 +275,77 @@
             <input type="password" placeholder="At least 8 characters">
           </div>
         </div>
-
         <button class="submit-btn" style="margin-top: 16px;">Create account</button>
-
         <div class="divider">or</div>
-
-        <button class="discord-login-btn" onclick="loginWithDiscord()">
+        
+        <a href="https://discord.com/api/oauth2/authorize?client_id=1569412157035126864&redirect_uri=https%3A%2F%2Fzpieeogaqggxykxqfnrd.supabase.co%2Fauth%2Fv1%2Fcallback&response_type=code&scope=identify%20guilds%20guild.members.read" class="discord-login-btn">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
           Continue with Discord
-        </button>
+        </a>
       </div>
     </div>
   </div>
 </div>
 
 <script>
-  // Envolvemos tudo em DOMContentLoaded para garantir que o HTML carregou antes do JS rodar
   document.addEventListener('DOMContentLoaded', () => {
-    
-    // Ativa a classe que permite a animação (mas se o JS falhar, o site fica visível)
     document.body.classList.add('js-enabled');
 
-    // ==========================================
-    // 1. SUPABASE CONFIG (À PROVA DE FALHAS)
-    // ==========================================
-    let supabaseClient = null;
-    
-    try {
-      if (window.supabase) {
-        supabaseClient = window.supabase.createClient(
-          'https://zpieeoqagqyxkxqffrd.supabase.co', 
-          'sb_publishable_h__tGsYkagynbTsboFVDsw_xEvLeQZI'
-        );
-      } else {
-        console.warn("Supabase não foi carregado. Verifique seu AdBlock.");
-      }
-    } catch (error) {
-      console.error("Erro ao iniciar o Supabase:", error);
-    }
+    // 1. LÓGICA DO LOGIN COM DISCORD
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
 
-    // Função global para o botão conseguir acessar
-    window.loginWithDiscord = async function() {
-      if (!supabaseClient) {
-        alert("O sistema de login não carregou. Desative o bloqueador de anúncios e recarregue a página.");
-        return;
-      }
+    if (code) {
+      fetch('https://zpieeogaqggxykxqfnrd.supabase.co/functions/v1/discord-auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code }),
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.error) throw new Error(data.error);
 
-      const { data, error } = await supabaseClient.auth.signInWithOAuth({
-        provider: 'discord',
-        options: { redirectTo: window.location.href }
-      });
+        const avatarUrl = data.avatar 
+          ? `https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png`
+          : 'https://cdn.discordapp.com/embed/avatars/0.png';
+        
+        const displayName = data.global_name || data.username;
+        const userTag = data.tags[0];
 
-      if (error) {
-        console.error('Erro no login:', error.message);
-        alert('Erro: ' + error.message);
-      }
-    };
-
-    // Verifica se já está logado
-    async function checkSession() {
-      if (!supabaseClient) return;
-      try {
-        const { data: { session } } = await supabaseClient.auth.getSession();
-        if (session) {
-          const loginBtn = document.getElementById('openLoginBtn');
-          const userName = session.user.user_metadata.full_name || session.user.user_metadata.name || 'My Account';
-          loginBtn.innerText = userName;
-          
-          document.getElementById('loginModal').classList.remove('show');
-          document.body.style.overflow = ''; 
+        const loginBtn = document.getElementById('openLoginBtn');
+        if (loginBtn) {
+          loginBtn.innerHTML = `
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <img src="${avatarUrl}" style="width: 24px; height: 24px; border-radius: 50%;" />
+              <span>${displayName}</span>
+              <span style="font-size: 0.7rem; background: #fff; color: #000; padding: 2px 6px; border-radius: 4px; font-weight: 800;">${userTag}</span>
+            </div>
+          `;
+          loginBtn.style.pointerEvents = 'none';
         }
-      } catch(e) {
-        console.error(e);
-      }
-    }
-    checkSession();
 
-    // ==========================================
-    // 2. TELA DE LOGIN (ABRIR / FECHAR)
-    // ==========================================
+        window.history.replaceState({}, document.title, window.location.pathname);
+      })
+      .catch(err => {
+        console.error("Erro no login:", err);
+        alert("Erro ao fazer login. O projeto no Supabase pode estar pausado.");
+        window.history.replaceState({}, document.title, window.location.pathname);
+      });
+    }
+
+    // 2. TELA DE LOGIN
     const openBtn = document.getElementById('openLoginBtn');
     const backToSiteBtn = document.getElementById('backToSiteBtn');
     const modal = document.getElementById('loginModal');
-    
     const tabs = document.querySelectorAll('.auth-tab');
     const forms = document.querySelectorAll('.auth-form');
 
     openBtn.addEventListener('click', () => {
-      modal.classList.add('show');
-      document.body.style.overflow = 'hidden'; 
+      if(openBtn.style.pointerEvents !== 'none') {
+        modal.classList.add('show');
+        document.body.style.overflow = 'hidden'; 
+        resizeEKG();
+      }
     });
 
     backToSiteBtn.addEventListener('click', (e) => {
@@ -466,33 +358,27 @@
       tab.addEventListener('click', () => {
         tabs.forEach(t => t.classList.remove('active'));
         forms.forEach(f => f.classList.remove('active'));
-
         tab.classList.add('active');
-        const targetForm = tab.getAttribute('data-target');
-        document.getElementById(targetForm).classList.add('active');
+        document.getElementById(tab.getAttribute('data-target')).classList.add('active');
       });
     });
 
-    // ==========================================
-    // 3. SCROLL SUAVE
-    // ==========================================
+    // 3. SCROLL
     const navLinks = document.querySelectorAll('.nav-links a');
     const sections = document.querySelectorAll('section, #home');
+    const reveals = document.querySelectorAll('.reveal');
 
     function smoothScrollTo(targetY, duration = 800) {
       const startY = window.scrollY;
       const difference = targetY - startY;
       const startTime = performance.now();
-
       function step() {
         const progress = (performance.now() - startTime) / duration;
         if (progress < 1) {
           const ease = progress < 0.5 ? 2 * progress * progress : -1 + (4 - 2 * progress) * progress;
           window.scrollTo(0, startY + difference * ease);
           requestAnimationFrame(step);
-        } else {
-          window.scrollTo(0, targetY);
-        }
+        } else { window.scrollTo(0, targetY); }
       }
       requestAnimationFrame(step);
     }
@@ -500,155 +386,141 @@
     navLinks.forEach(link => {
       link.addEventListener('click', function(e) {
         e.preventDefault(); 
-        const targetId = this.getAttribute('href');
-        const targetSection = document.querySelector(targetId);
-        
+        const targetSection = document.querySelector(this.getAttribute('href'));
         if (targetSection) {
-          const headerOffset = 100; 
-          const elementPosition = targetSection.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+          const offsetPosition = targetSection.getBoundingClientRect().top + window.pageYOffset - 100;
           smoothScrollTo(offsetPosition, 800); 
-
           navLinks.forEach(l => l.classList.remove('active'));
           this.classList.add('active');
         }
       });
     });
 
-    // ==========================================
-    // 4. ANIMAÇÕES DE SCROLL (REVEAL)
-    // ==========================================
-    const reveals = document.querySelectorAll('.reveal');
-    
     window.addEventListener('scroll', () => {
       let current = '';
       sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        if (window.scrollY >= sectionTop - 150) current = section.getAttribute('id');
+        if (window.scrollY >= section.offsetTop - 150) current = section.getAttribute('id');
       });
       navLinks.forEach(link => {
         link.classList.remove('active');
         if (link.getAttribute('href') === `#${current}`) link.classList.add('active');
       });
-
-      const windowHeight = window.innerHeight;
       reveals.forEach((reveal) => {
-        if (reveal.getBoundingClientRect().top < windowHeight - 100) {
-          reveal.classList.add('active');
-        }
+        if (reveal.getBoundingClientRect().top < window.innerHeight - 100) reveal.classList.add('active');
       });
     }, { passive: true });
 
-    // Roda uma vez ao carregar
     const windowHeight = window.innerHeight;
     reveals.forEach((reveal) => {
-      if (reveal.getBoundingClientRect().top < windowHeight - 100) {
-        reveal.classList.add('active');
-      }
+      if (reveal.getBoundingClientRect().top < windowHeight - 100) reveal.classList.add('active');
     });
 
-    // ==========================================
-    // 5. FUNDO ANIMADO (PARTÍCULAS)
-    // ==========================================
+    // 4. PARTÍCULAS
     const canvas = document.getElementById('bg-canvas');
     const ctx = canvas.getContext('2d');
     let particles = [];
-    
     let mouse = { x: -1000, y: -1000, active: false, radius: 90 }; 
     let idleTimer;
 
-    function resize() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resize);
-    resize();
+    function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    window.addEventListener('resize', resize); resize();
 
     window.addEventListener('mousemove', (e) => {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
-      mouse.active = true;
-
+      mouse.x = e.clientX; mouse.y = e.clientY; mouse.active = true;
       clearTimeout(idleTimer);
-      idleTimer = setTimeout(() => {
-        mouse.active = false; 
-        mouse.x = -1000;
-        mouse.y = -1000;
-      }, 30000);
+      idleTimer = setTimeout(() => { mouse.active = false; mouse.x = -1000; mouse.y = -1000; }, 30000);
     }, { passive: true });
+    window.addEventListener('mouseleave', () => { mouse.active = false; mouse.x = -1000; mouse.y = -1000; });
 
-    window.addEventListener('mouseleave', () => {
-      mouse.active = false;
-      mouse.x = -1000;
-      mouse.y = -1000;
-    });
-
-    const particleCount = 90; 
-
-    for (let i = 0; i < particleCount; i++) {
+    for (let i = 0; i < 90; i++) {
       particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 2.5, 
-        vy: (Math.random() - 0.5) * 2.5,
+        x: Math.random() * canvas.width, y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 2.5, vy: (Math.random() - 0.5) * 2.5,
         radius: Math.random() * 2 + 1
       });
     }
 
     function draw() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
       particles.forEach(p => {
-        p.x += p.vx;
-        p.y += p.vy;
-
+        p.x += p.vx; p.y += p.vy;
         if (mouse.active) {
-          let dx = p.x - mouse.x;
-          let dy = p.y - mouse.y;
+          let dx = p.x - mouse.x, dy = p.y - mouse.y;
           let distance = Math.sqrt(dx * dx + dy * dy);
-
           if (distance < mouse.radius) {
             let force = (mouse.radius - distance) / mouse.radius;
             let angle = Math.atan2(dy, dx);
-            
-            p.x += Math.cos(angle) * force * 6;
-            p.y += Math.sin(angle) * force * 6;
+            p.x += Math.cos(angle) * force * 6; p.y += Math.sin(angle) * force * 6;
           }
         }
-
         if (p.x < -10) p.x = canvas.width + 10;
         if (p.x > canvas.width + 10) p.x = -10;
         if (p.y < -10) p.y = canvas.height + 10;
         if (p.y > canvas.height + 10) p.y = -10;
-
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = '#333333';
-        ctx.fill();
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.fillStyle = '#333333'; ctx.fill();
       });
-
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
-          let dx = particles[i].x - particles[j].x;
-          let dy = particles[i].y - particles[j].y;
+          let dx = particles[i].x - particles[j].x, dy = particles[i].y - particles[j].y;
           let distance = Math.sqrt(dx * dx + dy * dy);
-
           if (distance < 120) {
-            ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(51, 51, 51, ${1 - distance / 120})`;
-            ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(51, 51, 51, ${1 - distance / 120})`; ctx.stroke();
           }
         }
       }
-
       requestAnimationFrame(draw);
     }
-    
     draw();
+
+    // 5. EKG
+    const ekgCanvas = document.getElementById('ekg-canvas');
+    const ekgCtx = ekgCanvas.getContext('2d');
+    const sidebar = document.getElementById('sidebar-clickable');
+    let ekgWidth, ekgHeight, points = [], isSpiking = false, spikePhase = 0;
+
+    function resizeEKG() {
+      if(!ekgCanvas) return;
+      ekgWidth = sidebar.offsetWidth; ekgHeight = sidebar.offsetHeight;
+      ekgCanvas.width = ekgWidth; ekgCanvas.height = ekgHeight;
+      points = [];
+      for(let i = 0; i < ekgWidth; i++) points.push({ x: i, y: ekgHeight / 2 });
+    }
+
+    sidebar.addEventListener('mousedown', () => { isSpiking = true; spikePhase = 0; });
+
+    function drawEKG() {
+      if(!document.getElementById('loginModal').classList.contains('show')) {
+        requestAnimationFrame(drawEKG); return;
+      }
+      ekgCtx.clearRect(0, 0, ekgWidth, ekgHeight);
+      points.shift();
+      let targetY = ekgHeight / 2; 
+      
+      if (isSpiking) {
+        if (spikePhase < 5) targetY = ekgHeight / 2 + 10;
+        else if (spikePhase < 15) targetY = ekgHeight / 2 - 40; 
+        else if (spikePhase < 25) targetY = ekgHeight / 2 + 30; 
+        else if (spikePhase < 35) targetY = ekgHeight / 2; 
+        else if (spikePhase < 45) targetY = ekgHeight / 2 - 15; 
+        else if (spikePhase < 55) targetY = ekgHeight / 2; 
+        else { isSpiking = false; targetY = ekgHeight / 2; }
+        spikePhase++;
+      } else {
+         targetY = ekgHeight / 2 + (Math.random() - 0.5) * 2;
+      }
+
+      points.push({ x: ekgWidth, y: targetY });
+
+      ekgCtx.beginPath(); ekgCtx.moveTo(points[0].x, points[0].y);
+      for (let i = 1; i < points.length; i++) ekgCtx.lineTo(points[i].x, points[i].y);
+      ekgCtx.strokeStyle = '#ffffff'; ekgCtx.lineWidth = 2; ekgCtx.shadowBlur = 15; ekgCtx.shadowColor = 'rgba(255, 255, 255, 0.8)'; ekgCtx.stroke();
+      ekgCtx.shadowBlur = 0; ekgCtx.strokeStyle = 'rgba(255, 255, 255, 0.1)'; ekgCtx.lineWidth = 4; ekgCtx.stroke();
+
+      requestAnimationFrame(drawEKG);
+    }
+    resizeEKG(); drawEKG(); window.addEventListener('resize', resizeEKG);
   });
 </script>
-
 </body>
 </html>
