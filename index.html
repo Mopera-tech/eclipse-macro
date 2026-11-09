@@ -21,17 +21,14 @@
   /* =========================================
      CURSORES CUSTOMIZADOS
      ========================================= */
-  /* 1. Mouse Normal (Estrela) */
   body, html, a, button, .btn, .tech-card, .game-card, .dropdown-item, .auth-tab, .side-nav-btn {
     cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12,2 C12,7 7,12 2,12 C7,12 12,17 12,22 C12,17 17,12 22,12 C17,12 12,7 12,2 Z" fill="%23ffffff"/></svg>') 12 12, auto !important;
   }
 
-  /* 2. Mouse no Batimento Cardíaco (Cruz) */
   .auth-sidebar, #sidebar-clickable {
     cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12,2 C13,2 14,6 14.5,8.5 C15,9.5 18,9 20,10 C22,11 22,13 20,14 C18,15 15,14.5 14.5,15.5 C14,18 13,22 12,22 C11,22 10,18 9.5,15.5 C9,14.5 6,15 4,14 C2,13 2,11 4,10 C6,9 9,9.5 9.5,8.5 C10,6 11,2 12,2 Z" fill="%23ffffff"/></svg>') 12 12, crosshair !important;
   }
 
-  /* 3. Mouse Clicando (Lua) */
   *:active, a:active, button:active, .btn:active {
     cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M21,12.79 A9,9 0 1,1 11.21,3 A7,7 0 0,0 21,12.79 Z" fill="%23ffffff"/></svg>') 12 12, pointer !important;
   }
@@ -615,7 +612,7 @@
       }
     }
 
-    // --- 3. PROCESSO DE LOGIN (DISCORD) ---
+    // --- 3. PROCESSO DE LOGIN (DIAGNÓSTICO DE ERRO) ---
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('code');
 
@@ -626,10 +623,17 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ code }),
       })
-      .then(res => res.json())
+      .then(async (res) => {
+        const text = await res.text();
+        try {
+          return JSON.parse(text);
+        } catch (e) {
+          throw new Error("O Supabase retornou uma resposta inválida (não é JSON). Verifique os logs da Edge Function.");
+        }
+      })
       .then(data => {
         if (data.error || !data.username || !data.id) {
-          throw new Error("O Supabase não retornou os dados corretos. Verifique a Edge Function.");
+          throw new Error(data.error || "Dados incompletos retornados pelo Supabase.");
         }
         
         try { localStorage.setItem('eclipse_user', JSON.stringify(data)); } catch(e){}
@@ -640,8 +644,9 @@
         document.body.style.opacity = '1';
       })
       .catch(err => {
-        console.error("Erro no login:", err);
-        alert("Erro ao fazer login. Verifique a Edge Function no Supabase.");
+        console.error("Erro detalhado no login:", err);
+        // O ALERTA AGORA MOSTRA O ERRO REAL DO SUPABASE
+        alert("ERRO NO SUPABASE:\n\n" + err.message + "\n\nVá no painel do Supabase -> Edge Functions -> discord-auth e verifique se o código está correto e se os Secrets (Client ID/Secret) estão configurados.");
         try { window.location.replace('https://mopera-tech.github.io/eclipse-macro/'); } catch(e){}
       });
     } else {
