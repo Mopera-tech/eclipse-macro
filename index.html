@@ -59,7 +59,7 @@
     align-items: center; gap: 8px; cursor: pointer; transition: background 0.2s;
   }
   .user-menu-btn:hover { background: #222; }
-  .user-menu-btn img { width: 28px; height: 28px; border-radius: 50%; }
+  .user-menu-btn img { width: 28px; height: 28px; border-radius: 50%; background: #333; }
 
   .dropdown-menu {
     position: absolute; top: calc(100% + 12px); right: 0;
@@ -525,18 +525,28 @@
     try {
       const stored = localStorage.getItem('eclipse_user');
       if (stored && stored !== "undefined" && stored !== "null") {
-        globalUser = JSON.parse(stored);
+        const parsed = JSON.parse(stored);
+        // TRAVA DE SEGURANÇA: Se os dados não tiverem ID ou Nome, consideramos inválido.
+        if (parsed && parsed.id && parsed.username) {
+          globalUser = parsed;
+        } else {
+          localStorage.removeItem('eclipse_user');
+        }
       }
-    } catch(e) { console.warn("LocalStorage vazio ou bloqueado."); }
+    } catch(e) { 
+      localStorage.removeItem('eclipse_user');
+    }
 
     function setupLoggedInUI(user) {
       if (!user || !user.id) return;
       globalUser = user;
 
+      // Foto com Fallback (se não tiver avatar, usa a padrão do Discord)
       const avatarUrl = user.avatar 
         ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`
         : 'https://cdn.discordapp.com/embed/avatars/0.png';
       
+      // Nome com Fallback
       const displayName = user.global_name || user.username || 'Eclipse User';
       const userEmail = user.email || 'Email privado';
       const userTag = (user.tags && user.tags.length > 0) ? user.tags[0] : 'Membro';
@@ -580,14 +590,22 @@
     }
 
     function checkRoute() {
-      if (window.location.hash === '#dashboard' && globalUser) {
-        showPage('dashboard');
+      if (window.location.hash === '#dashboard') {
+        if (globalUser) {
+          showPage('dashboard');
+        } else {
+          // Tentou ir pro painel sem estar logado. Manda pra home e abre o modal.
+          showPage('home');
+          document.getElementById('loginModal').classList.add('show');
+          document.body.style.overflow = 'hidden';
+          setTimeout(window.resizeEKG, 100);
+        }
       } else {
         showPage('home');
       }
     }
 
-    // --- 3. PROCESSO DE LOGIN ---
+    // --- 3. PROCESSO DE LOGIN (DISCORD) ---
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('code');
 
@@ -600,18 +618,22 @@
       })
       .then(res => res.json())
       .then(data => {
-        if (data.error) throw new Error(data.error);
+        // TRAVA DE SEGURANÇA: Se não vier nome ou ID, deu erro no Supabase.
+        if (data.error || !data.username || !data.id) {
+          throw new Error("O Supabase não retornou os dados corretos. Verifique a Edge Function.");
+        }
+        
         try { localStorage.setItem('eclipse_user', JSON.stringify(data)); } catch(e){}
         try { window.history.replaceState({}, document.title, window.location.pathname); } catch(e){}
+        
         setupLoggedInUI(data);
         showPage('dashboard');
         document.body.style.opacity = '1';
       })
       .catch(err => {
         console.error("Erro no login:", err);
-        alert("Erro ao fazer login. Tente novamente.");
-        try { window.history.replaceState({}, document.title, window.location.pathname); } catch(e){}
-        document.body.style.opacity = '1';
+        alert("Erro ao fazer login. Verifique se a Edge Function no Supabase está atualizada.");
+        try { window.location.replace('https://mopera-tech.github.io/eclipse-macro/'); } catch(e){}
       });
     } else {
       if (globalUser) setupLoggedInUI(globalUser);
@@ -724,7 +746,7 @@
       draw();
     }
 
-    // --- 7. BATIMENTO CARDÍACO (BRANCO) ---
+    // --- 7. BATIMENTO CARDÍACO (BRANCO E COM PONTAS AGUDAS) ---
     const ekgCanvas = document.getElementById('ekg-canvas');
     const sidebar = document.getElementById('sidebar-clickable');
     
@@ -805,14 +827,12 @@
           ekgCtx.lineJoin = 'miter';
           ekgCtx.miterLimit = 10;
 
-          // Cor Branca e Brilho
           ekgCtx.strokeStyle = '#ffffff';
           ekgCtx.lineWidth = 3; 
           ekgCtx.shadowBlur = 15;
           ekgCtx.shadowColor = 'rgba(255, 255, 255, 0.8)';
           ekgCtx.stroke();
           
-          // Rastro escuro embaixo da linha
           ekgCtx.shadowBlur = 0;
           ekgCtx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
           ekgCtx.lineWidth = 6;
