@@ -13,6 +13,7 @@
     --bg-dark: #050505;
     --bg-card: #0a0a0a;
     --border-color: #1a1a1a;
+    --text-muted: #888;
   }
 
   html, body { width: 100%; overflow-x: hidden; }
@@ -27,7 +28,7 @@
 
   @keyframes siteFadeIn { 0% { opacity: 0; } 100% { opacity: 1; } }
 
-  /* NAVBAR DO SITE */
+  /* NAVBAR */
   .navbar {
     position: fixed; top: 24px; left: 50%; transform: translateX(-50%);
     background: rgba(15, 15, 15, 0.85); backdrop-filter: blur(12px);
@@ -44,7 +45,6 @@
   .nav-links a:hover { background: #222; color: #fff; }
   .nav-links a.active { background: #333; color: #fff; }
 
-  /* BOTÃO LOGIN E MENU DROPDOWN */
   .login-nav-btn {
     background: #fff; color: #000; border: none; padding: 8px 20px;
     border-radius: 30px; font-weight: 700; font-size: 0.9rem;
@@ -84,7 +84,7 @@
 
   .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 2; }
 
-  /* HERO e SEÇÕES */
+  /* LANDING PAGE */
   .hero { text-align: center; padding: 180px 0 100px; }
   .hero h1 { font-size: clamp(3.5rem, 8vw, 6rem); font-weight: 800; letter-spacing: -2px; margin-bottom: 24px; background: linear-gradient(180deg, #fff 0%, #666 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
   .hero p { color: #999; font-size: 1.2rem; max-width: 600px; margin: 0 auto 40px; }
@@ -125,9 +125,7 @@
   
   footer { padding: 60px 0; border-top: 1px solid var(--border-color); text-align: center; color: #666; font-size: .9rem; }
 
-  /* =========================================
-     TELA DE LOGIN
-     ========================================= */
+  /* TELA DE LOGIN */
   .auth-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-dark); display: flex; visibility: hidden; opacity: 0; transition: opacity 0.4s ease, visibility 0.4s; z-index: 10000; }
   .auth-overlay.show { visibility: visible; opacity: 1; }
   .auth-sidebar { flex: 1; background: #000; border-right: 1px solid var(--border-color); padding: 60px 60px 60px 80px; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; cursor: crosshair; }
@@ -164,37 +162,47 @@
   .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid #222; }
   .divider::before { margin-right: 15px; }
   .divider::after { margin-left: 15px; }
-  
   .discord-login-btn { width: 100%; padding: 16px; background: var(--bg-card); color: #fff; border: 1px solid #222; border-radius: 8px; font-weight: 600; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.3s ease; text-decoration: none; }
   .discord-login-btn:hover { background: #1a1a1a; border-color: #444; }
-  
   @media (max-width: 800px) { .auth-sidebar { display: none; } .auth-main { padding: 40px 24px; } }
 
-  /* =========================================
-     DASHBOARD (ÁREA DE MEMBROS)
-     ========================================= */
-  .dashboard-page { display: none; flex-direction: column; min-height: 100vh; background: var(--bg-dark); position: relative; z-index: 100; }
-  
-  .db-container { flex: 1; max-width: 800px; margin: 0 auto; width: 100%; padding: 180px 24px 100px 24px; text-align: center; }
-  
-  .profile-card { background: var(--bg-card); border: 1px solid #222; border-radius: 24px; padding: 60px 40px; display: flex; flex-direction: column; align-items: center; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
-  .profile-card img { width: 120px; height: 120px; border-radius: 50%; border: 4px solid #111; margin-bottom: 24px; background: #222; }
-  
-  .profile-name-wrapper { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
-  .profile-name-wrapper h1 { font-size: 2.5rem; font-weight: 800; margin: 0; }
-  
-  .user-tag-badge {
-    background: #fff; color: #000; padding: 4px 12px; 
-    border-radius: 6px; font-size: 0.85rem; font-weight: 800; text-transform: uppercase;
-    display: inline-flex; align-items: center; letter-spacing: 1px;
-  }
-
-  .profile-card p { color: #888; font-size: 1.1rem; margin-bottom: 40px; }
-  
-  .profile-stats { display: flex; gap: 20px; margin-bottom: 40px; width: 100%; justify-content: center; flex-wrap: wrap; }
-  .stat-box { background: #000; border: 1px solid #222; padding: 16px 32px; border-radius: 12px; min-width: 160px; }
-  .stat-box h3 { font-size: 1.2rem; margin-bottom: 4px; }
-  .stat-box p { font-size: 0.8rem; margin: 0; color: #666; text-transform: uppercase; font-weight: 600; }
+  /* DASHBOARD */
+  .dashboard-page { display: none; min-height: 100vh; background: var(--bg-dark); padding-top: 100px; position: relative; z-index: 100; }
+  .dash-layout { display: flex; max-width: 1200px; margin: 0 auto; gap: 32px; padding: 0 24px 60px 24px; }
+  .dash-sidebar { width: 280px; flex-shrink: 0; display: flex; flex-direction: column; gap: 8px; }
+  .user-card { background: var(--bg-card); border: 1px solid #222; border-radius: 16px; padding: 32px 24px; text-align: center; margin-bottom: 24px; }
+  .user-card img { width: 80px; height: 80px; border-radius: 50%; border: 2px solid #333; margin-bottom: 16px; background: #111; }
+  .user-card h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
+  .user-card .email { color: var(--text-muted); font-size: 0.85rem; }
+  .user-tag-badge { background: #fff; color: #000; padding: 2px 8px; border-radius: 4px; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
+  .side-nav-btn { display: flex; align-items: center; gap: 12px; padding: 16px; border-radius: 12px; background: transparent; color: #888; border: 1px solid transparent; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.2s; text-align: left; }
+  .side-nav-btn:hover { background: #111; color: #fff; }
+  .side-nav-btn.active { background: var(--bg-card); border-color: #222; color: #fff; }
+  .side-nav-btn svg { width: 20px; height: 20px; }
+  .dash-main { flex: 1; display: flex; flex-direction: column; gap: 24px; }
+  .dash-header { margin-bottom: 8px; }
+  .dash-header h1 { font-size: 2rem; font-weight: 800; margin-bottom: 8px; }
+  .dash-header p { color: var(--text-muted); font-size: 1rem; }
+  .dash-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .stat-card { background: var(--bg-card); border: 1px solid #222; border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 8px; transition: border-color 0.3s; }
+  .stat-card:hover { border-color: #444; }
+  .stat-card svg { width: 24px; height: 24px; color: #fff; margin-bottom: 8px; }
+  .stat-card h3 { font-size: 1.6rem; font-weight: 800; color: #fff; }
+  .stat-card p { color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; font-weight: 600; letter-spacing: 1px; }
+  .download-card { background: linear-gradient(135deg, #111 0%, #000 100%); border: 1px solid #333; border-radius: 16px; padding: 40px; position: relative; overflow: hidden; }
+  .download-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: #fff; }
+  .download-card h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 12px; }
+  .download-card p { color: var(--text-muted); font-size: 1rem; margin-bottom: 24px; max-width: 500px; }
+  .dl-btn-main { display: inline-flex; align-items: center; gap: 12px; background: #fff; color: #000; padding: 16px 32px; border-radius: 8px; font-weight: 700; font-size: 1.1rem; text-decoration: none; transition: all 0.3s; }
+  .dl-btn-main:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(255,255,255,0.15); }
+  .changelog-card { background: var(--bg-card); border: 1px solid #222; border-radius: 16px; padding: 32px; }
+  .changelog-card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+  .update-item { display: flex; gap: 16px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #111; }
+  .update-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+  .update-date { color: #555; font-size: 0.85rem; font-weight: 600; width: 100px; flex-shrink: 0; }
+  .update-content h4 { font-size: 1rem; font-weight: 600; margin-bottom: 4px; }
+  .update-content p { color: var(--text-muted); font-size: 0.9rem; }
+  @media (max-width: 900px) { .dash-layout { flex-direction: column; } .dash-sidebar { width: 100%; } }
 </style>
 </head>
 <body>
@@ -205,7 +213,7 @@
     <div class="navbar-left">
       <img src="logo.png" alt="Eclipse Logo" class="navbar-logo">
       <div class="nav-links">
-        <a href="#home" class="active" onclick="showLanding()">Home</a>
+        <a href="#home" class="active" onclick="showPage('home')">Home</a>
         <a href="#features">Features</a>
         <a href="#howitworks">How it Works</a>
       </div>
@@ -308,7 +316,7 @@
     <div class="navbar-left">
       <img src="logo.png" alt="Eclipse Logo" class="navbar-logo">
       <div class="nav-links">
-        <a onclick="showLanding()">Voltar ao site</a>
+        <a onclick="showPage('home')">Voltar ao site</a>
       </div>
     </div>
     
@@ -342,30 +350,91 @@
     </div>
   </nav>
 
-  <div class="db-container">
-    <div class="profile-card">
-      <img id="db-main-avatar" src="" alt="Avatar">
-      
-      <div class="profile-name-wrapper">
-        <h1 id="db-main-name">Username</h1>
-        <span class="user-tag-badge" id="db-main-tag">Membro</span>
+  <div class="dash-layout">
+    <aside class="dash-sidebar">
+      <div class="user-card">
+        <img id="db-main-avatar" src="" alt="Avatar">
+        <h2>
+          <span id="db-main-name">Username</span>
+          <span class="user-tag-badge" id="db-main-tag">Membro</span>
+        </h2>
+        <span class="email" id="db-main-email">email@exemplo.com</span>
       </div>
-      
-      <p id="db-main-email">email@exemplo.com</p>
 
-      <div class="profile-stats">
-        <div class="stat-box">
+      <button class="side-nav-btn active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+        Visão Geral
+      </button>
+      <button class="side-nav-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        Downloads
+      </button>
+      <button class="side-nav-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+        Suporte
+      </button>
+      <button class="side-nav-btn" onclick="logout()" style="margin-top: 16px; color: #ff5555;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: #ff5555;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+        Sair da Conta
+      </button>
+    </aside>
+
+    <main class="dash-main">
+      <div class="dash-header">
+        <h1>Bem-vindo de volta, <span id="dash-welcome-name">User</span>!</h1>
+        <p>Gerencie sua conta e baixe as últimas atualizações do Eclipse Macro.</p>
+      </div>
+
+      <div class="dash-grid">
+        <div class="stat-card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+          <h3>Online</h3>
+          <p>Status do Servidor</p>
+        </div>
+        <div class="stat-card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+          <h3>v1.0.0</h3>
+          <p>Versão Atual</p>
+        </div>
+        <div class="stat-card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
           <h3 id="db-stat-date">--</h3>
-          <p>Membro desde</p>
-        </div>
-        <div class="stat-box">
-          <h3>Free</h3>
-          <p>Plano atual</p>
+          <p>Membro Desde</p>
         </div>
       </div>
 
-      <a href="https://github.com/Mopera-tech/eclipse-macro/releases/download/1.0/Eclipse.exe" class="btn" style="width: 100%;">Download Macro</a>
-    </div>
+      <div class="download-card">
+        <h2>Pronto para dominar o TSB?</h2>
+        <p>A versão mais recente do Eclipse está disponível. Certifique-se de desativar o antivírus caso haja um falso positivo, ou clique em "Mais informações" no SmartScreen.</p>
+        <a href="https://github.com/Mopera-tech/eclipse-macro/releases/download/1.0/Eclipse.exe" class="dl-btn-main">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          Baixar Eclipse.exe
+        </a>
+      </div>
+
+      <div class="changelog-card">
+        <h3>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          Últimas Atualizações
+        </h3>
+        
+        <div class="update-item">
+          <div class="update-date">Hoje</div>
+          <div class="update-content">
+            <h4>Lançamento da v1.0.0</h4>
+            <p>Adição das macros Supa, Instant Twisted, Lethal, e correções de estabilidade.</p>
+          </div>
+        </div>
+        
+        <div class="update-item">
+          <div class="update-date">Há 2 dias</div>
+          <div class="update-content">
+            <h4>Novo Sistema de Login</h4>
+            <p>Integração com o Discord implementada para a área de membros.</p>
+          </div>
+        </div>
+      </div>
+    </main>
   </div>
 </div>
 
@@ -451,7 +520,7 @@
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     
-    // --- 1. RECUPERAÇÃO DE SESSÃO (Se atualizar a página, continua logado) ---
+    // --- 1. RECUPERAÇÃO DE SESSÃO ---
     let globalUser = null;
     try {
       const stored = localStorage.getItem('eclipse_user');
@@ -460,12 +529,10 @@
       }
     } catch(e) { console.warn("LocalStorage vazio ou bloqueado."); }
 
-    // Atualiza a interface do usuário em todos os lugares
     function setupLoggedInUI(user) {
       if (!user || !user.id) return;
       globalUser = user;
 
-      // Se o Discord não enviar a foto, usa uma padrão segura.
       const avatarUrl = user.avatar 
         ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`
         : 'https://cdn.discordapp.com/embed/avatars/0.png';
@@ -474,50 +541,37 @@
       const userEmail = user.email || 'Email privado';
       const userTag = (user.tags && user.tags.length > 0) ? user.tags[0] : 'Membro';
 
-      // Atualiza botões de login (Navbar da Home e da Dashboard)
+      // Navbar (Home)
       document.getElementById('openLoginBtn').style.display = 'none';
-      
-      const menuHome = document.getElementById('user-menu-container');
-      if(menuHome) menuHome.style.display = 'block';
-      
-      const menuDb = document.getElementById('user-menu-container-db');
-      if(menuDb) menuDb.style.display = 'block';
+      document.getElementById('user-menu-container').style.display = 'block';
+      document.getElementById('nav-user-avatar').src = avatarUrl;
+      document.getElementById('nav-user-name').innerText = displayName;
 
-      // Preenche os dados na Home
-      const navAvatar = document.getElementById('nav-user-avatar');
-      if(navAvatar) navAvatar.src = avatarUrl;
-      const navName = document.getElementById('nav-user-name');
-      if(navName) navName.innerText = displayName;
+      // Navbar (Dashboard)
+      document.getElementById('user-menu-container-db').style.display = 'block';
+      document.getElementById('db-nav-avatar').src = avatarUrl;
+      document.getElementById('db-nav-name').innerText = displayName;
 
-      // Preenche os dados no Dashboard
-      const dbAvatar = document.getElementById('db-nav-avatar');
-      if(dbAvatar) dbAvatar.src = avatarUrl;
-      const dbName = document.getElementById('db-nav-name');
-      if(dbName) dbName.innerText = displayName;
+      // Sidebar e Main (Dashboard)
+      document.getElementById('db-main-avatar').src = avatarUrl;
+      document.getElementById('db-main-name').innerText = displayName;
+      document.getElementById('db-main-tag').innerText = userTag;
+      document.getElementById('db-main-email').innerText = userEmail;
+      document.getElementById('dash-welcome-name').innerText = displayName;
 
-      const mainAvatar = document.getElementById('db-main-avatar');
-      if(mainAvatar) mainAvatar.src = avatarUrl;
-      const mainName = document.getElementById('db-main-name');
-      if(mainName) mainName.innerText = displayName;
-      const mainTag = document.getElementById('db-main-tag');
-      if(mainTag) mainTag.innerText = userTag;
-      const mainEmail = document.getElementById('db-main-email');
-      if(mainEmail) mainEmail.innerText = userEmail;
-
-      // Data atual
+      // Data
       const today = new Date();
       const options = { day: 'numeric', month: 'short', year: 'numeric' };
-      const statDate = document.getElementById('db-stat-date');
-      if(statDate) statDate.innerText = today.toLocaleDateString('pt-BR', options);
+      document.getElementById('db-stat-date').innerText = today.toLocaleDateString('pt-BR', options);
     }
 
-    // --- 2. SISTEMA DE NAVEGAÇÃO (Hash para não perder a tela ao recarregar) ---
-    function showPage(page) {
+    // --- 2. SISTEMA DE NAVEGAÇÃO ---
+    window.showPage = function(page) {
       document.getElementById('landing-page').style.display = 'none';
       document.getElementById('dashboard-page').style.display = 'none';
       
       if (page === 'dashboard' && globalUser) {
-        document.getElementById('dashboard-page').style.display = 'flex';
+        document.getElementById('dashboard-page').style.display = 'block';
         window.location.hash = 'dashboard';
       } else {
         document.getElementById('landing-page').style.display = 'block';
@@ -525,10 +579,6 @@
       }
     }
 
-    window.showLanding = function() { showPage('home'); };
-    window.showDashboard = function() { showPage('dashboard'); };
-
-    // Verifica a URL para saber se deve carregar o dashboard
     function checkRoute() {
       if (window.location.hash === '#dashboard' && globalUser) {
         showPage('dashboard');
@@ -537,14 +587,12 @@
       }
     }
 
-    // --- 3. PROCESSO DE LOGIN E CALLBACK DO DISCORD ---
+    // --- 3. PROCESSO DE LOGIN ---
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('code');
 
     if (code) {
-      // Exibe um alerta visual simples
       document.body.style.opacity = '0.5';
-      
       fetch('https://zpieeogaqggxykxqfnrd.supabase.co/functions/v1/discord-auth', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -553,49 +601,38 @@
       .then(res => res.json())
       .then(data => {
         if (data.error) throw new Error(data.error);
-        
-        // Salva os dados no navegador
         try { localStorage.setItem('eclipse_user', JSON.stringify(data)); } catch(e){}
-        
-        // Limpa o '?code=' da URL
         try { window.history.replaceState({}, document.title, window.location.pathname); } catch(e){}
-        
-        // Atualiza a tela e vai pro dashboard
         setupLoggedInUI(data);
         showPage('dashboard');
         document.body.style.opacity = '1';
       })
       .catch(err => {
         console.error("Erro no login:", err);
-        alert("Erro ao fazer login. Verifique o console.");
+        alert("Erro ao fazer login. Tente novamente.");
         try { window.history.replaceState({}, document.title, window.location.pathname); } catch(e){}
         document.body.style.opacity = '1';
       });
     } else {
-      // Se já estiver logado ao carregar a página
-      if (globalUser) {
-        setupLoggedInUI(globalUser);
-      }
+      if (globalUser) setupLoggedInUI(globalUser);
       checkRoute();
     }
 
-    // --- 4. FUNÇÕES DE LOGOUT E DROPDOWN ---
+    // --- 4. LOGOUT E MENUS ---
     window.logout = function() {
       try { localStorage.removeItem('eclipse_user'); } catch(e){}
-      window.location.href = window.location.pathname; // Recarrega sem o hash
+      window.location.href = window.location.pathname; 
     };
 
     document.getElementById('btn-sair').addEventListener('click', window.logout);
     document.getElementById('btn-sair-db').addEventListener('click', window.logout);
 
-    // Toggles do dropdown
     document.getElementById('user-menu-btn').addEventListener('click', () => document.getElementById('dropdown-menu').classList.toggle('show'));
     document.getElementById('user-menu-btn-db').addEventListener('click', () => document.getElementById('dropdown-menu-db').classList.toggle('show'));
     
     document.getElementById('btn-painel').addEventListener('click', () => { showPage('dashboard'); document.getElementById('dropdown-menu').classList.remove('show'); });
     document.getElementById('btn-painel-db').addEventListener('click', () => { document.getElementById('dropdown-menu-db').classList.remove('show'); });
 
-    // Fecha menus ao clicar fora
     document.addEventListener('click', (e) => {
       if (!document.getElementById('user-menu-container').contains(e.target)) document.getElementById('dropdown-menu').classList.remove('show');
       if (!document.getElementById('user-menu-container-db').contains(e.target)) document.getElementById('dropdown-menu-db').classList.remove('show');
@@ -687,7 +724,7 @@
       draw();
     }
 
-    // --- 7. BATIMENTO CARDÍACO (ESTICADO) ---
+    // --- 7. BATIMENTO CARDÍACO (BRANCO) ---
     const ekgCanvas = document.getElementById('ekg-canvas');
     const sidebar = document.getElementById('sidebar-clickable');
     
@@ -731,8 +768,7 @@
 
         ekgCtx.clearRect(0, 0, ekgWidth, ekgHeight);
         
-        // ESTICADO: x -= 1 deixa a onda mais devagar e larga
-        points.forEach(p => p.x -= 1);
+        points.forEach(p => p.x -= 2);
 
         if (points.length > 0 && points[0].x < -10) {
           points.shift();
@@ -741,14 +777,14 @@
         let targetY = ekgHeight / 2;
 
         if (isSpiking) {
-          // Fases maiores (8 e 12) criam picos mais largos
-          if (spikePhase < 2) targetY = ekgHeight / 2;
-          else if (spikePhase < 4) targetY = ekgHeight / 2 + 30;   
-          else if (spikePhase < 8) targetY = ekgHeight / 2 - 130;  
-          else if (spikePhase < 12) targetY = ekgHeight / 2 + 100; 
-          else if (spikePhase < 14) targetY = ekgHeight / 2;       
-          else if (spikePhase < 18) targetY = ekgHeight / 2 - 40;  
-          else if (spikePhase < 20) targetY = ekgHeight / 2;       
+          if (spikePhase < 2) targetY = ekgHeight / 2; 
+          else if (spikePhase < 6) targetY = ekgHeight / 2 - 20; 
+          else if (spikePhase < 8) targetY = ekgHeight / 2 + 10; 
+          else if (spikePhase < 12) targetY = ekgHeight / 2 - 130; 
+          else if (spikePhase < 16) targetY = ekgHeight / 2 + 90; 
+          else if (spikePhase < 20) targetY = ekgHeight / 2; 
+          else if (spikePhase < 26) targetY = ekgHeight / 2 - 40; 
+          else if (spikePhase < 30) targetY = ekgHeight / 2; 
           else { 
             isSpiking = false; 
             targetY = ekgHeight / 2;
@@ -769,15 +805,17 @@
           ekgCtx.lineJoin = 'miter';
           ekgCtx.miterLimit = 10;
 
+          // Cor Branca e Brilho
           ekgCtx.strokeStyle = '#ffffff';
-          ekgCtx.lineWidth = 2.5; 
-          ekgCtx.shadowBlur = 12;
+          ekgCtx.lineWidth = 3; 
+          ekgCtx.shadowBlur = 15;
           ekgCtx.shadowColor = 'rgba(255, 255, 255, 0.8)';
           ekgCtx.stroke();
           
+          // Rastro escuro embaixo da linha
           ekgCtx.shadowBlur = 0;
           ekgCtx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
-          ekgCtx.lineWidth = 5;
+          ekgCtx.lineWidth = 6;
           ekgCtx.stroke();
         }
 
