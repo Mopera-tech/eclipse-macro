@@ -11,6 +11,8 @@
   :root {
     --accent-color: #ffffff; 
     --bg-dark: #050505;
+    --bg-card: #0a0a0a;
+    --border-color: #1a1a1a;
   }
 
   html, body { width: 100%; overflow-x: hidden; }
@@ -25,11 +27,13 @@
 
   @keyframes siteFadeIn { 0% { opacity: 0; } 100% { opacity: 1; } }
 
-  /* NAVBAR */
+  /* =========================================
+     NAVBAR DO SITE
+     ========================================= */
   .navbar {
     position: fixed; top: 24px; left: 50%; transform: translateX(-50%);
     background: rgba(15, 15, 15, 0.85); backdrop-filter: blur(12px);
-    border: 1px solid #222; border-radius: 50px;
+    border: 1px solid var(--border-color); border-radius: 50px;
     display: flex; align-items: center; padding: 8px 8px 8px 16px; 
     z-index: 999; width: max-content; max-width: 95%; gap: 20px;
   }
@@ -59,7 +63,7 @@
   .btn { display: inline-flex; align-items: center; justify-content: center; background: #fff; color: #000; padding: 16px 40px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 1.1rem; transition: all 0.3s ease; border: 1px solid #fff; }
   .btn:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 10px 20px rgba(255,255,255,0.2); }
 
-  section { padding: 80px 0; border-top: 1px solid #1a1a1a; position: relative; z-index: 2; }
+  section { padding: 80px 0; border-top: 1px solid var(--border-color); position: relative; z-index: 2; }
   h2 { font-size: 2.5rem; font-weight: 800; margin-bottom: 40px; letter-spacing: -1px; }
   
   .reveal { opacity: 1; transform: translateY(0); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
@@ -68,23 +72,23 @@
 
   .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
   .games-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 600px; }
-  .tech-card { background: #0a0a0a; border: 1px solid #222; border-radius: 16px; padding: 32px 24px; transition: all 0.4s ease; }
+  .tech-card { background: var(--bg-card); border: 1px solid #222; border-radius: 16px; padding: 32px 24px; transition: all 0.4s ease; }
   .tech-card:hover { transform: translateY(-8px); border-color: #fff; box-shadow: 0 10px 30px rgba(255,255,255,0.1); }
   .tag { display: inline-block; background: #fff; color: #000; padding: 4px 12px; border-radius: 4px; font-weight: 800; font-size: 0.75rem; margin-bottom: 16px; }
   .tech-card h3 { font-size: 1.6rem; margin-bottom: 8px; font-weight: 700; }
   .tech-card p { color: #888; font-size: 0.95rem; }
-  .game-card { background: #0a0a0a; border: 1px solid #222; border-radius: 16px; padding: 32px; transition: all 0.4s ease; }
+  .game-card { background: var(--bg-card); border: 1px solid #222; border-radius: 16px; padding: 32px; transition: all 0.4s ease; }
   
   .step { margin-bottom: 32px; }
   .step .num { color: #fff; font-size: 1rem; font-weight: 800; letter-spacing: 2px; }
   .step h3 { font-size: 1.5rem; margin: 8px 0; }
   .step p { color: #888; }
 
-  details { background: #0a0a0a; border: 1px solid #222; border-radius: 12px; padding: 24px; margin-bottom: 16px; cursor: pointer; }
+  details { background: var(--bg-card); border: 1px solid #222; border-radius: 12px; padding: 24px; margin-bottom: 16px; cursor: pointer; }
   details summary { font-weight: 600; font-size: 1.1rem; outline: none; }
   details p { color: #888; margin-top: 16px; }
 
-  .community-section { background: #000; padding: 100px 0; border-top: 1px solid #1a1a1a; }
+  .community-section { background: #000; padding: 100px 0; border-top: 1px solid var(--border-color); }
   .community-content { display: flex; flex-direction: column; align-items: flex-start; max-width: 800px; }
   .community-icon { background: #5865F2; width: 56px; height: 56px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 24px; }
   .community-content h2 { font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 16px; }
@@ -92,26 +96,14 @@
   .action-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
   .discord-btn-vertical { display: inline-flex; align-items: center; justify-content: center; background: #fff; color: #000; padding: 16px 32px; border-radius: 30px; font-weight: 700; text-decoration: none; font-size: 1.1rem; border: 1px solid #fff; transition: all 0.3s ease; }
   
-  footer { padding: 60px 0; border-top: 1px solid #1a1a1a; text-align: center; color: #666; font-size: .9rem; }
+  footer { padding: 60px 0; border-top: 1px solid var(--border-color); text-align: center; color: #666; font-size: .9rem; }
 
   /* =========================================
-     CORREÇÃO DO CANVAS: visibility hidden em vez de display none
+     TELA DE LOGIN
      ========================================= */
-  .auth-overlay { 
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-    background: var(--bg-dark); 
-    display: flex; 
-    visibility: hidden; 
-    opacity: 0; 
-    transition: opacity 0.4s ease, visibility 0.4s; 
-    z-index: 10000; 
-  }
-  .auth-overlay.show { 
-    visibility: visible; 
-    opacity: 1; 
-  }
-
-  .auth-sidebar { flex: 1; background: linear-gradient(135deg, #0a0a0a 0%, #000000 100%); border-right: 1px solid #1a1a1a; padding: 60px; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; }
+  .auth-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-dark); display: flex; visibility: hidden; opacity: 0; transition: opacity 0.4s ease, visibility 0.4s; z-index: 10000; }
+  .auth-overlay.show { visibility: visible; opacity: 1; }
+  .auth-sidebar { flex: 1; background: linear-gradient(135deg, #0a0a0a 0%, #000000 100%); border-right: 1px solid var(--border-color); padding: 60px; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; cursor: crosshair; }
   #ekg-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
   .sidebar-logo { display: flex; align-items: center; gap: 12px; font-size: 1.2rem; font-weight: 700; z-index: 2; position: relative; }
   .sidebar-logo img { width: 32px; height: 32px; border-radius: 50%; border: 1px solid #333; }
@@ -124,7 +116,7 @@
   .back-btn { position: absolute; top: 40px; right: 60px; display: inline-flex; align-items: center; gap: 8px; color: #888; text-decoration: none; font-size: 0.9rem; cursor: pointer; transition: color 0.3s; }
   .back-btn:hover { color: #fff; }
   .form-wrapper { margin: auto; width: 100%; max-width: 400px; }
-  .auth-tabs { display: flex; background: #0a0a0a; border-radius: 8px; border: 1px solid #222; padding: 4px; margin-bottom: 32px; }
+  .auth-tabs { display: flex; background: var(--bg-card); border-radius: 8px; border: 1px solid #222; padding: 4px; margin-bottom: 32px; }
   .auth-tab { flex: 1; padding: 12px; text-align: center; border-radius: 6px; cursor: pointer; font-weight: 600; color: #888; font-size: 0.95rem; transition: all 0.3s ease; }
   .auth-tab.active { background: #1a1a1a; color: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
   .auth-form { display: none; }
@@ -136,7 +128,7 @@
   .input-group label { display: block; font-size: 0.9rem; color: #ccc; margin-bottom: 8px; font-weight: 500; }
   .input-wrapper { position: relative; display: flex; align-items: center; }
   .input-wrapper svg { position: absolute; left: 16px; color: #666; width: 18px; height: 18px; }
-  .input-wrapper input { width: 100%; padding: 16px 16px 16px 44px; background: #0a0a0a; border: 1px solid #222; border-radius: 8px; color: #fff; font-size: 0.95rem; outline: none; transition: border-color 0.3s; }
+  .input-wrapper input { width: 100%; padding: 16px 16px 16px 44px; background: var(--bg-card); border: 1px solid #222; border-radius: 8px; color: #fff; font-size: 0.95rem; outline: none; transition: border-color 0.3s; }
   .input-wrapper input:focus { border-color: #555; }
   .submit-btn { width: 100%; padding: 16px; background: #fff; color: #000; border: none; border-radius: 8px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: all 0.3s ease; }
   .divider { display: flex; align-items: center; text-align: center; margin: 24px 0; color: #666; font-size: 0.85rem; }
@@ -144,86 +136,250 @@
   .divider::before { margin-right: 15px; }
   .divider::after { margin-left: 15px; }
   
-  /* O LINK DO DISCORD ESTÁ AQUI - SCOPE CORRIGIDO */
-  .discord-login-btn { width: 100%; padding: 16px; background: #0a0a0a; color: #fff; border: 1px solid #222; border-radius: 8px; font-weight: 600; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.3s ease; text-decoration: none; }
+  .discord-login-btn { width: 100%; padding: 16px; background: var(--bg-card); color: #fff; border: 1px solid #222; border-radius: 8px; font-weight: 600; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.3s ease; text-decoration: none; }
   .discord-login-btn:hover { background: #1a1a1a; border-color: #444; }
   
   @media (max-width: 800px) { .auth-sidebar { display: none; } .auth-main { padding: 40px 24px; } }
+
+  /* =========================================
+     DASHBOARD (ÁREA DE MEMBROS)
+     ========================================= */
+  .dashboard-page { display: none; flex-direction: column; min-height: 100vh; background: #000; position: relative; z-index: 100; }
+  
+  /* Navbar do Dashboard */
+  .db-nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; border-bottom: 1px solid #111; }
+  .db-nav-left { display: flex; align-items: center; gap: 32px; }
+  .db-logo { font-size: 1.2rem; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+  .db-logo img { width: 28px; height: 28px; border-radius: 50%; }
+  .db-nav-links { display: flex; gap: 24px; }
+  .db-nav-links a { color: #888; text-decoration: none; font-size: 0.9rem; font-weight: 500; }
+  .db-nav-links a:hover { color: #fff; }
+  
+  /* Layout principal */
+  .db-container { display: flex; flex: 1; }
+  
+  /* Sidebar do Dashboard */
+  .db-sidebar { width: 260px; border-right: 1px solid #111; padding: 32px 24px; display: flex; flex-direction: column; gap: 8px; }
+  .db-user-info { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; padding: 0 12px; }
+  .db-user-info img { width: 40px; height: 40px; border-radius: 50%; }
+  .db-user-info .name { font-size: 0.95rem; font-weight: 700; }
+  .db-user-info .email { font-size: 0.75rem; color: #888; }
+  
+  .db-nav-item { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 8px; color: #888; text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: all 0.2s; cursor: pointer; }
+  .db-nav-item:hover { background: #111; color: #fff; }
+  .db-nav-item.active { background: #fff; color: #000; }
+  
+  /* Conteúdo do Dashboard */
+  .db-content { flex: 1; padding: 60px; max-width: 1000px; }
+  .db-header { display: flex; align-items: center; gap: 24px; margin-bottom: 40px; }
+  .db-header img { width: 100px; height: 100px; border-radius: 50%; border: 2px solid #222; }
+  .db-header h1 { font-size: 2rem; font-weight: 700; margin: 0; }
+  .db-header p { color: #888; font-size: 1rem; margin: 0; }
+  
+  /* Stats Grid */
+  .db-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 60px; }
+  .db-stat-card { background: var(--bg-card); border: 1px solid #222; border-radius: 12px; padding: 20px; text-align: center; }
+  .db-stat-card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 4px; color: #fff; }
+  .db-stat-card p { font-size: 0.8rem; color: #888; }
+  
+  /* Atividade Heatmap */
+  .db-activity { margin-bottom: 60px; }
+  .db-activity-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .db-activity-header h2 { font-size: 1.2rem; font-weight: 700; margin: 0; }
+  .db-activity-header p { font-size: 0.85rem; color: #888; margin: 0; }
+  .db-activity-filters { display: flex; gap: 12px; font-size: 0.8rem; color: #666; }
+  .db-activity-filters span { cursor: pointer; }
+  .db-activity-filters span.active { color: #fff; font-weight: 600; }
+  
+  .heatmap { display: grid; grid-template-columns: repeat(52, 1fr); gap: 4px; }
+  .heatmap-day { width: 100%; aspect-ratio: 1; background: #111; border-radius: 2px; }
+  
+  .logout-btn { background: #fff; color: #000; border: none; padding: 8px 24px; border-radius: 20px; font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: all 0.2s; }
+  .logout-btn:hover { background: #ccc; }
 </style>
 </head>
 <body>
 
-<nav class="navbar">
-  <div class="navbar-left">
-    <img src="logo.png" alt="Eclipse Logo" class="navbar-logo">
-    <div class="nav-links">
-      <a href="#home" class="active">Home</a>
-      <a href="#features">Features</a>
-      <a href="#howitworks">How it Works</a>
+<!-- =========================================
+     SITE PRINCIPAL (LANDING PAGE)
+     ========================================= -->
+<div id="landing-page">
+  <nav class="navbar">
+    <div class="navbar-left">
+      <img src="logo.png" alt="Eclipse Logo" class="navbar-logo">
+      <div class="nav-links">
+        <a href="#home" class="active">Home</a>
+        <a href="#features">Features</a>
+        <a href="#howitworks">How it Works</a>
+      </div>
     </div>
+    <button id="openLoginBtn" class="login-nav-btn">Log In</button>
+  </nav>
+
+  <canvas id="bg-canvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;"></canvas>
+
+  <div id="home" class="hero container reveal active">
+    <h1>Eclipse</h1>
+    <p>Free macro for TSB. No license, no hassle, straight to the point.</p>
+    <a href="https://github.com/Mopera-tech/eclipse-macro/releases/download/1.0/Eclipse.exe" class="btn">Download for Windows</a>
   </div>
-  <button id="openLoginBtn" class="login-nav-btn">Log In</button>
-</nav>
 
-<canvas id="bg-canvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;"></canvas>
+  <section id="features" class="container reveal">
+    <h2>Features For Now</h2>
+    <div class="grid">
+      <div class="tech-card"><div class="tag">TECH</div><h3>Supa</h3><p>Flawless Supa execution with zero effort.</p></div>
+      <div class="tech-card"><div class="tag">TECH</div><h3>Instant Twisted</h3><p>Fast and precise combos with Instant Twisted.</p></div>
+      <div class="tech-card"><div class="tag">TECH</div><h3>Lethal</h3><p>Lethal attacks at the right moment.</p></div>
+      <div class="tech-card"><div class="tag">TECH</div><h3>Backdash Cancel</h3><p>Backdash canceling for maximum mobility.</p></div>
+      <div class="tech-card"><div class="tag">TECH</div><h3>Emote Dash</h3><p>Fast dash using emotes.</p></div>
+      <div class="tech-card"><div class="tag">TECH</div><h3>M1 Reset</h3><p>Instant combo reset.</p></div>
+    </div>
+    <h2 style="margin-top: 80px;">Supported Games</h2>
+    <div class="games-grid">
+      <div class="game-card"><h3>TSB</h3><p>The Strongest Battlegrounds.</p></div>
+    </div>
+  </section>
 
-<div id="home" class="hero container reveal active">
-  <h1>Eclipse</h1>
-  <p>Free macro for TSB. No license, no hassle, straight to the point.</p>
-  <a href="https://github.com/Mopera-tech/eclipse-macro/releases/download/1.0/Eclipse.exe" class="btn">Download for Windows</a>
+  <section id="howitworks" class="container reveal">
+    <h2>How it works</h2>
+    <div class="step"><div class="num">01</div><h3>Download</h3><p>Download the Windows installer using the button below.</p></div>
+    <div class="step"><div class="num">02</div><h3>Install</h3><p>Run the installer. If SmartScreen appears, click "More info → Run anyway".</p></div>
+    <div class="step"><div class="num">03</div><h3>Use</h3><p>Open Eclipse, choose your game, and start using it.</p></div>
+  </section>
+
+  <section class="container reveal">
+    <h2>FAQ</h2>
+    <details><summary>Is it really free?</summary><p>Yes, 100% free. No license, no payment.</p></details>
+    <details><summary>Is it safe?</summary><p>Eclipse does not inject code into Roblox. It is an input automation tool. Use it at your own risk.</p></details>
+  </section>
+
+  <section id="download" class="community-section">
+    <div class="container reveal">
+      <div class="community-content">
+        <div class="community-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="#ffffff"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+        </div>
+        <div class="community-label">Community</div>
+        <h2>Join the community.</h2>
+        <p>Updates, techs, and support. All in one place.</p>
+        <div class="action-buttons">
+          <a href="https://github.com/Mopera-tech/eclipse-macro/releases/download/1.0/Eclipse.exe" class="btn">Download Macro</a>
+          <a href="https://discord.gg/jfevHZcSzU" target="_blank" class="discord-btn-vertical">Join Discord</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="container">
+    <p>© 2026 Eclipse. All rights reserved.</p>
+  </footer>
 </div>
 
-<section id="features" class="container reveal">
-  <h2>Features For Now</h2>
-  <div class="grid">
-    <div class="tech-card"><div class="tag">TECH</div><h3>Supa</h3><p>Flawless Supa execution with zero effort.</p></div>
-    <div class="tech-card"><div class="tag">TECH</div><h3>Instant Twisted</h3><p>Fast and precise combos with Instant Twisted.</p></div>
-    <div class="tech-card"><div class="tag">TECH</div><h3>Lethal</h3><p>Lethal attacks at the right moment.</p></div>
-    <div class="tech-card"><div class="tag">TECH</div><h3>Backdash Cancel</h3><p>Backdash canceling for maximum mobility.</p></div>
-    <div class="tech-card"><div class="tag">TECH</div><h3>Emote Dash</h3><p>Fast dash using emotes.</p></div>
-    <div class="tech-card"><div class="tag">TECH</div><h3>M1 Reset</h3><p>Instant combo reset.</p></div>
-  </div>
-  <h2 style="margin-top: 80px;">Supported Games</h2>
-  <div class="games-grid">
-    <div class="game-card"><h3>TSB</h3><p>The Strongest Battlegrounds.</p></div>
-  </div>
-</section>
-
-<section id="howitworks" class="container reveal">
-  <h2>How it works</h2>
-  <div class="step"><div class="num">01</div><h3>Download</h3><p>Download the Windows installer using the button below.</p></div>
-  <div class="step"><div class="num">02</div><h3>Install</h3><p>Run the installer. If SmartScreen appears, click "More info → Run anyway".</p></div>
-  <div class="step"><div class="num">03</div><h3>Use</h3><p>Open Eclipse, choose your game, and start using it.</p></div>
-</section>
-
-<section class="container reveal">
-  <h2>FAQ</h2>
-  <details><summary>Is it really free?</summary><p>Yes, 100% free. No license, no payment.</p></details>
-  <details><summary>Is it safe?</summary><p>Eclipse does not inject code into Roblox. It is an input automation tool. Use it at your own risk.</p></details>
-</section>
-
-<section id="download" class="community-section">
-  <div class="container reveal">
-    <div class="community-content">
-      <div class="community-icon">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="#ffffff"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+<!-- =========================================
+     DASHBOARD (ÁREA DE MEMBROS)
+     ========================================= -->
+<div id="dashboard-page" class="dashboard-page">
+  <nav class="db-nav">
+    <div class="db-nav-left">
+      <div class="db-logo">
+        <img src="logo.png" alt="Eclipse"> Eclipse Account
       </div>
-      <div class="community-label">Community</div>
-      <h2>Join the community.</h2>
-      <p>Updates, techs, and support. All in one place.</p>
-      <div class="action-buttons">
-        <a href="https://github.com/Mopera-tech/eclipse-macro/releases/download/1.0/Eclipse.exe" class="btn">Download Macro</a>
-        <a href="https://discord.gg/jfevHZcSzU" target="_blank" class="discord-btn-vertical">Join Discord</a>
+      <div class="db-nav-links">
+        <a href="#">Produto</a>
+        <a href="#">Documentação</a>
+        <a href="#">Download</a>
+        <a href="#">Preços</a>
+        <a href="#">Comunidade</a>
+      </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 20px;">
+      <span style="font-size: 0.9rem; font-weight: 600;" id="db-nav-name">Carregando...</span>
+      <button class="logout-btn" onclick="logout()">Sair</button>
+    </div>
+  </nav>
+
+  <div class="db-container">
+    <!-- Sidebar -->
+    <div class="db-sidebar">
+      <div class="db-user-info">
+        <img id="db-side-avatar" src="" alt="Avatar">
+        <div>
+          <div class="name" id="db-side-name">Username</div>
+          <div class="email" id="db-side-email">email@exemplo.com</div>
+        </div>
+      </div>
+      <a class="db-nav-item active">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+        Visão geral
+      </a>
+      <a class="db-nav-item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        Informações pessoais
+      </a>
+      <a class="db-nav-item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+        Login e segurança
+      </a>
+      <a class="db-nav-item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+        Assinatura
+      </a>
+    </div>
+
+    <!-- Content -->
+    <div class="db-content">
+      <div class="db-header">
+        <img id="db-main-avatar" src="" alt="Avatar">
+        <div>
+          <h1 id="db-main-name">Username</h1>
+          <p id="db-main-email">email@exemplo.com</p>
+        </div>
+      </div>
+
+      <div class="db-stats">
+        <div class="db-stat-card">
+          <h3 id="db-stat-date">23 de jun. de 2026</h3>
+          <p>Membro desde</p>
+        </div>
+        <div class="db-stat-card">
+          <h3>Free</h3>
+          <p>Plano atual</p>
+        </div>
+        <div class="db-stat-card">
+          <h3>0 days</h3>
+          <p>Tempo na conta</p>
+        </div>
+        <div class="db-stat-card">
+          <h3>0</h3>
+          <p>Contas de Roblox geradas</p>
+        </div>
+        <div class="db-stat-card">
+          <h3>1</h3>
+          <p>Dispositivos usados</p>
+        </div>
+      </div>
+
+      <div class="db-activity">
+        <div class="db-activity-header">
+          <h2>Atividade</h2>
+          <div class="db-activity-filters">
+            <span class="active">Diário</span>
+            <span>Semanal</span>
+            <span>Acumulado</span>
+          </div>
+        </div>
+        <p style="font-size: 0.9rem; color: #888; margin-bottom: 20px;">Sua atividade no último ano.</p>
+        <div class="heatmap" id="heatmap">
+          <!-- Quadradinhos gerados via JS -->
+        </div>
       </div>
     </div>
   </div>
-</section>
+</div>
 
-<footer class="container">
-  <p>© 2026 Eclipse. All rights reserved.</p>
-</footer>
-
-<!-- TELA DE LOGIN -->
+<!-- =========================================
+     TELA DE LOGIN
+     ========================================= -->
 <div id="loginModal" class="auth-overlay">
   <div class="auth-sidebar" id="sidebar-clickable">
     <canvas id="ekg-canvas"></canvas>
@@ -267,8 +423,8 @@
         <button class="submit-btn">Sign in</button>
         <div class="divider">or</div>
 
-        <!-- LINK DO DISCORD COM O SCOPE CORRIGIDO -->
-        <a href="https://discord.com/api/oauth2/authorize?client_id=1569412157035126864&redirect_uri=https%3A%2F%2Fzpieeogaqggxykxqfnrd.supabase.co%2Fauth%2Fv1%2Fcallback&response_type=code&scope=identify%20guilds%20guilds.members.read" class="discord-login-btn">
+        <!-- Adicionado o scope "email" -->
+        <a href="https://discord.com/api/oauth2/authorize?client_id=1569412157035126864&redirect_uri=https%3A%2F%2Fzpieeogaqggxykxqfnrd.supabase.co%2Fauth%2Fv1%2Fcallback&response_type=code&scope=identify%20email%20guilds%20guilds.members.read" class="discord-login-btn">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
           Continue with Discord
         </a>
@@ -294,8 +450,8 @@
         <button class="submit-btn" style="margin-top: 16px;">Create account</button>
         <div class="divider">or</div>
         
-        <!-- LINK DO DISCORD COM O SCOPE CORRIGIDO -->
-        <a href="https://discord.com/api/oauth2/authorize?client_id=1569412157035126864&redirect_uri=https%3A%2F%2Fzpieeogaqggxykxqfnrd.supabase.co%2Fauth%2Fv1%2Fcallback&response_type=code&scope=identify%20guilds%20guilds.members.read" class="discord-login-btn">
+        <!-- Adicionado o scope "email" -->
+        <a href="https://discord.com/api/oauth2/authorize?client_id=1569412157035126864&redirect_uri=https%3A%2F%2Fzpieeogaqggxykxqfnrd.supabase.co%2Fauth%2Fv1%2Fcallback&response_type=code&scope=identify%20email%20guilds%20guilds.members.read" class="discord-login-btn">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
           Continue with Discord
         </a>
@@ -309,15 +465,13 @@
     document.body.classList.add('js-enabled');
 
     // ==========================================
-    // 1. LÓGICA DE CALLBACK DO DISCORD
+    // 1. LÓGICA DE LOGIN E CALLBACK
     // ==========================================
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('code');
 
+    // Se tem código na URL, acabou de voltar do Discord
     if (code) {
-      // Mostra um alerta de carregamento (opcional)
-      // alert("Autenticando com o Discord...");
-
       fetch('https://zpieeogaqggxykxqfnrd.supabase.co/functions/v1/discord-auth', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -326,69 +480,116 @@
       .then(res => res.json())
       .then(data => {
         if (data.error) throw new Error(data.error);
-
-        // Monta a URL do avatar
-        const avatarUrl = data.avatar 
-          ? `https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png`
-          : 'https://cdn.discordapp.com/embed/avatars/0.png';
         
-        const displayName = data.global_name || data.username;
-        const userTag = data.tags[0] || "Membro";
-
-        // Atualiza o botão no topo
-        const loginBtn = document.getElementById('openLoginBtn');
-        if (loginBtn) {
-          loginBtn.innerHTML = `
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <img src="${avatarUrl}" style="width: 24px; height: 24px; border-radius: 50%;" />
-              <span>${displayName}</span>
-              <span style="font-size: 0.7rem; background: #fff; color: #000; padding: 2px 6px; border-radius: 4px; font-weight: 800;">${userTag}</span>
-            </div>
-          `;
-          loginBtn.style.pointerEvents = 'none'; // Desativa clique
-        }
-
-        // Limpa a URL
+        // Salva os dados do usuário no navegador para a Dashboard
+        localStorage.setItem('eclipse_user', JSON.stringify(data));
+        
+        // Limpa a URL e recarrega a página para mostrar a Dashboard
         window.history.replaceState({}, document.title, window.location.pathname);
+        window.location.reload(); 
       })
       .catch(err => {
         console.error("Erro no login:", err);
-        alert("Erro ao fazer login. Verifique o painel do Supabase.");
+        alert("Erro ao fazer login. Tente novamente.");
         window.history.replaceState({}, document.title, window.location.pathname);
       });
     }
 
+    // Verifica se o usuário já está logado (tem dados salvos)
+    const savedUser = localStorage.getItem('eclipse_user');
+    
+    if (savedUser) {
+      // Usuário Logado -> Esconde o site e abre a Dashboard
+      const user = JSON.parse(savedUser);
+      
+      document.getElementById('landing-page').style.display = 'none';
+      document.getElementById('dashboard-page').style.display = 'flex';
+
+      // Preenche os dados da Dashboard
+      const avatarUrl = user.avatar 
+        ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`
+        : 'https://cdn.discordapp.com/embed/avatars/0.png';
+      
+      const displayName = user.global_name || user.username;
+      const userEmail = user.email || 'Email não fornecido';
+      const userTag = user.tags[0] || "Membro";
+
+      // Sidebar
+      document.getElementById('db-side-avatar').src = avatarUrl;
+      document.getElementById('db-side-name').innerText = displayName;
+      document.getElementById('db-side-email').innerText = userEmail;
+
+      // Nav
+      document.getElementById('db-nav-name').innerText = displayName;
+
+      // Header
+      document.getElementById('db-main-avatar').src = avatarUrl;
+      document.getElementById('db-main-name').innerText = displayName;
+      document.getElementById('db-main-email').innerText = userEmail;
+
+      // Atualiza a data de membro para hoje
+      const today = new Date();
+      const options = { day: 'numeric', month: 'short', year: 'numeric' };
+      document.getElementById('db-stat-date').innerText = today.toLocaleDateString('pt-BR', options);
+
+      // Gera o Heatmap (simulação visual)
+      const heatmapContainer = document.getElementById('heatmap');
+      for (let i = 0; i < 52 * 7; i++) {
+        const day = document.createElement('div');
+        day.classList.add('heatmap-day');
+        // Dá uma cor aleatória para parecer que tem atividade
+        if (Math.random() > 0.8) {
+          day.style.background = `rgba(255,255,255, ${Math.random() * 0.8 + 0.2})`;
+        }
+        heatmapContainer.appendChild(day);
+      }
+
+    } else {
+      // Usuário NÃO logado -> Site normal
+      document.getElementById('landing-page').style.display = 'block';
+      document.getElementById('dashboard-page').style.display = 'none';
+      
+      // Lógica do botão de login na navbar do site
+      const loginBtn = document.getElementById('openLoginBtn');
+      const modal = document.getElementById('loginModal');
+      
+      loginBtn.addEventListener('click', () => {
+        modal.classList.add('show');
+        document.body.style.overflow = 'hidden'; 
+        setTimeout(resizeEKG, 100);
+      });
+    }
+
+    // Botão de deslogar
+    window.logout = function() {
+      localStorage.removeItem('eclipse_user');
+      window.location.reload();
+    };
+
     // ==========================================
     // 2. CONTROLE DO MODAL DE LOGIN
     // ==========================================
-    const openBtn = document.getElementById('openLoginBtn');
     const backToSiteBtn = document.getElementById('backToSiteBtn');
     const modal = document.getElementById('loginModal');
     const tabs = document.querySelectorAll('.auth-tab');
     const forms = document.querySelectorAll('.auth-form');
 
-    openBtn.addEventListener('click', () => {
-      if(openBtn.style.pointerEvents !== 'none') {
-        modal.classList.add('show');
-        document.body.style.overflow = 'hidden'; 
-        setTimeout(resizeEKG, 50); // Dá um pequeno delay para o CSS carregar antes de ajustar o canvas
-      }
-    });
-
-    backToSiteBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      modal.classList.remove('show');
-      document.body.style.overflow = ''; 
-    });
-
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('active'));
-        forms.forEach(f => f.classList.remove('active'));
-        tab.classList.add('active');
-        document.getElementById(tab.getAttribute('data-target')).classList.add('active');
+    if (backToSiteBtn) {
+      backToSiteBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        modal.classList.remove('show');
+        document.body.style.overflow = ''; 
       });
-    });
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          tabs.forEach(t => t.classList.remove('active'));
+          forms.forEach(f => f.classList.remove('active'));
+          tab.classList.add('active');
+          document.getElementById(tab.getAttribute('data-target')).classList.add('active');
+        });
+      });
+    }
 
     // ==========================================
     // 3. SCROLL E ANIMAÇÕES
@@ -448,131 +649,169 @@
     // 4. PARTÍCULAS DE FUNDO
     // ==========================================
     const canvas = document.getElementById('bg-canvas');
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-    let mouse = { x: -1000, y: -1000, active: false, radius: 90 }; 
-    let idleTimer;
+    if(canvas) {
+      const ctx = canvas.getContext('2d');
+      let particles = [];
+      let mouse = { x: -1000, y: -1000, active: false, radius: 90 }; 
+      let idleTimer;
 
-    function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-    window.addEventListener('resize', resize); resize();
+      function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+      window.addEventListener('resize', resize); resize();
 
-    window.addEventListener('mousemove', (e) => {
-      mouse.x = e.clientX; mouse.y = e.clientY; mouse.active = true;
-      clearTimeout(idleTimer);
-      idleTimer = setTimeout(() => { mouse.active = false; mouse.x = -1000; mouse.y = -1000; }, 30000);
-    }, { passive: true });
-    window.addEventListener('mouseleave', () => { mouse.active = false; mouse.x = -1000; mouse.y = -1000; });
+      window.addEventListener('mousemove', (e) => {
+        mouse.x = e.clientX; mouse.y = e.clientY; mouse.active = true;
+        clearTimeout(idleTimer);
+        idleTimer = setTimeout(() => { mouse.active = false; mouse.x = -1000; mouse.y = -1000; }, 30000);
+      }, { passive: true });
+      window.addEventListener('mouseleave', () => { mouse.active = false; mouse.x = -1000; mouse.y = -1000; });
 
-    for (let i = 0; i < 90; i++) {
-      particles.push({
-        x: Math.random() * canvas.width, y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 2.5, vy: (Math.random() - 0.5) * 2.5,
-        radius: Math.random() * 2 + 1
-      });
-    }
-
-    function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach(p => {
-        p.x += p.vx; p.y += p.vy;
-        if (mouse.active) {
-          let dx = p.x - mouse.x, dy = p.y - mouse.y;
-          let distance = Math.sqrt(dx * dx + dy * dy);
-          if (distance < mouse.radius) {
-            let force = (mouse.radius - distance) / mouse.radius;
-            let angle = Math.atan2(dy, dx);
-            p.x += Math.cos(angle) * force * 6; p.y += Math.sin(angle) * force * 6;
-          }
-        }
-        if (p.x < -10) p.x = canvas.width + 10;
-        if (p.x > canvas.width + 10) p.x = -10;
-        if (p.y < -10) p.y = canvas.height + 10;
-        if (p.y > canvas.height + 10) p.y = -10;
-        ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.fillStyle = '#333333'; ctx.fill();
-      });
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          let dx = particles[i].x - particles[j].x, dy = particles[i].y - particles[j].y;
-          let distance = Math.sqrt(dx * dx + dy * dy);
-          if (distance < 120) {
-            ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(51, 51, 51, ${1 - distance / 120})`; ctx.stroke();
-          }
-        }
+      for (let i = 0; i < 90; i++) {
+        particles.push({
+          x: Math.random() * canvas.width, y: Math.random() * canvas.height,
+          vx: (Math.random() - 0.5) * 2.5, vy: (Math.random() - 0.5) * 2.5,
+          radius: Math.random() * 2 + 1
+        });
       }
-      requestAnimationFrame(draw);
+
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+          p.x += p.vx; p.y += p.vy;
+          if (mouse.active) {
+            let dx = p.x - mouse.x, dy = p.y - mouse.y;
+            let distance = Math.sqrt(dx * dx + dy * dy);
+            if (distance < mouse.radius) {
+              let force = (mouse.radius - distance) / mouse.radius;
+              let angle = Math.atan2(dy, dx);
+              p.x += Math.cos(angle) * force * 6; p.y += Math.sin(angle) * force * 6;
+            }
+          }
+          if (p.x < -10) p.x = canvas.width + 10;
+          if (p.x > canvas.width + 10) p.x = -10;
+          if (p.y < -10) p.y = canvas.height + 10;
+          if (p.y > canvas.height + 10) p.y = -10;
+          ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.fillStyle = '#333333'; ctx.fill();
+        });
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            let dx = particles[i].x - particles[j].x, dy = particles[i].y - particles[j].y;
+            let distance = Math.sqrt(dx * dx + dy * dy);
+            if (distance < 120) {
+              ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.strokeStyle = `rgba(51, 51, 51, ${1 - distance / 120})`; ctx.stroke();
+            }
+          }
+        }
+        requestAnimationFrame(draw);
+      }
+      draw();
     }
-    draw();
 
     // ==========================================
-    // 5. BATIMENTO CARDÍACO (CANVAS)
+    // 5. BATIMENTO CARDÍACO (LÓGICA REESCRITA)
     // ==========================================
     const ekgCanvas = document.getElementById('ekg-canvas');
-    const ekgCtx = ekgCanvas.getContext('2d');
     const sidebar = document.getElementById('sidebar-clickable');
-    let ekgWidth, ekgHeight, points = [], isSpiking = false, spikePhase = 0;
+    
+    if (ekgCanvas && sidebar) {
+      const ekgCtx = ekgCanvas.getContext('2d');
+      let ekgWidth = 0, ekgHeight = 0;
+      let points = [];
+      let isSpiking = false;
+      let spikePhase = 0;
 
-    function resizeEKG() {
-      if(!ekgCanvas || !sidebar) return;
-      ekgWidth = sidebar.offsetWidth; 
-      ekgHeight = sidebar.offsetHeight;
-      ekgCanvas.width = ekgWidth; 
-      ekgCanvas.height = ekgHeight;
-      points = [];
-      for(let i = 0; i < ekgWidth; i++) points.push({ x: i, y: ekgHeight / 2 });
-    }
-
-    sidebar.addEventListener('mousedown', () => { isSpiking = true; spikePhase = 0; });
-
-    function drawEKG() {
-      // Se o modal não estiver visível, apenas continua rodando o loop
-      if(!document.getElementById('loginModal').classList.contains('show')) {
-        requestAnimationFrame(drawEKG); 
-        return;
-      }
-      
-      ekgCtx.clearRect(0, 0, ekgWidth, ekgHeight);
-      points.shift();
-      let targetY = ekgHeight / 2; 
-      
-      if (isSpiking) {
-        if (spikePhase < 5) targetY = ekgHeight / 2 + 10;
-        else if (spikePhase < 15) targetY = ekgHeight / 2 - 40; 
-        else if (spikePhase < 25) targetY = ekgHeight / 2 + 30; 
-        else if (spikePhase < 35) targetY = ekgHeight / 2; 
-        else if (spikePhase < 45) targetY = ekgHeight / 2 - 15; 
-        else if (spikePhase < 55) targetY = ekgHeight / 2; 
-        else { isSpiking = false; targetY = ekgHeight / 2; }
-        spikePhase++;
-      } else {
-         targetY = ekgHeight / 2 + (Math.random() - 0.5) * 2;
+      window.resizeEKG = function() {
+        if(!ekgCanvas || !sidebar) return;
+        
+        ekgWidth = sidebar.clientWidth;
+        ekgHeight = sidebar.clientHeight;
+        
+        ekgCanvas.width = ekgWidth;
+        ekgCanvas.height = ekgHeight;
+        
+        points = [];
+        for(let i = 0; i <= ekgWidth; i += 2) {
+          points.push({ x: i, y: ekgHeight / 2 });
+        }
       }
 
-      points.push({ x: ekgWidth, y: targetY });
+      sidebar.addEventListener('mousedown', () => {
+        if(!isSpiking) {
+          isSpiking = true;
+          spikePhase = 0;
+        }
+      });
 
-      ekgCtx.beginPath(); 
-      ekgCtx.moveTo(points[0].x, points[0].y);
-      for (let i = 1; i < points.length; i++) ekgCtx.lineTo(points[i].x, points[i].y);
-      
-      ekgCtx.strokeStyle = '#ffffff'; 
-      ekgCtx.lineWidth = 2; 
-      ekgCtx.shadowBlur = 15; 
-      ekgCtx.shadowColor = 'rgba(255, 255, 255, 0.8)'; 
-      ekgCtx.stroke();
-      
-      ekgCtx.shadowBlur = 0; 
-      ekgCtx.strokeStyle = 'rgba(255, 255, 255, 0.1)'; 
-      ekgCtx.lineWidth = 4; 
-      ekgCtx.stroke();
+      function drawEKG() {
+        if(!document.getElementById('loginModal').classList.contains('show')) {
+          requestAnimationFrame(drawEKG); 
+          return;
+        }
 
-      requestAnimationFrame(drawEKG);
+        if(ekgWidth === 0 || ekgHeight === 0) {
+          resizeEKG();
+          requestAnimationFrame(drawEKG);
+          return;
+        }
+
+        ekgCtx.clearRect(0, 0, ekgWidth, ekgHeight);
+
+        points.forEach(p => p.x -= 3);
+
+        if (points.length > 0 && points[0].x < -10) {
+          points.shift();
+        }
+
+        let targetY = ekgHeight / 2;
+
+        if (isSpiking) {
+          if (spikePhase < 5) targetY = ekgHeight / 2 + 10;
+          else if (spikePhase < 15) targetY = ekgHeight / 2 - 50; 
+          else if (spikePhase < 25) targetY = ekgHeight / 2 + 30;
+          else if (spikePhase < 35) targetY = ekgHeight / 2;
+          else { 
+            isSpiking = false; 
+            targetY = ekgHeight / 2;
+          }
+          spikePhase++;
+        } else {
+          targetY = ekgHeight / 2 + (Math.random() - 0.5) * 2;
+        }
+
+        points.push({ x: ekgWidth, y: targetY });
+
+        if (points.length > 1) {
+          ekgCtx.beginPath();
+          ekgCtx.moveTo(points[0].x, points[0].y);
+          
+          for (let i = 1; i < points.length; i++) {
+            ekgCtx.lineTo(points[i].x, points[i].y);
+          }
+
+          ekgCtx.strokeStyle = '#ffffff';
+          ekgCtx.lineWidth = 2;
+          ekgCtx.shadowBlur = 15;
+          ekgCtx.shadowColor = 'rgba(255, 255, 255, 0.8)';
+          ekgCtx.stroke();
+          
+          ekgCtx.shadowBlur = 0;
+          ekgCtx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+          ekgCtx.lineWidth = 4;
+          ekgCtx.stroke();
+        }
+
+        requestAnimationFrame(drawEKG);
+      }
+
+      setTimeout(resizeEKG, 100); 
+      drawEKG(); 
+
+      window.addEventListener('resize', () => { 
+        if(document.getElementById('loginModal').classList.contains('show')){
+          resizeEKG(); 
+        }
+      });
     }
-    
-    // Inicializa o tamanho e a animação
-    setTimeout(resizeEKG, 100); 
-    drawEKG(); 
-    
-    window.addEventListener('resize', () => { resizeEKG(); });
   });
 </script>
 </body>
