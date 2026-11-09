@@ -21,6 +21,16 @@
 
   html, body { width: 100%; overflow-x: hidden; scroll-behavior: smooth; }
 
+  /* COR DE SELEÇÃO DE TEXTO (BRANCO) */
+  ::selection {
+    background: #ffffff;
+    color: #000000;
+  }
+  ::-moz-selection {
+    background: #ffffff;
+    color: #000000;
+  }
+
   /* CURSORES CUSTOMIZADOS */
   body, html, a, button, .btn, .tech-card, .game-card, .dropdown-item, .auth-tab, .side-nav-btn {
     cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12,2 C12,7 7,12 2,12 C7,12 12,17 12,22 C12,17 17,12 22,12 C17,12 12,7 12,2 Z" fill="%23ffffff"/></svg>') 12 12, auto !important;
@@ -265,8 +275,8 @@
 <div id="landing-page">
   <nav class="navbar">
     <div class="navbar-left">
-      <!-- LINK ABSOLUTO DO SEU GITHUB PAGES -->
-      <img src="https://mopera-tech.github.io/eclipse-macro/logo.png" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'45\' fill=\'none\' stroke=\'%23ffffff\' stroke-width=\'4\'/><path d=\'M50 20 L55 45 L80 50 L55 55 L50 80 L45 55 L20 50 L45 45 Z\' fill=\'%23ffffff\'/></svg>';" alt="Eclipse Logo" class="navbar-logo">
+      <!-- LINK RAW DO SEU GITHUB INSERIDO AQUI -->
+      <img src="https://raw.githubusercontent.com/Mopera-tech/eclipse-macro/main/logo.png" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'45\' fill=\'none\' stroke=\'%23ffffff\' stroke-width=\'4\'/><path d=\'M50 20 L55 45 L80 50 L55 55 L50 80 L45 55 L20 50 L45 45 Z\' fill=\'%23ffffff\'/></svg>';" alt="Eclipse Logo" class="navbar-logo">
       
       <div class="nav-links">
         <a href="#home" class="active" onclick="smoothScroll('home')">Home</a>
@@ -367,8 +377,8 @@
 <div id="dashboard-page" class="dashboard-page">
   <nav class="navbar anime-in" style="animation-delay: 0.1s;">
     <div class="navbar-left">
-      <!-- LINK ABSOLUTO DO SEU GITHUB PAGES -->
-      <img src="https://mopera-tech.github.io/eclipse-macro/logo.png" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'45\' fill=\'none\' stroke=\'%23ffffff\' stroke-width=\'4\'/><path d=\'M50 20 L55 45 L80 50 L55 55 L50 80 L45 55 L20 50 L45 45 Z\' fill=\'%23ffffff\'/></svg>';" alt="Eclipse Logo" class="navbar-logo">
+      <!-- LINK RAW DO SEU GITHUB INSERIDO AQUI -->
+      <img src="https://raw.githubusercontent.com/Mopera-tech/eclipse-macro/main/logo.png" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'45\' fill=\'none\' stroke=\'%23ffffff\' stroke-width=\'4\'/><path d=\'M50 20 L55 45 L80 50 L55 55 L50 80 L45 55 L20 50 L45 45 Z\' fill=\'%23ffffff\'/></svg>';" alt="Eclipse Logo" class="navbar-logo">
       
       <div class="nav-links">
         <a onclick="showPage('home')">Voltar ao site</a>
@@ -547,8 +557,8 @@
   <div class="auth-sidebar" id="sidebar-clickable">
     <canvas id="ekg-canvas"></canvas>
     <div class="sidebar-logo">
-      <!-- LINK ABSOLUTO DO SEU GITHUB PAGES -->
-      <img src="https://mopera-tech.github.io/eclipse-macro/logo.png" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'45\' fill=\'none\' stroke=\'%23ffffff\' stroke-width=\'4\'/><path d=\'M50 20 L55 45 L80 50 L55 55 L50 80 L45 55 L20 50 L45 45 Z\' fill=\'%23ffffff\'/></svg>';" alt="Logo">Eclipse
+      <!-- LINK RAW DO SEU GITHUB INSERIDO AQUI -->
+      <img src="https://raw.githubusercontent.com/Mopera-tech/eclipse-macro/main/logo.png" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'45\' fill=\'none\' stroke=\'%23ffffff\' stroke-width=\'4\'/><path d=\'M50 20 L55 45 L80 50 L55 55 L50 80 L45 55 L20 50 L45 45 Z\' fill=\'%23ffffff\'/></svg>';" alt="Logo">Eclipse
     </div>
     <div class="sidebar-text">
       <h2>Macros, techs and combos for Roblox.</h2>
@@ -704,7 +714,7 @@
       if (page === 'dashboard' && globalUser) {
         document.getElementById('dashboard-page').style.display = 'block';
         window.location.hash = 'dashboard';
-        window.scrollTo(0, 0); // Sobe pro topo ao abrir o dashboard
+        window.scrollTo(0, 0);
         
         document.querySelectorAll('.dash-main .anime-in, .dash-sidebar.anime-in, #dashboard-page .navbar.anime-in').forEach(el => {
             el.style.animation = 'none';
@@ -718,16 +728,13 @@
       }
     }
 
-    // FUNÇÃO QUE FAZ A ROLAGEM SUAVE
     window.smoothScroll = function(targetId) {
-      // Se não estiver na home, volta pra ela primeiro
       if (document.getElementById('landing-page').style.display === 'none') {
         showPage('home');
       }
       
       const targetSection = document.getElementById(targetId);
       if (targetSection) {
-        // Pega a posição da seção e desconta 100px do menu
         const offsetPosition = targetSection.getBoundingClientRect().top + window.pageYOffset - 100;
         
         window.scrollTo({
@@ -735,7 +742,6 @@
           behavior: 'smooth'
         });
         
-        // Atualiza a aba ativa
         const navLinks = document.querySelectorAll('.nav-links a');
         navLinks.forEach(l => l.classList.remove('active'));
         const activeLink = document.querySelector(`.nav-links a[href="#${targetId}"]`);
