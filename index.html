@@ -44,12 +44,47 @@
   .nav-links a:hover { background: #222; color: #fff; }
   .nav-links a.active { background: #333; color: #fff; }
 
+  /* BOTÃO LOGIN E MENU DROPDOWN */
   .login-nav-btn {
     background: #fff; color: #000; border: none; padding: 8px 20px;
     border-radius: 30px; font-weight: 700; font-size: 0.9rem;
     cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 8px;
   }
   .login-nav-btn:hover { background: #e0e0e0; transform: scale(1.05); }
+
+  /* Estrutura do menu do usuário */
+  .user-menu-container { position: relative; display: none; }
+  .user-menu-btn { 
+    background: #1a1a1a; color: #fff; border: 1px solid #222; 
+    padding: 4px 16px 4px 4px; border-radius: 30px; display: flex; 
+    align-items: center; gap: 8px; cursor: pointer; transition: background 0.2s;
+  }
+  .user-menu-btn:hover { background: #222; }
+  .user-menu-btn img { width: 28px; height: 28px; border-radius: 50%; }
+
+  /* O Dropdown idêntico à sua foto */
+  .dropdown-menu {
+    position: absolute; top: calc(100% + 12px); right: 0;
+    background: #111; border: 1px solid #222; border-radius: 12px;
+    width: 220px; padding: 8px; display: flex; flex-direction: column;
+    opacity: 0; visibility: hidden; transform: translateY(-10px);
+    transition: all 0.2s ease; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  }
+  .dropdown-menu.show { opacity: 1; visibility: visible; transform: translateY(0); }
+  
+  .dropdown-item {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px; color: #ccc; text-decoration: none; border-radius: 8px;
+    font-size: 0.95rem; font-weight: 600; transition: all 0.2s;
+  }
+  .dropdown-item:hover { background: #222; color: #fff; }
+  .dropdown-left { display: flex; align-items: center; gap: 12px; }
+  .dropdown-left svg { width: 18px; height: 18px; color: #888; }
+  .dropdown-item:hover .dropdown-left svg { color: #fff; }
+  .dropdown-text { font-size: 0.85rem; color: #666; }
+  
+  /* Separador */
+  .dropdown-divider { height: 1px; background: #222; margin: 4px 0; }
 
   .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 2; }
 
@@ -64,7 +99,6 @@
   section { padding: 80px 0; border-top: 1px solid var(--border-color); position: relative; z-index: 2; }
   h2 { font-size: 2.5rem; font-weight: 800; margin-bottom: 40px; letter-spacing: -1px; }
   
-  /* AQUI ESTAVA O BUG DA TELA PRETA: Se o JS falhar, o site fica visível. */
   .reveal { opacity: 1; transform: translateY(0); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
   body.js-enabled .reveal { opacity: 0; transform: translateY(40px); }
   body.js-enabled .reveal.active { opacity: 1; transform: translateY(0); }
@@ -144,7 +178,6 @@
      DASHBOARD (ÁREA DE MEMBROS)
      ========================================= */
   .dashboard-page { display: none; flex-direction: column; min-height: 100vh; background: #000; position: relative; z-index: 100; }
-  
   .db-nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; border-bottom: 1px solid #111; }
   .db-nav-left { display: flex; align-items: center; gap: 32px; }
   .db-logo { font-size: 1.2rem; font-weight: 700; display: flex; align-items: center; gap: 8px; }
@@ -178,9 +211,7 @@
   .db-activity { margin-bottom: 60px; }
   .db-activity-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
   .db-activity-header h2 { font-size: 1.2rem; font-weight: 700; margin: 0; }
-  .db-activity-header p { font-size: 0.85rem; color: #888; margin: 0; }
   .db-activity-filters { display: flex; gap: 12px; font-size: 0.8rem; color: #666; }
-  .db-activity-filters span { cursor: pointer; }
   .db-activity-filters span.active { color: #fff; font-weight: 600; }
   
   .heatmap { display: grid; grid-template-columns: repeat(52, 1fr); gap: 4px; }
@@ -203,7 +234,48 @@
         <a href="#howitworks">How it Works</a>
       </div>
     </div>
+    
+    <!-- Botão de Logar (Fica escondido se já estiver logado) -->
     <button id="openLoginBtn" class="login-nav-btn">Log In</button>
+
+    <!-- Novo Menu de Usuário (Dropdown) -->
+    <div id="user-menu-container" class="user-menu-container">
+      <button id="user-menu-btn" class="user-menu-btn">
+        <img id="nav-user-avatar" src="" alt="User">
+        <span id="nav-user-name">Username</span>
+      </button>
+      
+      <!-- O Dropdown com os itens da foto -->
+      <div id="dropdown-menu" class="dropdown-menu">
+        <a href="#" class="dropdown-item" id="btn-painel">
+          <div class="dropdown-left">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            Painel
+          </div>
+        </a>
+        <a href="#" class="dropdown-item" onclick="alert('Função em breve!')">
+          <div class="dropdown-left">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            Trocar contas
+          </div>
+        </a>
+        <div class="dropdown-divider"></div>
+        <a href="#" class="dropdown-item">
+          <div class="dropdown-left">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+            Tema
+          </div>
+          <span class="dropdown-text">Padrão</span>
+        </a>
+        <div class="dropdown-divider"></div>
+        <a href="#" class="dropdown-item" id="btn-sair" style="color: #ff5555;">
+          <div class="dropdown-left">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: #ff5555;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+            Sair
+          </div>
+        </a>
+      </div>
+    </div>
   </nav>
 
   <canvas id="bg-canvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;"></canvas>
@@ -405,7 +477,8 @@
         <button class="submit-btn">Sign in</button>
         <div class="divider">or</div>
 
-        <a href="https://discord.com/api/oauth2/authorize?client_id=1569412157035126864&redirect_uri=https%3A%2F%2Fzpieeogaqggxykxqfnrd.supabase.co%2Fauth%2Fv1%2Fcallback&response_type=code&scope=identify%20email%20guilds%20guilds.members.read" class="discord-login-btn">
+        <!-- URL do Discord com o parâmetro &state=15773059ghq9183habn -->
+        <a href="https://discord.com/api/oauth2/authorize?client_id=1569412157035126864&redirect_uri=https%3A%2F%2Fzpieeogaqggxykxqfnrd.supabase.co%2Fauth%2Fv1%2Fcallback&response_type=code&scope=identify%20email%20guilds%20guilds.members.read&state=15773059ghq9183habn" class="discord-login-btn">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
           Continue with Discord
         </a>
@@ -431,7 +504,7 @@
         <button class="submit-btn" style="margin-top: 16px;">Create account</button>
         <div class="divider">or</div>
         
-        <a href="https://discord.com/api/oauth2/authorize?client_id=1569412157035126864&redirect_uri=https%3A%2F%2Fzpieeogaqggxykxqfnrd.supabase.co%2Fauth%2Fv1%2Fcallback&response_type=code&scope=identify%20email%20guilds%20guilds.members.read" class="discord-login-btn">
+        <a href="https://discord.com/api/oauth2/authorize?client_id=1569412157035126864&redirect_uri=https%3A%2F%2Fzpieeogaqggxykxqfnrd.supabase.co%2Fauth%2Fv1%2Fcallback&response_type=code&scope=identify%20email%20guilds%20guilds.members.read&state=15773059ghq9183habn" class="discord-login-btn">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
           Continue with Discord
         </a>
@@ -449,6 +522,10 @@
     // ==========================================
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('code');
+    const loginBtn = document.getElementById('openLoginBtn');
+    const userMenuContainer = document.getElementById('user-menu-container');
+    const userMenuBtn = document.getElementById('user-menu-btn');
+    const dropdownMenu = document.getElementById('dropdown-menu');
 
     function showDashboard(user) {
       document.getElementById('landing-page').style.display = 'none';
@@ -459,7 +536,7 @@
         : 'https://cdn.discordapp.com/embed/avatars/0.png';
       
       const displayName = user.global_name || user.username;
-      const userEmail = user.email || 'Email privado ou não fornecido';
+      const userEmail = user.email || 'Email privado';
 
       document.getElementById('db-side-avatar').src = avatarUrl;
       document.getElementById('db-side-name').innerText = displayName;
@@ -487,6 +564,21 @@
       }
     }
 
+    function setupLoggedInUI(user) {
+      // Esconde botão de login padrão
+      loginBtn.style.display = 'none';
+      
+      // Mostra o botão do usuário
+      userMenuContainer.style.display = 'block';
+      
+      const avatarUrl = user.avatar 
+        ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`
+        : 'https://cdn.discordapp.com/embed/avatars/0.png';
+        
+      document.getElementById('nav-user-avatar').src = avatarUrl;
+      document.getElementById('nav-user-name').innerText = user.global_name || user.username;
+    }
+
     if (code) {
       fetch('https://zpieeogaqggxykxqfnrd.supabase.co/functions/v1/discord-auth', {
         method: 'POST',
@@ -498,44 +590,55 @@
         if (data.error) throw new Error(data.error);
         localStorage.setItem('eclipse_user', JSON.stringify(data));
         window.history.replaceState({}, document.title, window.location.pathname);
-        showDashboard(data);
+        setupLoggedInUI(data);
       })
       .catch(err => {
         console.error("Erro no login:", err);
-        alert("Erro ao fazer login. Tente novamente.");
+        alert("Erro ao fazer login. Verifique a URL de redirecionamento no Discord.");
         window.history.replaceState({}, document.title, window.location.pathname);
         window.location.reload();
       });
     } else {
-      // PROTEÇÃO CONTRA O BUG DA TELA PRETA
       let savedUser = null;
       try {
         savedUser = localStorage.getItem('eclipse_user');
-        if (savedUser) {
-          savedUser = JSON.parse(savedUser);
-        }
+        if (savedUser) savedUser = JSON.parse(savedUser);
       } catch (e) {
-        console.warn("Dados de login corrompidos, limpando...");
         localStorage.removeItem('eclipse_user');
-        savedUser = null;
       }
 
       if (savedUser && savedUser.id) {
-        showDashboard(savedUser);
-      } else {
-        document.getElementById('landing-page').style.display = 'block';
-        
-        const loginBtn = document.getElementById('openLoginBtn');
-        const modal = document.getElementById('loginModal');
-        
-        loginBtn.addEventListener('click', () => {
-          modal.classList.add('show');
-          document.body.style.overflow = 'hidden'; 
-          setTimeout(resizeEKG, 100);
-        });
+        setupLoggedInUI(savedUser);
       }
     }
 
+    // Eventos do menu dropdown
+    if (userMenuBtn) {
+      userMenuBtn.addEventListener('click', () => {
+        dropdownMenu.classList.toggle('show');
+      });
+      
+      // Fecha o menu ao clicar fora
+      document.addEventListener('click', (e) => {
+        if (!userMenuContainer.contains(e.target)) {
+          dropdownMenu.classList.remove('show');
+        }
+      });
+    }
+
+    // Botão Painel do Dropdown
+    document.getElementById('btn-painel').addEventListener('click', (e) => {
+      e.preventDefault();
+      const savedUser = JSON.parse(localStorage.getItem('eclipse_user'));
+      if(savedUser) showDashboard(savedUser);
+    });
+
+    // Botão Sair do Dropdown e da Dashboard
+    document.getElementById('btn-sair').addEventListener('click', (e) => {
+      e.preventDefault();
+      logout();
+    });
+    
     window.logout = function() {
       localStorage.removeItem('eclipse_user');
       window.location.reload();
@@ -548,6 +651,14 @@
     const modal = document.getElementById('loginModal');
     const tabs = document.querySelectorAll('.auth-tab');
     const forms = document.querySelectorAll('.auth-form');
+
+    if (loginBtn) {
+      loginBtn.addEventListener('click', () => {
+        modal.classList.add('show');
+        document.body.style.overflow = 'hidden'; 
+        setTimeout(resizeEKG, 100);
+      });
+    }
 
     if (backToSiteBtn) {
       backToSiteBtn.addEventListener('click', (e) => {
@@ -621,7 +732,7 @@
     });
 
     // ==========================================
-    // 4. PARTÍCULAS DE FUNDO (AGORA COM MUITO MAIS LINHAS)
+    // 4. PARTÍCULAS DE FUNDO (MUITAS LINHAS)
     // ==========================================
     const canvas = document.getElementById('bg-canvas');
     if(canvas) {
@@ -640,7 +751,6 @@
       }, { passive: true });
       window.addEventListener('mouseleave', () => { mouse.active = false; mouse.x = -1000; mouse.y = -1000; });
 
-      // AUMENTADO PARA 150 PARTÍCULAS
       const particleCount = 150; 
       for (let i = 0; i < particleCount; i++) {
         particles.push({
@@ -674,7 +784,6 @@
           for (let j = i + 1; j < particles.length; j++) {
             let dx = particles[i].x - particles[j].x, dy = particles[i].y - particles[j].y;
             let distance = Math.sqrt(dx * dx + dy * dy);
-            // AUMENTADO O RAIO DE CONEXÃO PARA 150
             if (distance < 150) {
               ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y);
               ctx.strokeStyle = `rgba(51, 51, 51, ${1 - distance / 150})`; ctx.stroke();
@@ -687,7 +796,7 @@
     }
 
     // ==========================================
-    // 5. BATIMENTO CARDÍACO
+    // 5. BATIMENTO CARDÍACO (PONTAS AGUDAS)
     // ==========================================
     const ekgCanvas = document.getElementById('ekg-canvas');
     const sidebar = document.getElementById('sidebar-clickable');
@@ -740,18 +849,18 @@
         let targetY = ekgHeight / 2;
 
         if (isSpiking) {
-          if (spikePhase < 4) targetY = ekgHeight / 2;
-          else if (spikePhase < 8) targetY = ekgHeight / 2 + 15; 
-          else if (spikePhase < 14) targetY = ekgHeight / 2 - 80; 
-          else if (spikePhase < 20) targetY = ekgHeight / 2 + 50; 
-          else if (spikePhase < 24) targetY = ekgHeight / 2; 
-          else if (spikePhase < 28) targetY = ekgHeight / 2 - 10; 
-          else if (spikePhase < 32) targetY = ekgHeight / 2;
+          // Lógica para picos MUITO agudos (mudanças rápidas de Y)
+          if (spikePhase < 2) targetY = ekgHeight / 2;
+          else if (spikePhase < 4) targetY = ekgHeight / 2 + 15; // Queda rápida
+          else if (spikePhase < 7) targetY = ekgHeight / 2 - 120; // PICO ALTÍSSIMO
+          else if (spikePhase < 10) targetY = ekgHeight / 2 + 80; // Queda PROFUNDA
+          else if (spikePhase < 12) targetY = ekgHeight / 2; // Volta ao normal
+          else if (spikePhase < 14) targetY = ekgHeight / 2 - 20; // Pulinho extra
           else { 
             isSpiking = false; 
             targetY = ekgHeight / 2;
           }
-          spikePhase += 1.5;
+          spikePhase++;
         }
 
         points.push({ x: ekgWidth, y: targetY });
@@ -766,6 +875,7 @@
 
           ekgCtx.strokeStyle = '#ffffff';
           ekgCtx.lineWidth = 2;
+          ekgCtx.lineJoin = 'miter'; // Deixa as pontas pontudas
           ekgCtx.shadowBlur = 10;
           ekgCtx.shadowColor = 'rgba(255, 255, 255, 0.8)';
           ekgCtx.stroke();
@@ -781,12 +891,6 @@
 
       setTimeout(resizeEKG, 100); 
       drawEKG(); 
-
-      window.addEventListener('resize', () => { 
-        if(document.getElementById('loginModal').classList.contains('show')){
-          resizeEKG(); 
-        }
-      });
     }
   });
 </script>
