@@ -19,7 +19,7 @@
     --text-muted: #888;
   }
 
-  html, body { width: 100%; overflow-x: hidden; }
+  html, body { width: 100%; overflow-x: hidden; scroll-behavior: smooth; }
 
   /* CURSORES CUSTOMIZADOS */
   body, html, a, button, .btn, .tech-card, .game-card, .dropdown-item, .auth-tab, .side-nav-btn {
@@ -265,13 +265,13 @@
 <div id="landing-page">
   <nav class="navbar">
     <div class="navbar-left">
-      <!-- ADICIONADO O ONERROR: Se a imagem falhar, ele desenha um SVG elegante no lugar -->
-      <img src="logo.png" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'45\' fill=\'none\' stroke=\'%23ffffff\' stroke-width=\'4\'/><path d=\'M50 20 L55 45 L80 50 L55 55 L50 80 L45 55 L20 50 L45 45 Z\' fill=\'%23ffffff\'/></svg>';" alt="Eclipse Logo" class="navbar-logo">
+      <!-- LINK ABSOLUTO DO SEU GITHUB PAGES -->
+      <img src="https://mopera-tech.github.io/eclipse-macro/logo.png" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'45\' fill=\'none\' stroke=\'%23ffffff\' stroke-width=\'4\'/><path d=\'M50 20 L55 45 L80 50 L55 55 L50 80 L45 55 L20 50 L45 45 Z\' fill=\'%23ffffff\'/></svg>';" alt="Eclipse Logo" class="navbar-logo">
       
       <div class="nav-links">
-        <a href="#home" class="active" onclick="showPage('home')">Home</a>
-        <a href="#features">Features</a>
-        <a href="#howitworks">How it Works</a>
+        <a href="#home" class="active" onclick="smoothScroll('home')">Home</a>
+        <a href="#features" onclick="smoothScroll('features')">Features</a>
+        <a href="#howitworks" onclick="smoothScroll('howitworks')">How it Works</a>
       </div>
     </div>
     
@@ -367,8 +367,8 @@
 <div id="dashboard-page" class="dashboard-page">
   <nav class="navbar anime-in" style="animation-delay: 0.1s;">
     <div class="navbar-left">
-      <!-- ADICIONADO O ONERROR AQUI TAMBÉM -->
-      <img src="logo.png" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'45\' fill=\'none\' stroke=\'%23ffffff\' stroke-width=\'4\'/><path d=\'M50 20 L55 45 L80 50 L55 55 L50 80 L45 55 L20 50 L45 45 Z\' fill=\'%23ffffff\'/></svg>';" alt="Eclipse Logo" class="navbar-logo">
+      <!-- LINK ABSOLUTO DO SEU GITHUB PAGES -->
+      <img src="https://mopera-tech.github.io/eclipse-macro/logo.png" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'45\' fill=\'none\' stroke=\'%23ffffff\' stroke-width=\'4\'/><path d=\'M50 20 L55 45 L80 50 L55 55 L50 80 L45 55 L20 50 L45 45 Z\' fill=\'%23ffffff\'/></svg>';" alt="Eclipse Logo" class="navbar-logo">
       
       <div class="nav-links">
         <a onclick="showPage('home')">Voltar ao site</a>
@@ -547,8 +547,8 @@
   <div class="auth-sidebar" id="sidebar-clickable">
     <canvas id="ekg-canvas"></canvas>
     <div class="sidebar-logo">
-      <!-- ADICIONADO O ONERROR AQUI TAMBÉM -->
-      <img src="logo.png" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'45\' fill=\'none\' stroke=\'%23ffffff\' stroke-width=\'4\'/><path d=\'M50 20 L55 45 L80 50 L55 55 L50 80 L45 55 L20 50 L45 45 Z\' fill=\'%23ffffff\'/></svg>';" alt="Logo">Eclipse
+      <!-- LINK ABSOLUTO DO SEU GITHUB PAGES -->
+      <img src="https://mopera-tech.github.io/eclipse-macro/logo.png" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'45\' fill=\'none\' stroke=\'%23ffffff\' stroke-width=\'4\'/><path d=\'M50 20 L55 45 L80 50 L55 55 L50 80 L45 55 L20 50 L45 45 Z\' fill=\'%23ffffff\'/></svg>';" alt="Logo">Eclipse
     </div>
     <div class="sidebar-text">
       <h2>Macros, techs and combos for Roblox.</h2>
@@ -696,7 +696,7 @@
       document.getElementById('db-stat-date').innerText = today.toLocaleDateString('pt-BR', options);
     }
 
-    // --- 2. SISTEMA DE NAVEGAÇÃO ---
+    // --- 2. SISTEMA DE NAVEGAÇÃO (COM SMOOTH SCROLL) ---
     window.showPage = function(page) {
       document.getElementById('landing-page').style.display = 'none';
       document.getElementById('dashboard-page').style.display = 'none';
@@ -704,6 +704,7 @@
       if (page === 'dashboard' && globalUser) {
         document.getElementById('dashboard-page').style.display = 'block';
         window.location.hash = 'dashboard';
+        window.scrollTo(0, 0); // Sobe pro topo ao abrir o dashboard
         
         document.querySelectorAll('.dash-main .anime-in, .dash-sidebar.anime-in, #dashboard-page .navbar.anime-in').forEach(el => {
             el.style.animation = 'none';
@@ -713,6 +714,32 @@
       } else {
         document.getElementById('landing-page').style.display = 'block';
         window.location.hash = 'home';
+        window.scrollTo(0, 0);
+      }
+    }
+
+    // FUNÇÃO QUE FAZ A ROLAGEM SUAVE
+    window.smoothScroll = function(targetId) {
+      // Se não estiver na home, volta pra ela primeiro
+      if (document.getElementById('landing-page').style.display === 'none') {
+        showPage('home');
+      }
+      
+      const targetSection = document.getElementById(targetId);
+      if (targetSection) {
+        // Pega a posição da seção e desconta 100px do menu
+        const offsetPosition = targetSection.getBoundingClientRect().top + window.pageYOffset - 100;
+        
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+        
+        // Atualiza a aba ativa
+        const navLinks = document.querySelectorAll('.nav-links a');
+        navLinks.forEach(l => l.classList.remove('active'));
+        const activeLink = document.querySelector(`.nav-links a[href="#${targetId}"]`);
+        if(activeLink) activeLink.classList.add('active');
       }
     }
 
