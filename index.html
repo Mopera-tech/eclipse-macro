@@ -265,7 +265,8 @@
 <div id="landing-page">
   <nav class="navbar">
     <div class="navbar-left">
-      <img src="logo.png" alt="Eclipse Logo" class="navbar-logo">
+      <!-- LINK RAW DA IMAGEM AQUI -->
+      <img src="https://raw.githubusercontent.com/Mopera-tech/eclipse-macro/main/logo.png" alt="Eclipse Logo" class="navbar-logo">
       <div class="nav-links">
         <a href="#home" class="active" onclick="showPage('home')">Home</a>
         <a href="#features">Features</a>
@@ -365,7 +366,8 @@
 <div id="dashboard-page" class="dashboard-page">
   <nav class="navbar anime-in" style="animation-delay: 0.1s;">
     <div class="navbar-left">
-      <img src="logo.png" alt="Eclipse Logo" class="navbar-logo">
+      <!-- LINK RAW DA IMAGEM AQUI -->
+      <img src="https://raw.githubusercontent.com/Mopera-tech/eclipse-macro/main/logo.png" alt="Eclipse Logo" class="navbar-logo">
       <div class="nav-links">
         <a onclick="showPage('home')">Voltar ao site</a>
       </div>
@@ -542,7 +544,10 @@
 <div id="loginModal" class="auth-overlay">
   <div class="auth-sidebar" id="sidebar-clickable">
     <canvas id="ekg-canvas"></canvas>
-    <div class="sidebar-logo"><img src="logo.png" alt="Logo">Eclipse</div>
+    <div class="sidebar-logo">
+      <!-- LINK RAW DA IMAGEM AQUI -->
+      <img src="https://raw.githubusercontent.com/Mopera-tech/eclipse-macro/main/logo.png" alt="Logo">Eclipse
+    </div>
     <div class="sidebar-text">
       <h2>Macros, techs and combos for Roblox.</h2>
       <p>The Strongest Battlegrounds.</p>
@@ -661,7 +666,6 @@
       if (!user || !user.id) return;
       globalUser = user;
 
-      // Fallback para foto de perfil caso seja login por email
       const avatarUrl = user.avatar 
         ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`
         : 'https://ui-avatars.com/api/?name=' + user.username + '&background=333&color=fff&rounded=true&bold=true';
@@ -840,7 +844,6 @@
             btn.innerText = originalText;
             btn.disabled = false;
           } else {
-            // Se o email confirmation estiver desativado no Supabase, ele loga direto
             if (data.session) {
                const user = data.user;
                const userData = {
@@ -855,7 +858,7 @@
                document.getElementById('loginModal').classList.remove('show');
                showPage('dashboard');
             } else {
-               alert("Conta criada! Verifique seu e-mail para confirmar antes de entrar (se a confirmação de e-mail estiver ativada no Supabase).");
+               alert("Conta criada! Verifique seu e-mail para confirmar antes de entrar.");
             }
             btn.innerText = originalText;
             btn.disabled = false;
