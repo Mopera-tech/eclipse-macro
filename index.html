@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Eclipse — Free Macro for TSB</title>
 
-<!-- ⚠️ ÍCONE DA ABA (FAVICON) ADICIONADO AQUI -->
+<!-- ÍCONE DA ABA (FAVICON) -->
 <link rel="icon" href="https://raw.githubusercontent.com/Mopera-tech/eclipse-macro/main/logo.png" type="image/png">
 <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/Mopera-tech/eclipse-macro/main/logo.png">
 
@@ -26,14 +26,8 @@
   html, body { width: 100%; overflow-x: hidden; scroll-behavior: smooth; }
 
   /* COR DE SELEÇÃO DE TEXTO (BRANCO) */
-  ::selection {
-    background: #ffffff;
-    color: #000000;
-  }
-  ::-moz-selection {
-    background: #ffffff;
-    color: #000000;
-  }
+  ::selection { background: #ffffff; color: #000000; }
+  ::-moz-selection { background: #ffffff; color: #000000; }
 
   /* CURSORES CUSTOMIZADOS */
   body, html, a, button, .btn, .tech-card, .game-card, .dropdown-item, .auth-tab, .side-nav-btn {
@@ -60,12 +54,13 @@
 
   #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
 
-  /* NAVBAR */
+  /* NAVBAR CENTRALIZADA */
   .navbar {
     position: fixed; top: 24px; left: 50%; transform: translateX(-50%);
     background: rgba(15, 15, 15, 0.6); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--border-color); border-radius: 50px;
-    display: flex; align-items: center; padding: 8px 8px 8px 16px; 
+    display: flex; align-items: center; justify-content: center;
+    padding: 8px 16px;
     z-index: 9999; width: max-content; max-width: 95%; gap: 20px;
   }
   
@@ -201,18 +196,40 @@
 
   /* DASHBOARD */
   .dashboard-page { display: none; min-height: 100vh; background: transparent; padding-top: 100px; position: relative; z-index: 100; overflow: hidden; }
+  
+  /* BANNER NO TOPO DO DASHBOARD */
+  .banner-container {
+    width: 100%; max-width: 1200px; height: 200px; margin: 0 auto 24px auto;
+    border-radius: 16px; overflow: hidden; position: relative; z-index: 2;
+    background: linear-gradient(135deg, #111 0%, #000 100%);
+    border: 1px solid var(--border-color);
+    display: none; /* Escondido por padrão, JS ativa se tiver banner */
+  }
+  .banner-container img { width: 100%; height: 100%; object-fit: cover; }
+
   .dash-layout { display: flex; max-width: 1200px; margin: 0 auto; gap: 32px; padding: 0 24px 60px 24px; position: relative; z-index: 2; }
   .dash-sidebar { width: 280px; flex-shrink: 0; display: flex; flex-direction: column; gap: 8px; }
   
   @keyframes slideUpFade { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
   .anime-in { opacity: 0; animation: slideUpFade 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
 
-  .user-card { background: var(--bg-card); backdrop-filter: blur(12px); border: 1px solid var(--border-color); border-radius: 16px; padding: 32px 24px; text-align: center; margin-bottom: 24px; transition: all 0.3s ease; }
+  .user-card { background: var(--bg-card); backdrop-filter: blur(12px); border: 1px solid var(--border-color); border-radius: 16px; padding: 32px 24px; text-align: center; margin-bottom: 24px; transition: all 0.3s ease; position: relative; }
   .user-card:hover { border-color: rgba(255,255,255,0.2); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-  .user-card img { width: 80px; height: 80px; border-radius: 50%; border: 2px solid #333; margin-bottom: 16px; background: #111; transition: transform 0.3s ease; }
-  .user-card:hover img { transform: scale(1.05) rotate(5deg); border-color: #fff; }
-  .user-card h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
-  .user-card .email { color: var(--text-muted); font-size: 0.85rem; word-break: break-all; }
+  
+  /* HOVER NO AVATAR PARA MOSTRAR O LÁPIS */
+  .avatar-container { position: relative; display: inline-block; cursor: pointer; border-radius: 50%; overflow: hidden; }
+  .avatar-container img { width: 80px; height: 80px; border-radius: 50%; border: 2px solid #333; background: #111; transition: transform 0.3s ease; object-fit: cover; }
+  .avatar-container:hover img { transform: scale(1.05); border-color: #fff; }
+  
+  .edit-overlay {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.3s ease;
+  }
+  .avatar-container:hover .edit-overlay { opacity: 1; }
+  .edit-overlay svg { width: 24px; height: 24px; fill: none; stroke: #fff; stroke-width: 2; }
+
+  .user-card h2 { font-size: 1.3rem; font-weight: 700; margin-top: 16px; margin-bottom: 4px; display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
   .user-tag-badge { background: #fff; color: #000; padding: 2px 8px; border-radius: 4px; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
   
   .side-nav-btn { display: flex; align-items: center; gap: 12px; padding: 16px; border-radius: 12px; background: transparent; color: #888; border: 1px solid transparent; font-size: 0.95rem; font-weight: 600; transition: all 0.2s; text-align: left; cursor: pointer; }
@@ -269,6 +286,38 @@
   .support-link-btn { display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.05); border: 1px solid #222; padding: 16px; border-radius: 8px; color: #fff; text-decoration: none; font-weight: 600; transition: all 0.2s; }
   .support-link-btn:hover { background: rgba(255,255,255,0.1); border-color: #444; transform: translateX(4px); }
 
+  /* MODAL DE EDITAR PERFIL */
+  .edit-profile-modal {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.85); backdrop-filter: blur(5px);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; visibility: hidden; transition: all 0.4s ease; z-index: 10001;
+  }
+  .edit-profile-modal.show { opacity: 1; visibility: visible; }
+  .edit-profile-content {
+    background: #050505; border: 1px solid #222; border-radius: 16px;
+    width: 100%; max-width: 450px; padding: 32px; position: relative;
+    transform: translateY(30px); transition: all 0.4s ease;
+  }
+  .edit-profile-modal.show .edit-profile-content { transform: translateY(0); }
+  
+  .edit-profile-content h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 24px; }
+  .edit-profile-content .input-group { margin-bottom: 16px; }
+  .edit-profile-content input {
+    width: 100%; padding: 12px; background: #0a0a0a; border: 1px solid #222;
+    border-radius: 8px; color: #fff; outline: none;
+  }
+  .edit-profile-content input:disabled { opacity: 0.5; cursor: not-allowed; }
+  .edit-profile-content .note { font-size: 0.8rem; color: #666; margin-top: 4px; }
+  .edit-profile-content .actions { display: flex; gap: 12px; margin-top: 24px; }
+  .edit-profile-content .actions button {
+    flex: 1; padding: 12px; border-radius: 8px; font-weight: 700; border: none; cursor: pointer;
+  }
+  .btn-cancel { background: #1a1a1a; color: #fff; transition: background 0.2s; }
+  .btn-cancel:hover { background: #222; }
+  .btn-save { background: #fff; color: #000; transition: background 0.2s; }
+  .btn-save:hover { background: #e0e0e0; }
+
   @media (max-width: 900px) { .dash-layout { flex-direction: column; } .dash-sidebar { width: 100%; } }
 </style>
 </head>
@@ -279,7 +328,6 @@
 <div id="landing-page">
   <nav class="navbar">
     <div class="navbar-left">
-      <!-- LINK RAW DO SEU GITHUB INSERIDO AQUI -->
       <img src="https://raw.githubusercontent.com/Mopera-tech/eclipse-macro/main/logo.png" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'45\' fill=\'none\' stroke=\'%23ffffff\' stroke-width=\'4\'/><path d=\'M50 20 L55 45 L80 50 L55 55 L50 80 L45 55 L20 50 L45 45 Z\' fill=\'%23ffffff\'/></svg>';" alt="Eclipse Logo" class="navbar-logo">
       
       <div class="nav-links">
@@ -381,7 +429,6 @@
 <div id="dashboard-page" class="dashboard-page">
   <nav class="navbar anime-in" style="animation-delay: 0.1s;">
     <div class="navbar-left">
-      <!-- LINK RAW DO SEU GITHUB INSERIDO AQUI -->
       <img src="https://raw.githubusercontent.com/Mopera-tech/eclipse-macro/main/logo.png" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'45\' fill=\'none\' stroke=\'%23ffffff\' stroke-width=\'4\'/><path d=\'M50 20 L55 45 L80 50 L55 55 L50 80 L45 55 L20 50 L45 45 Z\' fill=\'%23ffffff\'/></svg>';" alt="Eclipse Logo" class="navbar-logo">
       
       <div class="nav-links">
@@ -419,15 +466,27 @@
     </div>
   </nav>
 
+  <!-- BANNER -->
+  <div id="profile-banner" class="banner-container anime-in" style="animation-delay: 0.15s;">
+    <img id="banner-img" src="" alt="Banner">
+  </div>
+
   <div class="dash-layout">
     <aside class="dash-sidebar anime-in" style="animation-delay: 0.2s;">
       <div class="user-card">
-        <img id="db-main-avatar" src="" alt="Avatar">
+        <!-- HOVER PARA EDITAR AVATAR -->
+        <div class="avatar-container" onclick="openEditProfileModal()">
+          <img id="db-main-avatar" src="" alt="Avatar">
+          <div class="edit-overlay">
+            <svg viewBox="0 0 24 24"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+          </div>
+        </div>
+        
         <h2>
           <span id="db-main-name">Username</span>
           <span class="user-tag-badge" id="db-main-tag">Membro</span>
         </h2>
-        <span class="email" id="db-main-email">email@exemplo.com</span>
+        <!-- EMAIL REMOVIDO DAQUI -->
       </div>
 
       <button class="side-nav-btn active" onclick="switchTab('overview', this)">
@@ -557,11 +616,35 @@
   </div>
 </div>
 
+<!-- MODAL DE EDITAR PERFIL -->
+<div id="editProfileModal" class="edit-profile-modal">
+  <div class="edit-profile-content">
+    <h3>Editar Perfil</h3>
+    
+    <div class="input-group">
+      <label>Link da Banner (Imagem de fundo)</label>
+      <input type="text" id="edit-banner-url" placeholder="https://exemplo.com/banner.png">
+      <div class="note">Cole o link direto de uma imagem para o topo do painel.</div>
+    </div>
+
+    <div class="input-group">
+      <label>Link do Avatar (Foto de perfil)</label>
+      <input type="text" id="edit-avatar-url" placeholder="https://exemplo.com/avatar.png">
+      <div class="note" id="avatar-note">Cole o link direto para sua nova foto.</div>
+    </div>
+
+    <div class="actions">
+      <button class="btn-cancel" onclick="closeEditProfileModal()">Cancelar</button>
+      <button class="btn-save" onclick="saveProfile()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- TELA DE LOGIN -->
 <div id="loginModal" class="auth-overlay">
   <div class="auth-sidebar" id="sidebar-clickable">
     <canvas id="ekg-canvas"></canvas>
     <div class="sidebar-logo">
-      <!-- LINK RAW DO SEU GITHUB INSERIDO AQUI -->
       <img src="https://raw.githubusercontent.com/Mopera-tech/eclipse-macro/main/logo.png" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'45\' fill=\'none\' stroke=\'%23ffffff\' stroke-width=\'4\'/><path d=\'M50 20 L55 45 L80 50 L55 55 L50 80 L45 55 L20 50 L45 45 Z\' fill=\'%23ffffff\'/></svg>';" alt="Logo">Eclipse
     </div>
     <div class="sidebar-text">
@@ -682,12 +765,25 @@
       if (!user || !user.id) return;
       globalUser = user;
 
-      const avatarUrl = user.avatar 
-        ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`
-        : 'https://ui-avatars.com/api/?name=' + user.username + '&background=333&color=fff&rounded=true&bold=true';
+      // Fallback de Avatar
+      let avatarUrl = 'https://ui-avatars.com/api/?name=' + user.username + '&background=333&color=fff&rounded=true&bold=true';
+      if (user.avatar) {
+        if (user.avatar.startsWith('http')) {
+          avatarUrl = user.avatar; // Avatar customizado (link externo)
+        } else {
+          avatarUrl = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`; // Discord Avatar
+        }
+      }
+
+      // Banner
+      if (user.banner) {
+        document.getElementById('profile-banner').style.display = 'block';
+        document.getElementById('banner-img').src = user.banner;
+      } else {
+        document.getElementById('profile-banner').style.display = 'none';
+      }
       
       const displayName = user.global_name || user.username || 'Eclipse User';
-      const userEmail = user.email || 'Email privado';
       const userTag = (user.tags && user.tags.length > 0) ? user.tags[0] : 'Membro';
 
       document.getElementById('openLoginBtn').style.display = 'none';
@@ -702,7 +798,6 @@
       document.getElementById('db-main-avatar').src = avatarUrl;
       document.getElementById('db-main-name').innerText = displayName;
       document.getElementById('db-main-tag').innerText = userTag;
-      document.getElementById('db-main-email').innerText = userEmail;
       document.getElementById('dash-welcome-name').innerText = displayName;
 
       const today = new Date();
@@ -710,7 +805,61 @@
       document.getElementById('db-stat-date').innerText = today.toLocaleDateString('pt-BR', options);
     }
 
-    // --- 2. SISTEMA DE NAVEGAÇÃO (COM SMOOTH SCROLL) ---
+    // --- MODAL DE EDITAR PERFIL ---
+    window.openEditProfileModal = function() {
+      if (!globalUser) return;
+      
+      document.getElementById('editProfileModal').classList.add('show');
+      
+      // Preenche os inputs com os dados atuais
+      document.getElementById('edit-banner-url').value = globalUser.banner || '';
+      
+      const avatarInput = document.getElementById('edit-avatar-url');
+      const avatarNote = document.getElementById('avatar-note');
+
+      // Se for Discord, bloqueia a troca de avatar
+      if (globalUser.provider === 'discord') {
+        avatarInput.value = 'Gerenciado pelo Discord';
+        avatarInput.disabled = true;
+        avatarNote.innerHTML = '<span style="color: #f59e0b;">Sua foto é gerenciada automaticamente pelo Discord e não pode ser alterada aqui.</span>';
+      } else {
+        avatarInput.value = (globalUser.avatar && globalUser.avatar.startsWith('http')) ? globalUser.avatar : '';
+        avatarInput.disabled = false;
+        avatarNote.innerHTML = 'Cole o link direto para sua nova foto.';
+      }
+    };
+
+    window.closeEditProfileModal = function() {
+      document.getElementById('editProfileModal').classList.remove('show');
+    };
+
+    window.saveProfile = function() {
+      if (!globalUser) return;
+      
+      const newBanner = document.getElementById('edit-banner-url').value.trim();
+      const newAvatar = document.getElementById('edit-avatar-url').value.trim();
+
+      // Atualiza dados do usuário
+      globalUser.banner = newBanner || null;
+      
+      if (globalUser.provider !== 'discord') {
+        globalUser.avatar = newAvatar || null;
+      }
+
+      // Salva no localStorage
+      try {
+        localStorage.setItem('eclipse_user', JSON.stringify(globalUser));
+      } catch(e){}
+
+      // Atualiza a UI na hora
+      setupLoggedInUI(globalUser);
+      
+      // Fecha o modal
+      closeEditProfileModal();
+    };
+
+
+    // --- 2. SISTEMA DE NAVEGAÇÃO ---
     window.showPage = function(page) {
       document.getElementById('landing-page').style.display = 'none';
       document.getElementById('dashboard-page').style.display = 'none';
@@ -720,7 +869,7 @@
         window.location.hash = 'dashboard';
         window.scrollTo(0, 0);
         
-        document.querySelectorAll('.dash-main .anime-in, .dash-sidebar.anime-in, #dashboard-page .navbar.anime-in').forEach(el => {
+        document.querySelectorAll('.dash-main .anime-in, .dash-sidebar.anime-in, #dashboard-page .navbar.anime-in, .banner-container.anime-in').forEach(el => {
             el.style.animation = 'none';
             el.offsetHeight; 
             el.style.animation = null; 
@@ -799,6 +948,10 @@
       })
       .then(data => {
         if (data.error || !data.username || !data.id) throw new Error(data.error || "Dados incompletos retornados.");
+        
+        // Adiciona a flag de provider
+        data.provider = 'discord';
+
         try { localStorage.setItem('eclipse_user', JSON.stringify(data)); } catch(e){}
         try { window.history.replaceState({}, document.title, window.location.pathname); } catch(e){}
         setupLoggedInUI(data);
@@ -840,10 +993,11 @@
             const user = data.user;
             const userData = {
               id: user.id,
-              username: user.user_metadata.username || user.email.split('@')[0],
-              email: user.email,
+              username: user.user_metadata.username || email.split('@')[0],
               avatar: user.user_metadata.avatar_url || null,
-              tags: ["Membro"]
+              banner: user.user_metadata.banner || null,
+              tags: ["Membro"],
+              provider: 'email' // Flag para permitir troca de avatar
             };
             try { localStorage.setItem('eclipse_user', JSON.stringify(userData)); } catch(e){}
             setupLoggedInUI(userData);
@@ -871,9 +1025,7 @@
           const { data, error } = await supabaseClient.auth.signUp({
             email,
             password,
-            options: {
-              data: { username: username }
-            }
+            options: { data: { username: username } }
           });
 
           if (error) {
@@ -886,9 +1038,10 @@
                const userData = {
                   id: user.id,
                   username: username,
-                  email: user.email,
                   avatar: null,
-                  tags: ["Membro"]
+                  banner: null,
+                  tags: ["Membro"],
+                  provider: 'email'
                };
                try { localStorage.setItem('eclipse_user', JSON.stringify(userData)); } catch(e){}
                setupLoggedInUI(userData);
