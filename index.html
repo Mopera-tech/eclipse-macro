@@ -5,11 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Eclipse — Free Macro for TSB</title>
 
-<!-- ÍCONE DA ABA (FAVICON) -->
 <link rel="icon" href="https://raw.githubusercontent.com/Mopera-tech/eclipse-macro/main/logo.png" type="image/png">
-<link rel="apple-touch-icon" href="https://raw.githubusercontent.com/Mopera-tech/eclipse-macro/main/logo.png">
-
-<!-- BIBLIOTECA DO SUPABASE -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
@@ -25,19 +21,16 @@
 
   html, body { width: 100%; overflow-x: hidden; scroll-behavior: smooth; }
 
-  /* COR DE SELEÇÃO DE TEXTO (BRANCO) */
   ::selection { background: #ffffff; color: #000000; }
   ::-moz-selection { background: #ffffff; color: #000000; }
 
-  /* CURSORES CUSTOMIZADOS */
+  /* CURSORES OTIMIZADOS */
   body, html, a, button, .btn, .tech-card, .game-card, .dropdown-item, .auth-tab, .side-nav-btn {
     cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12,2 C12,7 7,12 2,12 C7,12 12,17 12,22 C12,17 17,12 22,12 C17,12 12,7 12,2 Z" fill="%23ffffff"/></svg>') 12 12, auto !important;
   }
-
   .auth-sidebar, #sidebar-clickable {
     cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><polygon points="12,1 14,9 21,10 14,12 12,23 10,12 3,10 10,9" fill="%23ffffff"/></svg>') 16 16, crosshair !important;
   }
-
   *:active, a:active, button:active, .btn:active {
     cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M21,12.79 A9,9 0 1,1 11.21,3 A7,7 0 0,0 21,12.79 Z" fill="%23ffffff"/></svg>') 12 12, pointer !important;
   }
@@ -54,14 +47,13 @@
 
   #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
 
-  /* NAVBAR CENTRALIZADA */
+  /* NAVBAR */
   .navbar {
     position: fixed; top: 24px; left: 50%; transform: translateX(-50%);
-    background: rgba(15, 15, 15, 0.6); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    background: rgba(15, 15, 15, 0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
     border: 1px solid var(--border-color); border-radius: 50px;
     display: flex; align-items: center; justify-content: center;
-    padding: 8px 16px;
-    z-index: 9999; width: max-content; max-width: 95%; gap: 20px;
+    padding: 8px 16px; z-index: 9999; width: max-content; max-width: 95%; gap: 20px;
   }
   
   .navbar-left { display: flex; align-items: center; }
@@ -126,19 +118,19 @@
   
   .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
   .games-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 600px; }
-  .tech-card { background: var(--bg-card); backdrop-filter: blur(10px); border: 1px solid var(--border-color); border-radius: 16px; padding: 32px 24px; transition: all 0.4s ease; }
+  .tech-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 32px 24px; transition: all 0.4s ease; }
   .tech-card:hover { transform: translateY(-8px); border-color: #fff; box-shadow: 0 10px 30px rgba(255,255,255,0.1); }
   .tag { display: inline-block; background: #fff; color: #000; padding: 4px 12px; border-radius: 4px; font-weight: 800; font-size: 0.75rem; margin-bottom: 16px; }
   .tech-card h3 { font-size: 1.6rem; margin-bottom: 8px; font-weight: 700; }
   .tech-card p { color: #888; font-size: 0.95rem; }
-  .game-card { background: var(--bg-card); backdrop-filter: blur(10px); border: 1px solid var(--border-color); border-radius: 16px; padding: 32px; transition: all 0.4s ease; }
+  .game-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 32px; transition: all 0.4s ease; }
   
   .step { margin-bottom: 32px; }
   .step .num { color: #fff; font-size: 1rem; font-weight: 800; letter-spacing: 2px; }
   .step h3 { font-size: 1.5rem; margin: 8px 0; }
   .step p { color: #888; }
 
-  details { background: var(--bg-card); backdrop-filter: blur(10px); border: 1px solid var(--border-color); border-radius: 12px; padding: 24px; margin-bottom: 16px; }
+  details { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 24px; margin-bottom: 16px; }
   details summary { font-weight: 600; font-size: 1.1rem; outline: none; cursor: pointer; }
   details p { color: #888; margin-top: 16px; }
 
@@ -170,7 +162,7 @@
   .back-btn { position: absolute; top: 40px; right: 60px; display: inline-flex; align-items: center; gap: 8px; color: #888; text-decoration: none; font-size: 0.9rem; transition: color 0.3s; cursor: pointer; }
   .back-btn:hover { color: #fff; }
   .form-wrapper { margin: auto; width: 100%; max-width: 400px; }
-  .auth-tabs { display: flex; background: var(--bg-card); backdrop-filter: blur(10px); border-radius: 8px; border: 1px solid var(--border-color); padding: 4px; margin-bottom: 32px; }
+  .auth-tabs { display: flex; background: var(--bg-card); border-radius: 8px; border: 1px solid var(--border-color); padding: 4px; margin-bottom: 32px; }
   .auth-tab { flex: 1; padding: 12px; text-align: center; border-radius: 6px; font-weight: 600; color: #888; font-size: 0.95rem; transition: all 0.3s ease; cursor: pointer; }
   .auth-tab.active { background: #1a1a1a; color: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
   .auth-form { display: none; }
@@ -197,13 +189,12 @@
   /* DASHBOARD */
   .dashboard-page { display: none; min-height: 100vh; background: transparent; padding-top: 100px; position: relative; z-index: 100; overflow: hidden; }
   
-  /* BANNER NO TOPO DO DASHBOARD */
   .banner-container {
     width: 100%; max-width: 1200px; height: 200px; margin: 0 auto 24px auto;
     border-radius: 16px; overflow: hidden; position: relative; z-index: 2;
     background: linear-gradient(135deg, #111 0%, #000 100%);
     border: 1px solid var(--border-color);
-    display: none; /* Escondido por padrão, JS ativa se tiver banner */
+    display: none;
   }
   .banner-container img { width: 100%; height: 100%; object-fit: cover; }
 
@@ -213,10 +204,9 @@
   @keyframes slideUpFade { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
   .anime-in { opacity: 0; animation: slideUpFade 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
 
-  .user-card { background: var(--bg-card); backdrop-filter: blur(12px); border: 1px solid var(--border-color); border-radius: 16px; padding: 32px 24px; text-align: center; margin-bottom: 24px; transition: all 0.3s ease; position: relative; }
+  .user-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 32px 24px; text-align: center; margin-bottom: 24px; transition: all 0.3s ease; position: relative; }
   .user-card:hover { border-color: rgba(255,255,255,0.2); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
   
-  /* HOVER NO AVATAR PARA MOSTRAR O LÁPIS */
   .avatar-container { position: relative; display: inline-block; cursor: pointer; border-radius: 50%; overflow: hidden; }
   .avatar-container img { width: 80px; height: 80px; border-radius: 50%; border: 2px solid #333; background: #111; transition: transform 0.3s ease; object-fit: cover; }
   .avatar-container:hover img { transform: scale(1.05); border-color: #fff; }
@@ -234,7 +224,7 @@
   
   .side-nav-btn { display: flex; align-items: center; gap: 12px; padding: 16px; border-radius: 12px; background: transparent; color: #888; border: 1px solid transparent; font-size: 0.95rem; font-weight: 600; transition: all 0.2s; text-align: left; cursor: pointer; }
   .side-nav-btn:hover { background: rgba(255,255,255,0.05); color: #fff; }
-  .side-nav-btn.active { background: var(--bg-card); border-color: var(--border-color); color: #fff; backdrop-filter: blur(10px); }
+  .side-nav-btn.active { background: var(--bg-card); border-color: var(--border-color); color: #fff; }
   .side-nav-btn svg { width: 20px; height: 20px; }
 
   .dash-main { flex: 1; display: flex; flex-direction: column; gap: 24px; }
@@ -247,10 +237,8 @@
   .tab-content.active { display: block; }
 
   .dash-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 24px; }
-  .stat-card { background: var(--bg-card); backdrop-filter: blur(12px); border: 1px solid var(--border-color); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 8px; transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); position: relative; overflow: hidden; }
-  .stat-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at top right, rgba(255,255,255,0.1), transparent 70%); opacity: 0; transition: opacity 0.3s; }
+  .stat-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 8px; transition: all 0.3s ease; position: relative; overflow: hidden; }
   .stat-card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.3); box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
-  .stat-card:hover::before { opacity: 1; }
   .stat-card svg { width: 24px; height: 24px; color: #fff; margin-bottom: 8px; }
   .stat-card h3 { font-size: 1.6rem; font-weight: 800; color: #fff; }
   .stat-card p { color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; font-weight: 600; letter-spacing: 1px; }
@@ -259,18 +247,16 @@
   .online-dot { width: 8px; height: 8px; background: #10b981; border-radius: 50%; box-shadow: 0 0 10px #10b981; animation: pulseGreen 2s infinite; }
   @keyframes pulseGreen { 0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); } 100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); } }
 
-  .download-card { background: linear-gradient(135deg, rgba(20,20,20,0.8) 0%, rgba(0,0,0,0.9) 100%); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 40px; position: relative; overflow: hidden; transition: all 0.3s ease; }
-  .download-card:hover { border-color: rgba(255,255,255,0.3); box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
+  .download-card { background: #0a0a0a; border: 1px solid #222; border-radius: 16px; padding: 40px; position: relative; overflow: hidden; transition: all 0.3s ease; }
+  .download-card:hover { border-color: #444; box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
   .download-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, transparent, #fff, transparent); }
   .download-card h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 12px; }
   .download-card p { color: var(--text-muted); font-size: 1rem; margin-bottom: 24px; max-width: 500px; }
   
   .dl-btn-main { display: inline-flex; align-items: center; gap: 12px; background: #fff; color: #000; padding: 16px 32px; border-radius: 8px; font-weight: 700; font-size: 1.1rem; text-decoration: none; transition: all 0.3s; position: relative; overflow: hidden; }
-  .dl-btn-main::after { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent); transform: skewX(-20deg); transition: 0.5s; }
   .dl-btn-main:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(255,255,255,0.2); }
-  .dl-btn-main:hover::after { left: 150%; }
 
-  .changelog-card, .info-card { background: var(--bg-card); backdrop-filter: blur(12px); border: 1px solid var(--border-color); border-radius: 16px; padding: 32px; transition: all 0.3s ease; }
+  .changelog-card, .info-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 32px; transition: all 0.3s ease; }
   .changelog-card:hover, .info-card:hover { border-color: rgba(255,255,255,0.15); }
   .changelog-card h3, .info-card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
   
@@ -466,7 +452,6 @@
     </div>
   </nav>
 
-  <!-- BANNER -->
   <div id="profile-banner" class="banner-container anime-in" style="animation-delay: 0.15s;">
     <img id="banner-img" src="" alt="Banner">
   </div>
@@ -474,7 +459,6 @@
   <div class="dash-layout">
     <aside class="dash-sidebar anime-in" style="animation-delay: 0.2s;">
       <div class="user-card">
-        <!-- HOVER PARA EDITAR AVATAR -->
         <div class="avatar-container" onclick="openEditProfileModal()">
           <img id="db-main-avatar" src="" alt="Avatar">
           <div class="edit-overlay">
@@ -486,7 +470,6 @@
           <span id="db-main-name">Username</span>
           <span class="user-tag-badge" id="db-main-tag">Membro</span>
         </h2>
-        <!-- EMAIL REMOVIDO DAQUI -->
       </div>
 
       <button class="side-nav-btn active" onclick="switchTab('overview', this)">
@@ -765,17 +748,15 @@
       if (!user || !user.id) return;
       globalUser = user;
 
-      // Fallback de Avatar
       let avatarUrl = 'https://ui-avatars.com/api/?name=' + user.username + '&background=333&color=fff&rounded=true&bold=true';
       if (user.avatar) {
         if (user.avatar.startsWith('http')) {
-          avatarUrl = user.avatar; // Avatar customizado (link externo)
+          avatarUrl = user.avatar;
         } else {
-          avatarUrl = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`; // Discord Avatar
+          avatarUrl = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
         }
       }
 
-      // Banner
       if (user.banner) {
         document.getElementById('profile-banner').style.display = 'block';
         document.getElementById('banner-img').src = user.banner;
@@ -811,13 +792,11 @@
       
       document.getElementById('editProfileModal').classList.add('show');
       
-      // Preenche os inputs com os dados atuais
       document.getElementById('edit-banner-url').value = globalUser.banner || '';
       
       const avatarInput = document.getElementById('edit-avatar-url');
       const avatarNote = document.getElementById('avatar-note');
 
-      // Se for Discord, bloqueia a troca de avatar
       if (globalUser.provider === 'discord') {
         avatarInput.value = 'Gerenciado pelo Discord';
         avatarInput.disabled = true;
@@ -839,22 +818,17 @@
       const newBanner = document.getElementById('edit-banner-url').value.trim();
       const newAvatar = document.getElementById('edit-avatar-url').value.trim();
 
-      // Atualiza dados do usuário
       globalUser.banner = newBanner || null;
       
       if (globalUser.provider !== 'discord') {
         globalUser.avatar = newAvatar || null;
       }
 
-      // Salva no localStorage
       try {
         localStorage.setItem('eclipse_user', JSON.stringify(globalUser));
       } catch(e){}
 
-      // Atualiza a UI na hora
       setupLoggedInUI(globalUser);
-      
-      // Fecha o modal
       closeEditProfileModal();
     };
 
@@ -910,7 +884,7 @@
           showPage('home');
           document.getElementById('loginModal').classList.add('show');
           document.body.style.overflow = 'hidden';
-          setTimeout(window.resizeEKG, 100);
+          setTimeout(() => { startEKG(); resizeEKG(); }, 100);
         }
       } else {
         showPage('home');
@@ -949,7 +923,6 @@
       .then(data => {
         if (data.error || !data.username || !data.id) throw new Error(data.error || "Dados incompletos retornados.");
         
-        // Adiciona a flag de provider
         data.provider = 'discord';
 
         try { localStorage.setItem('eclipse_user', JSON.stringify(data)); } catch(e){}
@@ -997,11 +970,13 @@
               avatar: user.user_metadata.avatar_url || null,
               banner: user.user_metadata.banner || null,
               tags: ["Membro"],
-              provider: 'email' // Flag para permitir troca de avatar
+              provider: 'email'
             };
             try { localStorage.setItem('eclipse_user', JSON.stringify(userData)); } catch(e){}
             setupLoggedInUI(userData);
             document.getElementById('loginModal').classList.remove('show');
+            document.body.style.overflow = ''; 
+            stopEKG(); // Para a animação ao fechar
             showPage('dashboard');
             btn.innerText = originalText;
             btn.disabled = false;
@@ -1046,6 +1021,8 @@
                try { localStorage.setItem('eclipse_user', JSON.stringify(userData)); } catch(e){}
                setupLoggedInUI(userData);
                document.getElementById('loginModal').classList.remove('show');
+               document.body.style.overflow = ''; 
+               stopEKG();
                showPage('dashboard');
             } else {
                alert("Conta criada! Verifique seu e-mail para confirmar antes de entrar.");
@@ -1087,13 +1064,14 @@
     document.getElementById('openLoginBtn').addEventListener('click', () => {
       document.getElementById('loginModal').classList.add('show');
       document.body.style.overflow = 'hidden'; 
-      setTimeout(window.resizeEKG, 100);
+      setTimeout(() => { startEKG(); resizeEKG(); }, 100);
     });
 
     document.getElementById('backToSiteBtn').addEventListener('click', (e) => {
       e.preventDefault();
       document.getElementById('loginModal').classList.remove('show');
       document.body.style.overflow = ''; 
+      stopEKG(); // Para a animação quando fecha
     });
 
     const tabs = document.querySelectorAll('.auth-tab');
@@ -1107,8 +1085,10 @@
       });
     });
 
-    // --- 8. PARTÍCULAS DE FUNDO GLOBAIS ---
+    // --- 8. PARTÍCULAS DE FUNDO (OTIMIZADO) ---
     const canvas = document.getElementById('bg-canvas');
+    let animationFrameIdBg;
+    
     if(canvas) {
       const ctx = canvas.getContext('2d');
       let particles = [];
@@ -1118,14 +1098,22 @@
       function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
       window.addEventListener('resize', resize); resize();
 
+      // Debounce no mousemove para não sobrecarregar
+      let mouseTimeout;
       window.addEventListener('mousemove', (e) => {
         mouse.x = e.clientX; mouse.y = e.clientY; mouse.active = true;
+        
         clearTimeout(idleTimer);
         idleTimer = setTimeout(() => { mouse.active = false; mouse.x = -1000; mouse.y = -1000; }, 30000);
+
+        // Pausa o cálculo se o mouse se mover muito rápido e retoma
+        if (mouseTimeout) return;
+        mouseTimeout = setTimeout(() => { mouseTimeout = null; }, 16); // ~60fps limit for mouse events
       }, { passive: true });
+      
       window.addEventListener('mouseleave', () => { mouse.active = false; mouse.x = -1000; mouse.y = -1000; });
 
-      const particleCount = 150; 
+      const particleCount = 80; // Reduzido de 150 para 80 (suficiente para o visual e muito mais leve)
       for (let i = 0; i < particleCount; i++) {
         particles.push({
           x: Math.random() * canvas.width, y: Math.random() * canvas.height,
@@ -1134,44 +1122,76 @@
         });
       }
 
-      function draw() {
+      function drawBg() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // Desenha partículas
         particles.forEach(p => {
           p.x += p.vx; p.y += p.vy;
+          
           if (mouse.active) {
             let dx = p.x - mouse.x, dy = p.y - mouse.y;
-            let distance = Math.sqrt(dx * dx + dy * dy);
-            if (distance < mouse.radius) {
+            let distSq = dx * dx + dy * dy;
+            let radSq = mouse.radius * mouse.radius;
+            
+            if (distSq < radSq) {
+              let distance = Math.sqrt(distSq);
               let force = (mouse.radius - distance) / mouse.radius;
               let angle = Math.atan2(dy, dx);
               p.x += Math.cos(angle) * force * 6; p.y += Math.sin(angle) * force * 6;
             }
           }
+          
           if (p.x < -10) p.x = canvas.width + 10;
           if (p.x > canvas.width + 10) p.x = -10;
           if (p.y < -10) p.y = canvas.height + 10;
           if (p.y > canvas.height + 10) p.y = -10;
+          
           ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.fillStyle = '#333333'; ctx.fill();
         });
         
+        // Otimização: Desenha todas as linhas em um único caminho
+        ctx.beginPath();
         for (let i = 0; i < particles.length; i++) {
           for (let j = i + 1; j < particles.length; j++) {
-            let dx = particles[i].x - particles[j].x, dy = particles[i].y - particles[j].y;
-            let distance = Math.sqrt(dx * dx + dy * dy);
-            if (distance < 150) {
-              ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y);
-              ctx.strokeStyle = `rgba(51, 51, 51, ${1 - distance / 150})`; ctx.stroke();
+            let dx = particles[i].x - particles[j].x;
+            let dy = particles[i].y - particles[j].y;
+            let distSq = dx * dx + dy * dy;
+            
+            // Evita Math.sqrt até ser necessário
+            if (distSq < 22500) { // 150 * 150
+              let distance = Math.sqrt(distSq);
+              let opacity = 1 - (distance / 150);
+              
+              ctx.moveTo(particles[i].x, particles[i].y);
+              ctx.lineTo(particles[j].x, particles[j].y);
+              // Não podemos mudar a cor de cada linha individualmente num único path,
+              // então usamos uma cor fixa com opacidade média para todas
             }
           }
         }
-        requestAnimationFrame(draw);
+        ctx.strokeStyle = 'rgba(51, 51, 51, 0.4)';
+        ctx.stroke();
+
+        animationFrameIdBg = requestAnimationFrame(drawBg);
       }
-      draw();
+      
+      // Pausa a animação quando a aba está oculta
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+          cancelAnimationFrame(animationFrameIdBg);
+        } else {
+          drawBg();
+        }
+      });
+
+      drawBg();
     }
 
-    // --- 9. BATIMENTO CARDÍACO ---
+    // --- 9. BATIMENTO CARDÍACO (OTIMIZADO) ---
     const ekgCanvas = document.getElementById('ekg-canvas');
     const sidebar = document.getElementById('sidebar-clickable');
+    let ekgAnimationId;
     
     if (ekgCanvas && sidebar) {
       const ekgCtx = ekgCanvas.getContext('2d');
@@ -1210,18 +1230,20 @@
         }
       });
 
+      window.stopEKG = function() {
+        if(ekgAnimationId) {
+            cancelAnimationFrame(ekgAnimationId);
+            ekgAnimationId = null;
+        }
+      }
+
+      window.startEKG = function() {
+        if(!ekgAnimationId) {
+            drawEKG();
+        }
+      }
+
       function drawEKG() {
-        if(!document.getElementById('loginModal').classList.contains('show')) {
-          requestAnimationFrame(drawEKG); 
-          return;
-        }
-
-        if(ekgWidth === 0 || ekgHeight === 0) {
-          window.resizeEKG();
-          requestAnimationFrame(drawEKG);
-          return;
-        }
-
         ekgCtx.clearRect(0, 0, ekgWidth, ekgHeight);
         points.forEach(p => p.x -= 1.5);
 
@@ -1262,10 +1284,19 @@
           ekgCtx.lineWidth = 6;
           ekgCtx.stroke();
         }
-        requestAnimationFrame(drawEKG);
+        
+        // Só agenda o próximo frame se o modal estiver aberto
+        if (document.getElementById('loginModal').classList.contains('show')) {
+            ekgAnimationId = requestAnimationFrame(drawEKG);
+        } else {
+            ekgAnimationId = null;
+        }
       }
-      setTimeout(window.resizeEKG, 100); 
-      drawEKG(); 
+
+      // Inicia parado
+      ekgAnimationId = null;
+      
+      // O start e stop são chamados quando o modal abre/fecha
     }
   });
 </script>
